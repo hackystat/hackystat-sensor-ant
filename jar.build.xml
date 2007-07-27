@@ -15,18 +15,23 @@
           <include name="org/hackystat/sensor/**"/>
        </fileset>
      </copy>
+
+  	<!-- Copy over the antlib so junit sensor task can be used. -->
+  	<copy todir="${tmp.dir}/org/hackystat/sensor/ant">
+  		<fileset file="${basedir}/src/org/hackystat/sensor/ant/antlib.xml"/>
+  	</copy>
     
-     <unjar src="${env.SENSORSHELL_HOME}/sensorshell.java6.jar" dest="${tmp.dir}"/>
+     <unjar src="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.java6.jar" dest="${tmp.dir}"/>
    
      <jar destfile="${basedir}/antsensors.java6.jar" basedir="${tmp.dir}">
        <manifest>
-         <attribute name="Implementation-Title" value="XmlDataSensor"/>
+         <attribute name="Implementation-Title" value="JUnitSensor"/>
          <attribute name="Implementation-Version" value="${version}"/>
          <attribute name="Implementation-Vendor" value="Collaborative Software Development Laboratory, University of Hawaii"/>
        </manifest>
      </jar>
 
-     <!-- Now build antsensors.java6.jar, which adds in JAXB --> 
+     <!-- Now build antsensors.java5.jar, which adds in JAXB --> 
      <unjar src="${env.JAXB_HOME}/lib/activation.jar" dest="${tmp.dir}"/>
      <unjar src="${env.JAXB_HOME}/lib/jaxb-api.jar" dest="${tmp.dir}"/>
      <unjar src="${env.JAXB_HOME}/lib/jaxb-impl.jar" dest="${tmp.dir}"/>
@@ -38,9 +43,9 @@
        <fileset dir="${tmp.dir}/META-INF" includes="*.RSA,*.DSA,*.SF,*.rsa,*.dsa,*.sf"/>
      </delete>
     
-     <jar destfile="${basedir}/antsensors.java6.jar" basedir="${tmp.dir}">
+     <jar destfile="${basedir}/antsensors.java5.jar" basedir="${tmp.dir}">
         <manifest>
-          <attribute name="Implementation-Title" value="XmlDataSensor"/>
+          <attribute name="Implementation-Title" value="JUnitSensor"/>
           <attribute name="Implementation-Version" value="${version}"/>
           <attribute name="Implementation-Vendor" value="Collaborative Software Development Laboratory, University of Hawaii"/>
         </manifest>

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<antlib>
+    <taskdef name="hacky-junit" classname="org.hackystat.sensor.ant.junit.JUnitSensor" />
+</antlib>

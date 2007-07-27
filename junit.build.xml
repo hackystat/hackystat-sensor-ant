@@ -20,9 +20,11 @@
         <pathelement location="${build.dir}/classes" />
         <path refid="compile.classpath"/>
       </classpath>
+    	<sysproperty key="junittestfiles" value="${basedir}/testdata/junit"/>
       <formatter type="xml" />
       <batchtest todir="${junit.dir}">
-        <fileset dir="${src.dir}" includes="**/Test*.java"/>
+      	<!-- Must exclude the jaxb folders because jaxb created Testsuite class. -->
+        <fileset dir="${src.dir}" includes="**/Test*.java" excludes="**/jaxb/**"/>
       </batchtest>
     </junit>
   </target>  
@@ -37,17 +39,15 @@
     
   <target name="junit.sensor" description="Sends UnitTest data to Hackystat using the JUnit sensor.">
     <!-- Define the junit sensor taskdef, failing the build if the sensor is not installed. -->
-    <available classname="org.hackystat.sensor.junit.JUnitSensor" property="junit.sensor.available"/>
+    <available classname="org.hackystat.sensor.ant.junit.JUnitSensor" property="junit.sensor.available"/>
     <fail unless="junit.sensor.available" message="Error: JUnit sensor not installed."/>
-    <taskdef name="hacky-junit" classname="org.hackystat.sensor.junit.JUnitSensor" />
-
+  	<taskdef resource="org/hackystat/sensor/ant/antlib.xml" classpath="${basedir}/antsensors.java5.jar"/>
+  	
     <!-- Send JUnit test data to hackystat using the JUnit sensor. -->
     <hacky-junit verbose="${hackystat.verbose.mode}" 
                  sourcePath="${src.dir}">
       <fileset dir="${junit.dir}" includes="TEST-*.xml"/>
     </hacky-junit>
   </target>
+	
 </project>
-
-
-

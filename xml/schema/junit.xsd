@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Primitive elements and attributes -->
+  <xs:element name="system-out" />
+  <xs:element name="system-err" />
+
+  <xs:attribute name="errors" type="xs:int" />
+  <xs:attribute name="failures" type="xs:int" />
+  <xs:attribute name="tests" type="xs:int" />
+  <xs:attribute name="classname" type="xs:string" />
+  <xs:attribute name="name" type="xs:string" />
+  <xs:attribute name="time" type="xs:double" />
+  <xs:attribute name="value" type="xs:string" />
+  <xs:attribute name="message" type="xs:string" />
+  <xs:attribute name="type" type="xs:string" />
+
+  <!-- Complex elements -->
+  <xs:element name="failure">
+    <xs:complexType>
+      <xs:attribute ref="message" />
+      <xs:attribute ref="type" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="error">
+    <xs:complexType>
+      <xs:attribute ref="message" />
+      <xs:attribute ref="type" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="testcase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="failure" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="error" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+      <xs:attribute ref="classname" use="required" />
+      <xs:attribute ref="name" />
+      <xs:attribute ref="time" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="property">
+    <xs:complexType>
+      <xs:attribute ref="name" />
+      <xs:attribute ref="value" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="properties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="property" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="testsuite">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="properties" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="testcase" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="system-out" minOccurs="1" maxOccurs="1" />
+        <xs:element name="system-err" minOccurs="1" maxOccurs="1" />
+      </xs:sequence>
+      <xs:attribute ref="errors" />
+      <xs:attribute ref="failures" />
+      <xs:attribute ref="name" />
+      <xs:attribute ref="time" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

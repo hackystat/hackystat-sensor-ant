@@ -8,6 +8,9 @@ package org.hackystat.sensor.ant.junit;
  */
 public class JUnitSensorException extends Exception {
 
+  /** Generated serial UID. */
+  private static final long serialVersionUID = 3747847041801451039L;
+
   /** Constructor when there is no prior exception to chain. */
   public JUnitSensorException() {
   }

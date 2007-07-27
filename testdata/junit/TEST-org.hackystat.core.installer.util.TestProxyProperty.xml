@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="1" name="org.hackystat.core.installer.util.TestProxyProperty" tests="1" time="0.0080">
+  <properties>
+    <property name="ant.file.hackySensor_Emma.local" value="/home/jsakuda/hackystat-svn/hackySensor_Emma/local.build.xml"></property>
+    <property name="installer.test.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Installer/build/installertemp"></property>
+    <property name="install.jira.classes.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/jira/classes"></property>
+    <property name="ant.file.hackyCore_Build.globals" value="/home/jsakuda/hackystat-svn/hackyCore_Build/globals.build.xml"></property>
+    <property name="ant.file.hackySensor_LoadTest.local" value="/home/jsakuda/hackystat-svn/hackySensor_LoadTest/local.build.xml"></property>
+    <property name="findbugs.report.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/reports/findbugs"></property>
+    <property name="hackySensor_VisualStudio.required.modules" value="hackyCore_Installer, hackySdt_DevEvent"></property>
+    <property name="hackystat.build.DependencyFinder.sensor.available" value="true"></property>
+    <property name="ant.file.hackyCore_Telemetry.local" value="/home/jsakuda/hackystat-svn/hackyCore_Telemetry/local.build.xml"></property>
+    <property name="env.TERM" value="xterm"></property>
+    <property name="install.war.changelog.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/changelog"></property>
+    <property name="hackyApp_Experiment.required.modules" value="hackyCore_Telemetry, hackySdt_Activity"></property>
+    <property name="ant.file.hackyCore_Build.tomcat" value="/home/jsakuda/hackystat-svn/hackyCore_Build/tomcat.build.xml"></property>
+    <property name="ant.file.hackySdt_ReviewIssue.local" value="/home/jsakuda/hackystat-svn/hackySdt_ReviewIssue/local.build.xml"></property>
+    <property name="ant.library.dir" value="/home/jsakuda/apache-ant-1.6.5/lib"></property>
+    <property name="env.SCLC_HOME" value="/home/jsakuda/csdl-svn/sclc"></property>
+    <property name="hackySensor_Cccc.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Cccc/src"></property>
+    <property name="ant.file.hackyCore_Build.macros" value="/home/jsakuda/hackystat-svn/hackyCore_Build/macros.build.xml"></property>
+    <property name="hackySdt_ReviewIssue.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_ReviewIssue/src"></property>
+    <property name="env.OLDPWD" value="/home/jsakuda/hackystat-svn"></property>
+    <property name="hackyCore_Kernel.required.modules" value="hackyCore_Build"></property>
+    <property name="hackySdt_Issue.available" value="true"></property>
+    <property name="hackySensor_Checkstyle.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Checkstyle/src"></property>
+    <property name="ant.file.hackySensor_Ant.local" value="/home/jsakuda/hackystat-svn/hackySensor_Ant/local.build.xml"></property>
+    <property name="user.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build"></property>
+    <property name="hackyCore_Kernel.local.basedir" value="/home/jsakuda/hackystat-svn/hackyCore_Kernel"></property>
+    <property name="java.vm.version" value="1.5.0_11-b03"></property>
+    <property name="hackySensor_JUnit.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_JUnit/src"></property>
+    <property name="tomcat.admin.user" value="hackyAdmin"></property>
+    <property name="hackySensor_Emacs.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Emacs"></property>
+    <property name="ant.file.hackySensor_JUnit.local" value="/home/jsakuda/hackystat-svn/hackySensor_JUnit/local.build.xml"></property>
+    <property name="hackySensor_Emma.available" value="true"></property>
+    <property name="hackySensor_CppUnit.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_CppUnit"></property>
+    <property name="ant.file.hackySdt_DevEvent.local" value="/home/jsakuda/hackystat-svn/hackySdt_DevEvent/local.build.xml"></property>
+    <property name="ant.file.hackyCore_Build.sensorshell" value="/home/jsakuda/hackystat-svn/hackyCore_Build/sensorshell.build.xml"></property>
+    <property name="temp:docbook.ready.file" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/docbook/docbook-ready-file.tmp"></property>
+    <property name="hackySdt_Build.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_Build"></property>
+    <property name="ant.file.hackySensor_Checkstyle.local" value="/home/jsakuda/hackystat-svn/hackySensor_Checkstyle/local.build.xml"></property>
+    <property name="junit.printsummary" value="withOutAndErr"></property>
+    <property name="hackySdt_Cli.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_Cli/src"></property>
+    <property name="hackyCore_Installer.junit.forkmode" value="once"></property>
+    <property name="env.GNOME_KEYRING_SOCKET" value="/tmp/keyring-qgunw9/socket"></property>
+    <property name="install.tmp.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/tmp"></property>
+    <property name="hackySensor_Cvs.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Cvs"></property>
+    <property name="env.CVSROOT" value="/usr/local/cvsroot"></property>
+    <property name="sun.os.patch.level" value="unknown"></property>
+    <property name="hackySensor_Jupiter.publish.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Jupiter/publish"></property>
+    <property name="hackySensor_Vim.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Vim/src"></property>
+    <property name="hackySensor_Cli.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Cli/src"></property>
+    <property name="hackySensor_Bcml.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Bcml/src"></property>
+    <property name="hackySdt_ReviewActivity.available" value="true"></property>
+    <property name="hackySdt_ReviewIssue.available" value="true"></property>
+    <property name="ant.file.hackySensor_CppUnit.local" value="/home/jsakuda/hackystat-svn/hackySensor_CppUnit/local.build.xml"></property>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"></property>
+    <property name="env.IDEA_HOME" value="/home/jsakuda/devel-tools/idea-6107"></property>
+    <property name="hackySensor_DependencyFinder.available" value="true"></property>
+    <property name="hackystat.build.FindBugs.sensor.available" value="true"></property>
+    <property name="hackySensor_Locc.required.modules" value="hackyCore_Installer, hackySdt_FileMetric"></property>
+    <property name="hackyCore_Build.docbook.gather.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/docbook/gather"></property>
+    <property name="hackystat.admin.userkey" value="*ADMIN-KEY*"></property>
+    <property name="hackySdt_CodeIssue.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="hackyCore_Installer.lib.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Installer/lib"></property>
+    <property name="hackyCore_Kernel.junit.DSTAMP" value="20070721"></property>
+    <property name="hackySdt_BuffTrans.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="hackystat.war.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war"></property>
+    <property name="hackySensor_Ant.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Ant/src"></property>
+    <property name="hackyCore_Installer.dot.hackystat.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Installer/build/installertemp/.hackystat"></property>
+    <property name="JESS.present" value="true"></property>
+    <property name="os.name" value="Linux"></property>
+    <property name="hackyCore_Kernel.lib.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Kernel/lib"></property>
+    <property name="hackySensor_Cli.required.modules" value="hackyCore_Installer, hackySdt_Cli, hackySdt_DevEvent"></property>
+    <property name="ant.file.hackySdt_Activity.local" value="/home/jsakuda/hackystat-svn/hackySdt_Activity/local.build.xml"></property>
+    <property name="hackyCore_Installer.exclude.string" value="**/swing/**"></property>
+    <property name="hackyCore_Report.src.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Report/src"></property>
+    <property name="hackystat.site.properties.available" value="true"></property>
+    <property name="ant.file.hackyCore_Build.build" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build.xml"></property>
+    <property name="hackySensor_FindBugs.required.modules" value="hackyCore_Installer, hackySdt_CodeIssue"></property>
+    <property name="ant.file.hackySensor_Bugzilla.local" value="/home/jsakuda/hackystat-svn/hackySensor_Bugzilla/local.build.xml"></property>
+    <property name="hackySdt_Dependency.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_Dependency/src"></property>
+    <property name="hackystat.logging.level" value="info"></property>
+    <property name="hackySdt_Commit.available" value="true"></property>
+    <property name="hackySensor_Jupiter.lib.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Jupiter/lib"></property>
+    <property name="hackySdt_DevEvent.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_DevEvent/src"></property>
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
+    <property name="hackySensor_Bcml.required.modules" value="hackyCore_Installer, hackySdt_FileMetric"></property>
+    <property name="os.arch" value="i386"></property>
+    <property name="hackyCore_Report.local.basedir" value="/home/jsakuda/hackystat-svn/hackyCore_Report"></property>
+    <property name="hackySdt_BuffTrans.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_BuffTrans/src"></property>
+    <property name="user.name" value="jsakuda"></property>
+    <property name="DAYSTAMP" value="721"></property>
+    <property name="version" value="7.7.721"></property>
+    <property name="hackySensor_Cccc.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Cccc"></property>
+    <property name="ant.file.hackyCore_Build.javadoc" value="/home/jsakuda/hackystat-svn/hackyCore_Build/javadoc.build.xml"></property>
+    <property name="env.USER" value="jsakuda"></property>
+    <property name="hackyCore_Statistics.available" value="true"></property>
+    <property name="hackyApp_TelemetryControlCenter.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="ant.file.hackySensor_Eclipse.local" value="/home/jsakuda/hackystat-svn/hackySensor_Eclipse/local.build.xml"></property>
+    <property name="hackystat.mail.server" value="mail.hawaii.edu"></property>
+    <property name="hackySensor_Cccc.required.modules" value="hackyCore_Installer, hackySdt_FileMetric"></property>
+    <property name="env.LOGNAME" value="jsakuda"></property>
+    <property name="env.GNOME_DESKTOP_SESSION_ID" value="Default"></property>
+    <property name="hackySensor_XmlData.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_XmlData"></property>
+    <property name="install.war.download.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download"></property>
+    <property name="ant.file.hackySensor_JBlanket.local" value="/home/jsakuda/hackystat-svn/hackySensor_JBlanket/local.build.xml"></property>
+    <property name="hackySensor_FindBugs.available" value="true"></property>
+    <property name="junit.report.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/reports/junit"></property>
+    <property name="hackyApp_Sdsa.local.basedir" value="/home/jsakuda/hackystat-svn/hackyApp_Sdsa"></property>
+    <property name="hackystat.site.name" value="University of Hawaii"></property>
+    <property name="hackyApp_TelemetryControlCenter.stage.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/telemetrycontrolcenter"></property>
+    <property name="user.country" value="US"></property>
+    <property name="hackySensor_Pmd.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Pmd"></property>
+    <property name="hackystat.build.PMD.sensor.available" value="true"></property>
+    <property name="install.war.jess.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/jess"></property>
+    <property name="hackystat.analysis.logging" value="true"></property>
+    <property name="hackySensor_Locc.available" value="true"></property>
+    <property name="hackyCore_Kernel.package.prefix.dir" value="org/hackystat/core/kernel"></property>
+    <property name="ant.file.hackySensor_Vim.local" value="/home/jsakuda/hackystat-svn/hackySensor_Vim/local.build.xml"></property>
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/endorsed"></property>
+    <property name="hackySensor_FindBugs.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_FindBugs/src"></property>
+    <property name="ant.file.hackyCore_Kernel.local" value="/home/jsakuda/hackystat-svn/hackyCore_Kernel/local.build.xml"></property>
+    <property name="hackySensor_Office.available" value="true"></property>
+    <property name="hackyCore_Build.docbook.assemble.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/docbook/assemble"></property>
+    <property name="junit.haltonfailure" value="false"></property>
+    <property name="env.GDMSESSION" value="default"></property>
+    <property name="hackySensor_Jupiter.build.publish.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Jupiter/build/publish"></property>
+    <property name="java.vm.specification.version" value="1.0"></property>
+    <property name="hackyApp_Experiment.src.dir" value="/home/jsakuda/hackystat-svn/hackyApp_Experiment/src"></property>
+    <property name="ant.file.hackySensor_OpenOffice.local" value="/home/jsakuda/hackystat-svn/hackySensor_OpenOffice/local.build.xml"></property>
+    <property name="hackySensor_Cli.available" value="true"></property>
+    <property name="java.awt.headless" value="${java.awt.headless}"></property>
+    <property name="hackySdt_WorkspaceMap.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_WorkspaceMap"></property>
+    <property name="hackySensor_JUnit.required.modules" value="hackyCore_Installer, hackySdt_UnitTest"></property>
+    <property name="hackySdt_DevEvent.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="env.SHLVL" value="1"></property>
+    <property name="ant.file.hackyApp_TelemetryControlCenter.local" value="/home/jsakuda/hackystat-svn/hackyApp_TelemetryControlCenter/local.build.xml"></property>
+    <property name="java.vendor" value="Sun Microsystems Inc."></property>
+    <property name="hackySdt_BuffTrans.available" value="true"></property>
+    <property name="hackySensor_Jupiter.required.modules" value="hackyCore_Installer, hackySdt_ReviewIssue, hackySdt_ReviewActivity, hackySensor_Eclipse"></property>
+    <property name="env.LANGUAGE" value="en"></property>
+    <property name="hackySdt_CodeIssue.available" value="true"></property>
+    <property name="file.separator" value="/"></property>
+    <property name="ant.file.hackySdt_Build.local" value="/home/jsakuda/hackystat-svn/hackySdt_Build/local.build.xml"></property>
+    <property name="minorVersionNum" value="7"></property>
+    <property name="hackySdt_DevEvent.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_DevEvent"></property>
+    <property name="hackySensor_Cvs.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Cvs/src"></property>
+    <property name="tomcat.admin.password" value="hackystat"></property>
+    <property name="javadoc.report.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/reports/javadoc"></property>
+    <property name="env.XFILESEARCHPATH" value="/usr/dt/app-defaults/%L/Dt"></property>
+    <property name="hackySdt_Cli.available" value="true"></property>
+    <property name="hackySensor_CppUnit.available" value="true"></property>
+    <property name="install.manifest" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/META-INF/MANIFEST.MF"></property>
+    <property name="ant.file.hackySensor_Idea.local" value="/home/jsakuda/hackystat-svn/hackySensor_Idea/local.build.xml"></property>
+    <property name="hackySensor_Vim.required.modules" value="hackyCore_Installer, hackySdt_Activity, hackySdt_DevEvent"></property>
+    <property name="hackySensor_Europa.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Europa/src"></property>
+    <property name="sun.java.launcher" value="SUN_STANDARD"></property>
+    <property name="checkstyle.failOnViolation" value="true"></property>
+    <property name="env.NLSPATH" value="/usr/dt/lib/nls/msg/%L/%N.cat"></property>
+    <property name="ant.file.hackyCore_Build.loadtest" value="/home/jsakuda/hackystat-svn/hackyCore_Build/loadtest.build.xml"></property>
+    <property name="ant.home" value="/home/jsakuda/apache-ant-1.6.5"></property>
+    <property name="ant.java.version" value="1.5"></property>
+    <property name="java.library.path" value="/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/i386/client:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/i386:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/../lib/i386"></property>
+    <property name="hackystat.site.properties" value="/home/jsakuda/.hackystat/hackystat.site.properties"></property>
+    <property name="DSTAMP" value="20070721"></property>
+    <property name="hackystat.build.properties" value="/home/jsakuda/hackystat-svn/hackystat.build.properties"></property>
+    <property name="ant.file.hackySensor_Office.local" value="/home/jsakuda/hackystat-svn/hackySensor_Office/local.build.xml"></property>
+    <property name="install.build.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build"></property>
+    <property name="hackyCore_Installer.test.tmp.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Installer/build/installertemp"></property>
+    <property name="sun.arch.data.model" value="32"></property>
+    <property name="basedir" value="/home/jsakuda/hackystat-svn/hackyCore_Build"></property>
+    <property name="hackyCore_Installer.local.basedir" value="/home/jsakuda/hackystat-svn/hackyCore_Installer"></property>
+    <property name="ant.file.hackyCore_Build.Hackystat.sensor.build" value="/home/jsakuda/hackystat-svn/hackyCore_Build/hackystat.sensor.build.xml"></property>
+    <property name="hackySensor_Ant.required.modules" value="hackyCore_Installer, hackySdt_Build, hackySdt_DevEvent"></property>
+    <property name="hackySensor_OpenOffice.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_OpenOffice/src"></property>
+    <property name="hackyApp_Zorro.webapp.dir" value="/home/jsakuda/hackystat-svn/hackyApp_Zorro/webapp"></property>
+    <property name="env.PATH" value="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games:/home/jsakuda/apache-ant-1.6.5/bin:/home/jsakuda/apache-tomcat-5.5.20/bin:/usr/lib/jvm/java-1.5.0-sun/jre/lib/ext/activation.jar:/home/jsakuda/hackystat-install/restlet-1.0.3/lib/org.restlet.jar:/home/jsakuda/hackystat-install/restlet-1.0.3/lib/com.noelios.restlet.jar:/home/jsakuda/hackystat-install/restlet-1.0.3/lib/com.noelios.restlet.ext.net.jar:/home/jsakuda/hackystat-install/hackystat-sensorbase-uh-8.0.710/sensorbase.lib.jar:/home/jsakuda/hackystat-install/jaxb-ri-20070711/lib/jaxb-api.jar:/home/jsakuda/hackystat-install/jaxb-ri-20070711/lib/jaxb-impl.jar:/home/jsakuda/hackystat-install/jaxb-ri-20070711/lib/jsr173_1.0_api.jar"></property>
+    <property name="path.separator" value=":"></property>
+    <property name="hackyCore_Telemetry.src.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Telemetry/src"></property>
+    <property name="hackySensor_Jira.available" value="true"></property>
+    <property name="hackySdt_Build.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="hackySdt_CodeIssue.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_CodeIssue"></property>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"></property>
+    <property name="ant.file.hackyApp_BuildAnalysis.local" value="/home/jsakuda/hackystat-svn/hackyApp_BuildAnalysis/local.build.xml"></property>
+    <property name="TSTAMP" value="17:07:08"></property>
+    <property name="hackySensor_Idea.available" value="true"></property>
+    <property name="hackyCore_Installer.package.prefix.dir" value="org/hackystat/core/installer"></property>
+    <property name="ant.file.hackyCore_Build.modules" value="/home/jsakuda/hackystat-svn/hackyCore_Build/modules.build.xml"></property>
+    <property name="user.language" value="en"></property>
+    <property name="ant.file.hackySdt_ReviewActivity.local" value="/home/jsakuda/hackystat-svn/hackySdt_ReviewActivity/local.build.xml"></property>
+    <property name="dateVersionNum" value="721"></property>
+    <property name="env.GTK_RC_FILES" value="/etc/gtk/gtkrc:/home/jsakuda/.gtkrc-1.2-gnome2"></property>
+    <property name="ant.file.hackySensor_Svn.local" value="/home/jsakuda/hackystat-svn/hackySensor_Svn/local.build.xml"></property>
+    <property name="hackyCore_Build.local.basedir" value="/home/jsakuda/hackystat-svn/hackyCore_Build"></property>
+    <property name="ant.file.hackySensor_Jira.local" value="/home/jsakuda/hackystat-svn/hackySensor_Jira/local.build.xml"></property>
+    <property name="hackySensor_JBlanket.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_JBlanket/src"></property>
+    <property name="hackyCore_Build.src.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/src"></property>
+    <property name="hackyCore_Build.docbook.xep.installation.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/${env.XEP_HOME}"></property>
+    <property name="hackystat.build.properties.available" value="true"></property>
+    <property name="client.testing.dir" value="/home/jsakuda/.hackystat/testing"></property>
+    <property name="install.war.doc.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/doc"></property>
+    <property name="hackySdt_UnitTest.available" value="true"></property>
+    <property name="hackySdt_Commit.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_Commit/src"></property>
+    <property name="java.class.version" value="49.0"></property>
+    <property name="hackySensor_Jira.required.modules" value="hackyCore_Installer, hackySdt_Issue"></property>
+    <property name="hackyCore_Kernel.lib.jar.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Kernel/lib/jar"></property>
+    <property name="hackySdt_Activity.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_Activity/src"></property>
+    <property name="hackySensor_Eclipse.build.publish.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Eclipse/build/publish"></property>
+    <property name="hackySensor_Emma.required.modules" value="hackyCore_Installer, hackySdt_Coverage"></property>
+    <property name="hackySdt_UnitTest.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_UnitTest/src"></property>
+    <property name="hackySensor_XmlData.available" value="true"></property>
+    <property name="ant.file.hackySdt_FileMetric.local" value="/home/jsakuda/hackystat-svn/hackySdt_FileMetric/local.build.xml"></property>
+    <property name="ant.file.hackySdt_Dependency.local" value="/home/jsakuda/hackystat-svn/hackySdt_Dependency/local.build.xml"></property>
+    <property name="ant.file.hackySdt_BadData.local" value="/home/jsakuda/hackystat-svn/hackySdt_BadData/local.build.xml"></property>
+    <property name="hackySdt_Build.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_Build/src"></property>
+    <property name="install.docbook.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/docbook"></property>
+    <property name="locc.report.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/reports/locc"></property>
+    <property name="manual.name" value="index"></property>
+    <property name="ant.file.hackySensor_Europa.local" value="/home/jsakuda/hackystat-svn/hackySensor_Europa/local.build.xml"></property>
+    <property name="hackyCore_Installer.required.modules" value="hackyCore_Kernel"></property>
+    <property name="hackySensor_Locc.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Locc/src"></property>
+    <property name="file.encoding.pkg" value="sun.io"></property>
+    <property name="sun.cpu.endian" value="little"></property>
+    <property name="ant.file.hackyCore_Build.junit" value="/home/jsakuda/hackystat-svn/hackyCore_Build/junit.build.xml"></property>
+    <property name="hackySensor_Eclipse.available" value="true"></property>
+    <property name="hackyCore_Common.available" value="true"></property>
+    <property name="hackyApp_TelemetryControlCenter.local.basedir" value="/home/jsakuda/hackystat-svn/hackyApp_TelemetryControlCenter"></property>
+    <property name="hackystat.context.root" value="hackystat"></property>
+    <property name="hackySdt_WorkspaceMap.required.modules" value="hackySdt_Activity, hackySdt_FileMetric"></property>
+    <property name="hackyCore_Kernel.webapp.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Kernel/webapp"></property>
+    <property name="ant.file.hackySensor_Cli.local" value="/home/jsakuda/hackystat-svn/hackySensor_Cli/local.build.xml"></property>
+    <property name="hackyCore_Kernel.junit.TODAY" value="July 21 2007"></property>
+    <property name="modules.build.xml.available" value="true"></property>
+    <property name="hackySensor_Emma.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Emma/src"></property>
+    <property name="hackyCore_Statistics.local.basedir" value="/home/jsakuda/hackystat-svn/hackyCore_Statistics"></property>
+    <property name="env.SHELL" value="/bin/bash"></property>
+    <property name="ant.file.hackyCore_Build.local" value="/home/jsakuda/hackystat-svn/hackyCore_Build/local.build.xml"></property>
+    <property name="hackySensor_Emacs.available" value="true"></property>
+    <property name="ant.1.6.5.available" value="true"></property>
+    <property name="initialize.hackystatDataDir" value="on"></property>
+    <property name="hackySdt_Activity.available" value="true"></property>
+    <property name="hackySdt_Coverage.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_Coverage"></property>
+    <property name="hackySdt_Cli.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_Cli"></property>
+    <property name="ant.file.hackyCore_Report.local" value="/home/jsakuda/hackystat-svn/hackyCore_Report/local.build.xml"></property>
+    <property name="install.installer.classes.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/installer/classes"></property>
+    <property name="java.home" value="/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre"></property>
+    <property name="hackySensor_Idea.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Idea"></property>
+    <property name="hackystat.properties.dir" value="/home/jsakuda/apache-tomcat-5.5.20/conf"></property>
+    <property name="ant.file.hackySdt_Commit.local" value="/home/jsakuda/hackystat-svn/hackySdt_Commit/local.build.xml"></property>
+    <property name="hackySdt_Dependency.required.modules" value="hackyCore_Telemetry, hackySdt_FileMetric, hackySdt_WorkspaceMap"></property>
+    <property name="hackySensor_JUnit.available" value="true"></property>
+    <property name="ant.file.hackyCore_Build.dependencyfinder" value="/home/jsakuda/hackystat-svn/hackyCore_Build/dependency.build.xml"></property>
+    <property name="hackySensor_Idea.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Idea/src"></property>
+    <property name="install.sensorshell.sdt.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/sensorshell/src/org/hackystat/lib/ext/sdt"></property>
+    <property name="install.war.eclipse.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/eclipse"></property>
+    <property name="hackySensor_LoadTest.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_LoadTest"></property>
+    <property name="env.JBUILDER_HOME" value="/home/jsakuda/devel-tools/jbuilder-fake"></property>
+    <property name="env.JESS_HOME" value="/home/jsakuda/devel-tools/Jess70a5"></property>
+    <property name="env.DESKTOP_SESSION" value="default"></property>
+    <property name="majorVersionNum" value="7"></property>
+    <property name="hackyApp_BuildAnalysis.local.basedir" value="/home/jsakuda/hackystat-svn/hackyApp_BuildAnalysis"></property>
+    <property name="hackySdt_BadData.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_BadData"></property>
+    <property name="hackySensor_JBlanket.available" value="true"></property>
+    <property name="hackySensor_Svn.available" value="true"></property>
+    <property name="hackyCore_Build.docbook.styler.build.file" value="/home/jsakuda/hackystat-svn/hackyCore_Build/lib/styler/ant-build-docbook.xml"></property>
+    <property name="hackySdt_Dependency.available" value="true"></property>
+    <property name="hackySdt_Dependency.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_Dependency"></property>
+    <property name="hackyApp_StdCmd.local.basedir" value="/home/jsakuda/hackystat-svn/hackyApp_StdCmd"></property>
+    <property name="hackyCore_Build.docbook.manual.name" value="index"></property>
+    <property name="installer.config.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/installer"></property>
+    <property name="hackySdt_FileMetric.required.modules" value="hackyCore_Telemetry, hackySdt_Activity"></property>
+    <property name="install.war.jupiter.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/jupiter"></property>
+    <property name="hackystat.disable.admin.email" value="true"></property>
+    <property name="ant.file.hackySdt_BuffTrans.local" value="/home/jsakuda/hackystat-svn/hackySdt_BuffTrans/local.build.xml"></property>
+    <property name="hackySensor_Checkstyle.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Checkstyle"></property>
+    <property name="tomcat.servlet.jar.filename" value="servlet-api.jar"></property>
+    <property name="hackystat.build.Build.sensor.available" value="true"></property>
+    <property name="hackySdt_Issue.required.modules" value="hackyCore_Telemetry, hackySdt_FileMetric"></property>
+    <property name="hackyCore_Telemetry.local.basedir" value="/home/jsakuda/hackystat-svn/hackyCore_Telemetry"></property>
+    <property name="hackyCore_Common.src.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Common/src"></property>
+    <property name="hackyCore_Telemetry.required.modules" value="hackyCore_Common"></property>
+    <property name="env.DBUS_SESSION_BUS_ADDRESS" value="unix:abstract=/tmp/dbus-DDWQ6iWVv3,guid=69577c03401b4f3cdcb1f40046a2c39b"></property>
+    <property name="ant.file.hackySdt_Cli.local" value="/home/jsakuda/hackystat-svn/hackySdt_Cli/local.build.xml"></property>
+    <property name="hackySensor_Checkstyle.required.modules" value="hackyCore_Installer, hackySdt_CodeIssue"></property>
+    <property name="hackyApp_StdCmd.required.modules" value="hackyCore_Common, hackySdt_Activity, hackySdt_Coverage, hackySdt_FileMetric, hackySdt_UnitTest"></property>
+    <property name="hackySdt_Build.available" value="true"></property>
+    <property name="env.SSH_AUTH_SOCK" value="/tmp/ssh-xWGTLL5666/agent.5666"></property>
+    <property name="ant.file.hackySensor_Vcs.local" value="/home/jsakuda/hackystat-svn/hackySensor_Vcs/local.build.xml"></property>
+    <property name="hackySdt_FileMetric.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_FileMetric/src"></property>
+    <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
+    <property name="ant.file.hackyCore_Build.testdata" value="/home/jsakuda/hackystat-svn/hackyCore_Build/testdata.build.xml"></property>
+    <property name="env.DISPLAY" value=":0.0"></property>
+    <property name="ant.file.hackySdt_Issue.local" value="/home/jsakuda/hackystat-svn/hackySdt_Issue/local.build.xml"></property>
+    <property name="env.FINDBUGS_HOME" value="/home/jsakuda/devel-tools/findbugs-0.9.5"></property>
+    <property name="ant.file.hackyCore_Build.dist" value="/home/jsakuda/hackystat-svn/hackyCore_Build/dist.build.xml"></property>
+    <property name="ant.file.hackySensor_Cccc.local" value="/home/jsakuda/hackystat-svn/hackySensor_Cccc/local.build.xml"></property>
+    <property name="hackySensor_CppUnit.required.modules" value="hackyCore_Installer, hackySdt_UnitTest, hackySdt_DevEvent, hackySensor_XmlData"></property>
+    <property name="ant.file" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build.xml"></property>
+    <property name="ant.file.hackySensor_Emacs.local" value="/home/jsakuda/hackystat-svn/hackySensor_Emacs/local.build.xml"></property>
+    <property name="ant.file.hackySensor_Bcml.local" value="/home/jsakuda/hackystat-svn/hackySensor_Bcml/local.build.xml"></property>
+    <property name="ant.file.hackySensor_Jupiter.local" value="/home/jsakuda/hackystat-svn/hackySensor_Jupiter/local.build.xml"></property>
+    <property name="hackySdt_BuffTrans.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_BuffTrans"></property>
+    <property name="hackyApp_TelemetryControlCenter.src.dir" value="/home/jsakuda/hackystat-svn/hackyApp_TelemetryControlCenter/src"></property>
+    <property name="env.GDM_XSERVER_LOCATION" value="local"></property>
+    <property name="hackySensor_Svn.required.modules" value="hackyCore_Installer, hackySdt_Commit, hackySensor_Vcs"></property>
+    <property name="hackySensor_Vcs.available" value="true"></property>
+    <property name="hackySensor_Svn.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Svn/src"></property>
+    <property name="hackySensor_XmlData.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_XmlData/src"></property>
+    <property name="ant.file.hackyCore_Common.local" value="/home/jsakuda/hackystat-svn/hackyCore_Common/local.build.xml"></property>
+    <property name="hackySensor_Emacs.required.modules" value="hackyCore_Installer, hackySdt_Activity, hackySdt_BuffTrans, hackySdt_DevEvent"></property>
+    <property name="hackySensor_Europa.lib.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Europa/lib"></property>
+    <property name="hackySensor_Ant.available" value="true"></property>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
+    <property name="hackySensor_Bugzilla.available" value="true"></property>
+    <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
+    <property name="install.testdata.users.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/testdata/users"></property>
+    <property name="hackySensor_DependencyFinder.required.modules" value="hackyCore_Installer, hackySdt_Dependency"></property>
+    <property name="hackySensor_Emma.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Emma"></property>
+    <property name="hackystat.data.dir" value="/home/jsakuda/hackystatdata"></property>
+    <property name="java.io.tmpdir" value="/tmp"></property>
+    <property name="java.vendor.url" value="http://java.sun.com/"></property>
+    <property name="hackySensor_Checkstyle.available" value="true"></property>
+    <property name="hackyApp_Zorro.required.modules" value="hackyApp_Sdsa"></property>
+    <property name="ant.file.hackySdt_UnitTest.local" value="/home/jsakuda/hackystat-svn/hackySdt_UnitTest/local.build.xml"></property>
+    <property name="hackySensor_Bugzilla.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Bugzilla/src"></property>
+    <property name="ant.file.hackySensor_Cvs.local" value="/home/jsakuda/hackystat-svn/hackySensor_Cvs/local.build.xml"></property>
+    <property name="hackyCore_Build.available" value="true"></property>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/i386"></property>
+    <property name="install.testdata.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/testdata"></property>
+    <property name="hackySensor_OpenOffice.lib.dir" value="/home/jsakuda/hackystat-svn/hackySensor_OpenOffice/lib"></property>
+    <property name="hackySdt_WorkspaceMap.available" value="true"></property>
+    <property name="install.war.dailyanalysis.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/dailyanalysis"></property>
+    <property name="hackySensor_Jira.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Jira/src"></property>
+    <property name="hackySdt_DevEvent.available" value="true"></property>
+    <property name="install.war.web-inf.lib.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib"></property>
+    <property name="hackySdt_ReviewActivity.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_ReviewActivity"></property>
+    <property name="ant.file.hackyCore_Installer.local" value="/home/jsakuda/hackystat-svn/hackyCore_Installer/local.build.xml"></property>
+    <property name="ant.file.hackySdt_Perf.local" value="/home/jsakuda/hackystat-svn/hackySdt_Perf/local.build.xml"></property>
+    <property name="java.runtime.name" value="Java(TM) 2 Runtime Environment, Standard Edition"></property>
+    <property name="hackySensor_VisualStudio.available" value="true"></property>
+    <property name="hackySdt_Issue.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_Issue"></property>
+    <property name="hackySdt_Activity.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="ant.project.name" value="hackyCore_Build.build"></property>
+    <property name="temp:fo.ready.file" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/docbook/fo-ready-file.tmp"></property>
+    <property name="hackyCore_Statistics.required.modules" value="hackyCore_Kernel"></property>
+    <property name="env.LESSCLOSE" value="/usr/bin/lesspipe %s %s"></property>
+    <property name="hackySensor_Bugzilla.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Bugzilla"></property>
+    <property name="hackySdt_Issue.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_Issue/src"></property>
+    <property name="hackySdt_FileMetric.available" value="true"></property>
+    <property name="ant.home.present" value="true"></property>
+    <property name="sun.cpu.isalist" value=""></property>
+    <property name="hackySensor_Eclipse.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Eclipse/src"></property>
+    <property name="hackySensor_JBuilder.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_JBuilder"></property>
+    <property name="env.SSH_AGENT_PID" value="5720"></property>
+    <property name="hackySensor_Cccc.available" value="true"></property>
+    <property name="hackySensor_JUnit.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_JUnit"></property>
+    <property name="hackyApp_Zorro.src.dir" value="/home/jsakuda/hackystat-svn/hackyApp_Zorro/src"></property>
+    <property name="user.home" value="/home/jsakuda"></property>
+    <property name="env.JAVA_HOME" value="/usr/lib/jvm/java-1.5.0-sun"></property>
+    <property name="install.war.meta-inf.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/META-INF"></property>
+    <property name="hackystat.build.Checkstyle.sensor.available" value="true"></property>
+    <property name="env.DESKTOP_STARTUP_ID" value=""></property>
+    <property name="hackySensor_Cvs.available" value="true"></property>
+    <property name="hackySdt_Perf.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="java.specification.name" value="Java Platform API Specification"></property>
+    <property name="hackySensor_Jupiter.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Jupiter"></property>
+    <property name="hackySensor_JBuilder.required.modules" value="hackyCore_Installer, hackySdt_Activity"></property>
+    <property name="env.DEPENDENCYFINDER_HOME" value="/home/jsakuda/devel-tools/DependencyFinder"></property>
+    <property name="hackyApp_BuildAnalysis.required.modules" value="hackyCore_Telemetry, hackySdt_Commit, hackySdt_Build, hackySdt_Activity"></property>
+    <property name="hackySensor_Cli.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Cli"></property>
+    <property name="hackySensor_LoadTest.required.modules" value="hackyCore_Installer, hackySdt_Perf"></property>
+    <property name="env.XAUTHORITY" value="/home/jsakuda/.Xauthority"></property>
+    <property name="ant.file.hackyApp_StdCmd.local" value="/home/jsakuda/hackystat-svn/hackyApp_StdCmd/local.build.xml"></property>
+    <property name="hackyApp_BuildAnalysis.src.dir" value="/home/jsakuda/hackystat-svn/hackyApp_BuildAnalysis/src"></property>
+    <property name="ant.file.hackyCore_Build.docbook" value="/home/jsakuda/hackystat-svn/hackyCore_Build/docbook.build.xml"></property>
+    <property name="hackySdt_CodeIssue.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_CodeIssue/src"></property>
+    <property name="hackyCore_Common.local.basedir" value="/home/jsakuda/hackystat-svn/hackyCore_Common"></property>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
+    <property name="java.version" value="1.5.0_11"></property>
+    <property name="ant.file.hackySdt_CodeIssue.local" value="/home/jsakuda/hackystat-svn/hackySdt_CodeIssue/local.build.xml"></property>
+    <property name="install.installer.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/installer"></property>
+    <property name="env.HACKYSTAT_SENSORSHELL_HOME" value="/home/jsakuda/hackystat-install/hackystat-sensor-shell-8.0.717"></property>
+    <property name="tomcat.home" value="/home/jsakuda/apache-tomcat-5.5.20"></property>
+    <property name="hackySensor_Pmd.available" value="true"></property>
+    <property name="env._" value="/home/jsakuda/apache-ant-1.6.5/bin/ant"></property>
+    <property name="env.SESSION_MANAGER" value="local/julia:/tmp/.ICE-unix/5666"></property>
+    <property name="hackySdt_Commit.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_Commit"></property>
+    <property name="buildtime" value="July 21 2007 17:07:08"></property>
+    <property name="env.LD_LIBRARY_PATH" value="/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/i386/client:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/i386:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/../lib/i386"></property>
+    <property name="hackyCore_Build.docbook.styler.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/lib/styler"></property>
+    <property name="install.war.web-inf.classes.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/classes"></property>
+    <property name="hackySensor_Eclipse.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Eclipse"></property>
+    <property name="hackySensor_XmlData.required.modules" value="hackyCore_Installer, hackySdt_Coverage, hackySdt_UnitTest, hackySdt_FileMetric"></property>
+    <property name="hackystat.base.dir" value="/home/jsakuda/hackystat-svn"></property>
+    <property name="hackySensor_ShellLogger.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_ShellLogger"></property>
+    <property name="hackySdt_ReviewActivity.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_ReviewActivity/src"></property>
+    <property name="hackySensor_Jira.lib.jar.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Jira/lib/jar"></property>
+    <property name="hackyApp_Sdsa.required.modules" value="hackyCore_Kernel, hackySdt_Activity, hackySdt_BuffTrans, hackySdt_Build,                     hackySdt_Cli, hackySdt_Commit"></property>
+    <property name="hackySensor_Idea.required.modules" value="hackyCore_Kernel, hackySdt_DevEvent"></property>
+    <property name="env.LESSOPEN" value="| /usr/bin/lesspipe %s"></property>
+    <property name="modules.build.xml.upToDate" value="true"></property>
+    <property name="hackySdt_ReviewActivity.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="hackySdt_UnitTest.required.modules" value="hackyCore_Telemetry, hackySdt_WorkspaceMap"></property>
+    <property name="install.war.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war"></property>
+    <property name="ant.file.hackyCore_Build.sclc" value="/home/jsakuda/hackystat-svn/hackyCore_Build/sclc.build.xml"></property>
+    <property name="hackySdt_Coverage.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_Coverage/src"></property>
+    <property name="hackySdt_BadData.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="hackyCore_Build.docbook.tmp.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/docbook/tmp"></property>
+    <property name="dependency.report.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/reports/dependency"></property>
+    <property name="install.sensorshell.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/sensorshell"></property>
+    <property name="env.CHECKSTYLE_HOME" value="/home/jsakuda/devel-tools/checkstyle-4.2"></property>
+    <property name="env.PWD" value="/home/jsakuda/hackystat-svn/hackyCore_Build"></property>
+    <property name="hackySensor_Cvs.required.modules" value="hackyCore_Installer, hackySdt_Commit, hackySensor_Vcs"></property>
+    <property name="hackystat.host" value="http://localhost:8080/"></property>
+    <property name="line.separator" value="
+"></property>
+    <property name="hackyCore_Telemetry.available" value="true"></property>
+    <property name="java.specification.version" value="1.5"></property>
+    <property name="java.vm.info" value="mixed mode, sharing"></property>
+    <property name="ant.file.hackySdt_WorkspaceMap.local" value="/home/jsakuda/hackystat-svn/hackySdt_WorkspaceMap/local.build.xml"></property>
+    <property name="hackySensor_DependencyFinder.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_DependencyFinder"></property>
+    <property name="install.installer.lib.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/installer/lib"></property>
+    <property name="ant.file.hackySensor_DependencyFinder.local" value="/home/jsakuda/hackystat-svn/hackySensor_DependencyFinder/local.build.xml"></property>
+    <property name="env.ANT_HOME" value="/home/jsakuda/apache-ant-1.6.5"></property>
+    <property name="hackySensor_Europa.required.modules" value="hackyCore_Installer, hackySdt_ReviewIssue, hackySdt_ReviewActivity"></property>
+    <property name="hackySdt_WorkspaceMap.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_WorkspaceMap/src"></property>
+    <property name="hackySdt_Cli.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="ant.file.hackySdt_Coverage.local" value="/home/jsakuda/hackystat-svn/hackySdt_Coverage/local.build.xml"></property>
+    <property name="hackySdt_Perf.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_Perf/src"></property>
+    <property name="hackyApp_Zorro.local.basedir" value="/home/jsakuda/hackystat-svn/hackyApp_Zorro"></property>
+    <property name="hackyCore_Installer.available" value="true"></property>
+    <property name="hackySdt_Coverage.required.modules" value="hackyCore_Telemetry, hackySdt_WorkspaceMap"></property>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/rt.jar:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/i18n.jar:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/jsse.jar:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/jce.jar:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/charsets.jar:/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/classes"></property>
+    <property name="tomcat.home.present" value="true"></property>
+    <property name="install.testdataset.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/testdata/users/testdataset"></property>
+    <property name="hackyCore_Common.required.modules" value="hackyCore_Report"></property>
+    <property name="hackySdt_Coverage.available" value="true"></property>
+    <property name="hackySensor_OpenOffice.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_OpenOffice"></property>
+    <property name="env.HOME" value="/home/jsakuda"></property>
+    <property name="hackySensor_Vcs.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Vcs"></property>
+    <property name="install.war.sdt.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/sdt"></property>
+    <property name="pmd.report.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/reports/pmd"></property>
+    <property name="hackySensor_Eclipse.publish.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Eclipse/publish"></property>
+    <property name="hackySensor_Office.required.modules" value="hackyCore_Installer, hackySdt_Activity"></property>
+    <property name="sclc.report.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/reports/sclc"></property>
+    <property name="hackySensor_DependencyFinder.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_DependencyFinder/src"></property>
+    <property name="hackySensor_Vcs.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Vcs/src"></property>
+    <property name="hackystat.sensor.verbose" value="true"></property>
+    <property name="hackySensor_Office.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Office"></property>
+    <property name="ant.file.hackySensor_FindBugs.local" value="/home/jsakuda/hackystat-svn/hackySensor_FindBugs/local.build.xml"></property>
+    <property name="hackyCore_Statistics.src.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Statistics/src"></property>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"></property>
+    <property name="TODAY" value="July 21 2007"></property>
+    <property name="hackyCore_Installer.src.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Installer/src"></property>
+    <property name="sun.jnu.encoding" value="UTF-8"></property>
+    <property name="hackyCore_Kernel.junit.TSTAMP" value="17:07:30"></property>
+    <property name="tomcat.servlet.jar" value="/home/jsakuda/apache-tomcat-5.5.20/common/lib/servlet-api.jar"></property>
+    <property name="hackyCore_Kernel.src.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Kernel/src"></property>
+    <property name="env.CATALINA_HOME" value="/home/jsakuda/apache-tomcat-5.5.20"></property>
+    <property name="java.runtime.version" value="1.5.0_11-b03"></property>
+    <property name="hackySensor_JBlanket.required.modules" value="hackyCore_Installer, hackySdt_Coverage"></property>
+    <property name="hackySensor_CppUnit.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_CppUnit/src"></property>
+    <property name="hackySdt_Perf.available" value="true"></property>
+    <property name="hackySensor_Vim.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Vim"></property>
+    <property name="hackySensor_Pmd.required.modules" value="hackyCore_Installer, hackySdt_CodeIssue"></property>
+    <property name="env.COLORTERM" value="gnome-terminal"></property>
+    <property name="hackySensor_Jupiter.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Jupiter/src"></property>
+    <property name="hackystat.admin.email" value="jsakuda@hawaii.edu"></property>
+    <property name="user.timezone" value=""></property>
+    <property name="hackySensor_ShellLogger.required.modules" value="hackyCore_Telemetry, hackySdt_Cli, hackySdt_DevEvent, hackySensor_XmlData"></property>
+    <property name="ant.file.hackyCore_Build.cruisecontrol" value="/home/jsakuda/hackystat-svn/hackyCore_Build/cruisecontrol.build.xml"></property>
+    <property name="hackyApp_Experiment.local.basedir" value="/home/jsakuda/hackystat-svn/hackyApp_Experiment"></property>
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.5.0-sun-1.5.0.11/jre/lib/ext"></property>
+    <property name="ant.file.hackySensor_XmlData.local" value="/home/jsakuda/hackystat-svn/hackySensor_XmlData/local.build.xml"></property>
+    <property name="hackyCore_Installer.lib.jar.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Installer/lib/jar"></property>
+    <property name="hackySensor_Locc.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Locc"></property>
+    <property name="hackySensor_FindBugs.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_FindBugs"></property>
+    <property name="java.class.path" value="/home/jsakuda/apache-tomcat-5.5.20/common/lib/servlet-api.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/classes:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/Tidy.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/activation.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/axis.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/batik-awt-util.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/batik-svggen.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/batik-util.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/commons-discovery-0.2.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/commons-logging-1.0.4.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/concurrent.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/cos.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/httpunit.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/jaxrpc.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/jcommon-1.0.0.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/jdom.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/jfcunit.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/jfreechart-1.0.1.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/js.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/jstl.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/junit-4.1.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/mail.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/request.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/saaj.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/standard.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/taglibs-datetime.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/taglibs-input.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/lib/wsdl4j-1.5.1.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.ant.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.bcml.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.bugzilla.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.cccc.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.checkstyle.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.cli.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.cppunit.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.cvs.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.dependencyfinder.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.emma.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.findbugs.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.hackyloadtest.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.idea.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.jblanket.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.jbuilder.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.jira.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.junit.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.locc.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.pmd.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.shelllogger.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.svn.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.vim.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.xmldata-ant.jar:/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/download/sensor.xmldata-cli.jar:/home/jsakuda/hackystat-svn/hackyCore_Installer/lib/jar/forms-1.0.6.jar:/home/jsakuda/hackystat-svn/hackyCore_Installer/lib/jar/jakarta-regexp-1.4.jar:/home/jsakuda/hackystat-svn/hackyCore_Installer/lib/jar/jfcunit.jar:/home/jsakuda/hackystat-svn/hackyCore_Installer/lib/jar/looks-2.0.jar:/home/jsakuda/hackystat-svn/hackyCore_Installer/lib/jar/xerces.jar:/home/jsakuda/apache-ant-1.6.5/lib/junit.jar:/home/jsakuda/apache-ant-1.6.5/lib/ant-launcher.jar:/home/jsakuda/apache-ant-1.6.5/lib/ant.jar:/home/jsakuda/apache-ant-1.6.5/lib/ant-junit.jar"></property>
+    <property name="hackystat.build.properties.file.path" value="/home/jsakuda/hackystat-svn/hackystat.build.properties"></property>
+    <property name="ant.file.hackyApp_Zorro.local" value="/home/jsakuda/hackystat-svn/hackyApp_Zorro/local.build.xml"></property>
+    <property name="install.jira.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/jira"></property>
+    <property name="hackySensor_Svn.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Svn"></property>
+    <property name="hackySdt_ReviewIssue.required.modules" value="hackyCore_Telemetry, hackySdt_ReviewActivity"></property>
+    <property name="env.USERNAME" value="jsakuda"></property>
+    <property name="hackySdt_Perf.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_Perf"></property>
+    <property name="hackySensor_Vcs.required.modules" value="hackyCore_Installer, hackySdt_Commit"></property>
+    <property name="hackySdt_Activity.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_Activity"></property>
+    <property name="os.version" value="2.6.20-16-386"></property>
+    <property name="hackyCore_Report.required.modules" value="hackyCore_Statistics"></property>
+    <property name="hackySensor_Eclipse.required.modules" value="hackyCore_Installer, hackySdt_Activity, hackySdt_UnitTest, hackySdt_DevEvent"></property>
+    <property name="ant.file.hackyApp_Sdsa.local" value="/home/jsakuda/hackystat-svn/hackyApp_Sdsa/local.build.xml"></property>
+    <property name="env.LS_COLORS" value="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.flac=01;35:*.mp3=01;35:*.mpc=01;35:*.ogg=01;35:*.wav=01;35:"></property>
+    <property name="install.war.sensor.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/sensor"></property>
+    <property name="hackySensor_Jupiter.available" value="true"></property>
+    <property name="hackySdt_BadData.available" value="true"></property>
+    <property name="hackySensor_Pmd.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Pmd/src"></property>
+    <property name="sun.desktop" value="gnome"></property>
+    <property name="hackySensor_Eclipse.lib.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Eclipse/lib"></property>
+    <property name="env.WINDOWID" value="48234591"></property>
+    <property name="hackyCore_Build.docbook.dist.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/docbook"></property>
+    <property name="hackyCore_Kernel.available" value="true"></property>
+    <property name="java.5.available" value="true"></property>
+    <property name="hackySensor_VisualStudio.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_VisualStudio/src"></property>
+    <property name="hackySensor_ShellLogger.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_ShellLogger/src"></property>
+    <property name="install.war.command.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/command"></property>
+    <property name="hackySensor_Jira.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Jira"></property>
+    <property name="hackySensor_JBuilder.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_JBuilder/src"></property>
+    <property name="hackySensor_LoadTest.available" value="true"></property>
+    <property name="hackySensor_JBlanket.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_JBlanket"></property>
+    <property name="install.war.dailyprojectdata.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF/dailyprojectdata"></property>
+    <property name="hackySensor_OpenOffice.available" value="true"></property>
+    <property name="hackySdt_BadData.src.dir" value="/home/jsakuda/hackystat-svn/hackySdt_BadData/src"></property>
+    <property name="env.LANG" value="en_US.UTF-8"></property>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"></property>
+    <property name="hackySensor_Office.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Office/src"></property>
+    <property name="java.vm.vendor" value="Sun Microsystems Inc."></property>
+    <property name="ant.file.hackyCore_Build.pmd" value="/home/jsakuda/hackystat-svn/hackyCore_Build/pmd.build.xml"></property>
+    <property name="hackySensor_Ant.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Ant"></property>
+    <property name="hackyCore_Report.available" value="true"></property>
+    <property name="hackystat.build.JUnit.sensor.available" value="true"></property>
+    <property name="ant.file.hackyCore_Build.locc" value="/home/jsakuda/hackystat-svn/hackyCore_Build/locc.build.xml"></property>
+    <property name="hackySdt_Commit.required.modules" value="hackyCore_Telemetry"></property>
+    <property name="hackySdt_FileMetric.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_FileMetric"></property>
+    <property name="hackySdt_UnitTest.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_UnitTest"></property>
+    <property name="ant.file.hackyApp_Experiment.local" value="/home/jsakuda/hackystat-svn/hackyApp_Experiment/local.build.xml"></property>
+    <property name="hackySensor_Vim.available" value="true"></property>
+    <property name="hackySensor_OpenOffice.required.modules" value="hackyCore_Installer, hackySdt_Activity"></property>
+    <property name="hackySdt_ReviewIssue.local.basedir" value="/home/jsakuda/hackystat-svn/hackySdt_ReviewIssue"></property>
+    <property name="hackySensor_XmlData.tmp.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/xmldatatmp"></property>
+    <property name="install.war.web-inf.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/war/WEB-INF"></property>
+    <property name="hackySensor_Bcml.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Bcml"></property>
+    <property name="ant.file.hackySensor_JBuilder.local" value="/home/jsakuda/hackystat-svn/hackySensor_JBuilder/local.build.xml"></property>
+    <property name="env.PMD_HOME" value="/home/jsakuda/devel-tools/pmd-3.5"></property>
+    <property name="ant.file.hackyCore_Build.checkstyle" value="/home/jsakuda/hackystat-svn/hackyCore_Build/checkstyle.build.xml"></property>
+    <property name="findbugs.build.dir" value="/home/jsakuda/hackystat-svn/hackyCore_Build/build/findbugs"></property>
+    <property name="ant.file.hackyCore_Statistics.local" value="/home/jsakuda/hackystat-svn/hackyCore_Statistics/local.build.xml"></property>
+    <property name="ant.file.hackySensor_Pmd.local" value="/home/jsakuda/hackystat-svn/hackySensor_Pmd/local.build.xml"></property>
+    <property name="hackySensor_VisualStudio.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_VisualStudio"></property>
+    <property name="hackySensor_ShellLogger.available" value="true"></property>
+    <property name="ant.file.hackyCore_Build.findbugs" value="/home/jsakuda/hackystat-svn/hackyCore_Build/findbugs.build.xml"></property>
+    <property name="hackySensor_Bugzilla.required.modules" value="hackyCore_Installer, hackySdt_Issue"></property>
+    <property name="hackySensor_Emacs.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_Emacs/src"></property>
+    <property name="hackyCore_Build.required.modules" value=""></property>
+    <property name="hackySensor_JBuilder.available" value="true"></property>
+    <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
+    <property name="hackyApp_StdCmd.src.dir" value="/home/jsakuda/hackystat-svn/hackyApp_StdCmd/src"></property>
+    <property name="hackyApp_Sdsa.src.dir" value="/home/jsakuda/hackystat-svn/hackyApp_Sdsa/src"></property>
+    <property name="ant.file.hackySensor_Locc.local" value="/home/jsakuda/hackystat-svn/hackySensor_Locc/local.build.xml"></property>
+    <property name="hackySensor_Bcml.available" value="true"></property>
+    <property name="file.encoding" value="UTF-8"></property>
+    <property name="hackySensor_Europa.local.basedir" value="/home/jsakuda/hackystat-svn/hackySensor_Europa"></property>
+    <property name="hackySensor_LoadTest.src.dir" value="/home/jsakuda/hackystat-svn/hackySensor_LoadTest/src"></property>
+    <property name="ant.file.hackySensor_VisualStudio.local" value="/home/jsakuda/hackystat-svn/hackySensor_VisualStudio/local.build.xml"></property>
+    <property name="ant.file.hackySensor_ShellLogger.local" value="/home/jsakuda/hackystat-svn/hackySensor_ShellLogger/local.build.xml"></property>
+  </properties>
+  <testcase classname="org.hackystat.core.installer.util.TestProxyProperty" name="testNormalFunctionality" time="0.0040">
+    <failure message="Value should be the same. expected:&lt;[8]0&gt; but was:&lt;[9]0&gt;" type="junit.framework.ComparisonFailure">junit.framework.ComparisonFailure: Value should be the same. expected:&lt;[8]0&gt; but was:&lt;[9]0&gt;
+	at org.hackystat.core.installer.util.TestProxyProperty.testNormalFunctionality(TestProxyProperty.java:21)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
