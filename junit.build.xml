@@ -41,7 +41,7 @@
     <!-- Define the junit sensor taskdef, failing the build if the sensor is not installed. -->
     <available classname="org.hackystat.sensor.ant.junit.JUnitSensor" property="junit.sensor.available"/>
     <fail unless="junit.sensor.available" message="Error: JUnit sensor not installed."/>
-  	<taskdef resource="org/hackystat/sensor/ant/antlib.xml" classpath="${basedir}/antsensors.java5.jar" 
+  	<taskdef resource="antlib.xml" classpath="${basedir}/antsensors.java5.jar" 
   		uri="org.hackystat.sensor.ant"/>
   	
     <!-- Send JUnit test data to hackystat using the JUnit sensor. -->

@@ -17,8 +17,8 @@
      </copy>
 
   	<!-- Copy over the antlib so junit sensor task can be used. -->
-  	<copy todir="${tmp.dir}/org/hackystat/sensor/ant">
-  		<fileset file="${basedir}/src/org/hackystat/sensor/ant/antlib.xml"/>
+  	<copy todir="${tmp.dir}">
+  		<fileset file="${basedir}/xml/antlib/antlib.xml"/>
   	</copy>
     
      <unjar src="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.java6.jar" dest="${tmp.dir}"/>
