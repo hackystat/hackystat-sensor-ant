@@ -32,6 +32,7 @@
       <sourcePath>
         <fileset dir="${src.dir}">
           <include name="**/*.java"/>
+        	<exclude name="**/jaxb/**"/>
         </fileset>
       </sourcePath>
       <class location="${build.dir}/classes" />

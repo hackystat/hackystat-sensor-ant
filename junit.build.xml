@@ -38,9 +38,7 @@
   </target>
     
   <target name="junit.sensor" description="Sends UnitTest data to Hackystat using the JUnit sensor.">
-    <!-- Define the junit sensor taskdef, failing the build if the sensor is not installed. -->
-    <available classname="org.hackystat.sensor.ant.junit.JUnitSensor" property="junit.sensor.available"/>
-    <fail unless="junit.sensor.available" message="Error: JUnit sensor not installed."/>
+    <!-- Define the junit sensor taskdef. -->
   	<taskdef resource="antlib.xml" classpath="${basedir}/antsensors.java5.jar" 
   		uri="org.hackystat.sensor.ant"/>
   	

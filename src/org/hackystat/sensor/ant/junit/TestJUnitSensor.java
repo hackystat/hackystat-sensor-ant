@@ -88,7 +88,8 @@ public class TestJUnitSensor extends TestCase {
       if (filter.accept(files[j])) {
         String fileName = files[j].getName();
         // Process the file.
-        testcases += sensor.processJunitXmlFile(directory.getCanonicalPath() + File.separator + fileName);
+        testcases += sensor.processJunitXmlFile(directory.getCanonicalPath() + 
+            File.separator + fileName);
       }
     }
     assertSame("Should have 4 entries.", 4, testcases);

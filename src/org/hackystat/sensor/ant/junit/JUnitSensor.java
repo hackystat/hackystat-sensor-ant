@@ -160,10 +160,10 @@ public class JUnitSensor extends Task {
    * Parses a JUnit XML file and sends the JUnitEntry instances to the shell.
    * 
    * @param fileNameString The XML file name to be processed.
-   * @exception JUnitSensorException if any error.
+   * @exception BuildException if any error.
    * @return The number of test cases in this XML file.
    */
-  public int processJunitXmlFile(String fileNameString) throws JUnitSensorException {
+  public int processJunitXmlFile(String fileNameString) throws BuildException {
     File xmlFile = new File(fileNameString);
 
     try {
@@ -186,7 +186,6 @@ public class JUnitSensor extends Task {
         // Get the stop time
         double elapsedTime = testcase.getTime();
         long elapsedTimeMillis = (long) (elapsedTime * 1000);
-        String elapsedTimeString = new Long(elapsedTimeMillis).toString();
 
         // Make a list of error strings.
         // This should always be a list of zero or one elements.
@@ -205,7 +204,7 @@ public class JUnitSensor extends Task {
         }
 
         String result = "pass";
-        if (stringErrorList.size() > 0 || stringFailureList.size() > 0) {
+        if (!stringErrorList.isEmpty() || stringFailureList.isEmpty()) {
           result = "fail";
         }
 
@@ -227,15 +226,15 @@ public class JUnitSensor extends Task {
         keyValMap.put("Result", result);
 
         // Optional
-        keyValMap.put("ElapsedTime", elapsedTimeString);
+        keyValMap.put("ElapsedTime", Long.toString(elapsedTimeMillis));
         keyValMap.put("TestName", testClassName);
         keyValMap.put("TestCaseName", testCaseName);
 
-        if (stringFailureList.size() > 0) {
+        if (!stringFailureList.isEmpty()) {
           keyValMap.put("FailureString", stringFailureList.get(0));
         }
 
-        if (stringErrorList.size() > 0) {
+        if (!stringErrorList.isEmpty()) {
           keyValMap.put("ErrorString", stringErrorList.get(0));
         }
 
@@ -245,7 +244,7 @@ public class JUnitSensor extends Task {
     }
     catch (Exception e) {
       e.printStackTrace();
-      throw new JUnitSensorException("Failed to process " + fileNameString + "   " + e);
+      throw new BuildException("Failed to process " + fileNameString + "   " + e);
     }
   }
 

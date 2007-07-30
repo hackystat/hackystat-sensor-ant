@@ -50,6 +50,7 @@
       <batchtest todir="${junit.dir}">
         <fileset dir="${src.dir}">
           <include name="**/Test*.java" />
+        	<exclude name="**/jaxb/**" />
         </fileset>
       </batchtest>
     </junit>
