@@ -212,7 +212,7 @@ public class JUnitSensor extends Task {
         // Alter startTime to guarantee uniqueness.
         long tweakedStartTime = startTime + computeFileHash(name);
         // Get altered start time as XMLGregorianCalendar
-        XMLGregorianCalendar strartTime = convertLongToGregorian(tweakedStartTime);
+        XMLGregorianCalendar startTimeGregorian = convertLongToGregorian(tweakedStartTime);
 
         Map<String, String> keyValMap = new HashMap<String, String>();
         keyValMap.put("Tool", "JUnit");
@@ -220,7 +220,7 @@ public class JUnitSensor extends Task {
         keyValMap.put("DevEvent-Type", "Test");
 
         // Required
-        keyValMap.put("Tstamp", strartTime.toString());
+        keyValMap.put("Tstamp", startTimeGregorian.toString());
         keyValMap.put("Name", name);
         keyValMap.put("Resource", testCaset2Path(name));
         keyValMap.put("Result", result);
@@ -294,7 +294,7 @@ public class JUnitSensor extends Task {
     ArrayList<File> fileList = new ArrayList<File>();
     final int size = filesets.size();
     for (int i = 0; i < size; i++) {
-      FileSet fs = (FileSet) filesets.get(i);
+      FileSet fs = filesets.get(i);
       DirectoryScanner ds = fs.getDirectoryScanner(getProject());
       ds.scan();
       String[] f = ds.getIncludedFiles();
