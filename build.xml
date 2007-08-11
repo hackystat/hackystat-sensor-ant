@@ -59,7 +59,8 @@
   	<fileset file="${ant.home}/lib/ant.jar"/>
     <fileset file="${env.JUNIT_HOME}/junit-${junit.version}.jar"/>
     <fileset file="${env.FINDBUGS_HOME}/lib/annotations.jar"/> 
-    <fileset file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.java5.jar"/>  
+    <fileset file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.java5.jar"/>
+  	<fileset file="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar"/>
     <!-- These aren't needed but don't hurt in Java6. --> 
     <fileset file="${env.JAXB_HOME}/lib/activation.jar"/> 
     <fileset file="${env.JAXB_HOME}/lib/jaxb-api.jar"/> 

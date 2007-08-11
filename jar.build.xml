@@ -22,6 +22,7 @@
   	</copy>
     
      <unjar src="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.java6.jar" dest="${tmp.dir}"/>
+  	 <unjar src="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar" dest="${tmp.dir}"/>
    
      <jar destfile="${basedir}/antsensors.java6.jar" basedir="${tmp.dir}">
        <manifest>
