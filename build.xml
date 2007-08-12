@@ -29,13 +29,12 @@
   <fail message="This package requires JUNIT_HOME to be defined and ${junit.jar} available" unless="junit.available"/>
 
   <!-- Make sure that the SensorShell is available. Use Java6 version without JAXB --> 
-  <available file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.java6.jar" type="file" property="hackystat.sensorshell.available"/>
+  <available file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" type="file" property="hackystat.sensorshell.available"/>
   <fail message="This package requires the Hackystat SensorShell to be installed and HACKYSTAT_SENSORSHELL_HOME defined" unless="hackystat.sensorshell.available"/>   
  
-  <!-- Make sure that the JAXB library is available . --> 
-  <!-- Needed even under Java 6 so that a Java 5-compatible dist can be created. -->   
-  <available file="${env.JAXB_HOME}/lib/jaxb-xjc.jar" type="file" property="jaxb.available"/>
-  <fail message="This package requires JAXB to be installed and JAXB_HOME defined" unless="jaxb.available"/>
+  <!-- Make sure that the JAXB library is available (by default in Java 6, through manual installation in Java 5. --> 
+  <available classname="javax.xml.bind.JAXBContext" property="jaxb.available"/>
+  <fail message="This package requires JAXB to be installed" unless="jaxb.available"/>
         
   <!-- Basic properties for this system. --> 
   <property name="system.name" value="hackystat-sensor-ant" />
@@ -59,13 +58,8 @@
   	<fileset file="${ant.home}/lib/ant.jar"/>
     <fileset file="${env.JUNIT_HOME}/junit-${junit.version}.jar"/>
     <fileset file="${env.FINDBUGS_HOME}/lib/annotations.jar"/> 
-    <fileset file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.java5.jar"/>
+    <fileset file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar"/>
   	<fileset file="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar"/>
-    <!-- These aren't needed but don't hurt in Java6. --> 
-    <fileset file="${env.JAXB_HOME}/lib/activation.jar"/> 
-    <fileset file="${env.JAXB_HOME}/lib/jaxb-api.jar"/> 
-    <fileset file="${env.JAXB_HOME}/lib/jaxb-impl.jar"/> 
-    <fileset file="${env.JAXB_HOME}/lib/jsr173_1.0_api.jar"/>     
   </path> 
 
   <target name="compile" description="Compiles the code.">

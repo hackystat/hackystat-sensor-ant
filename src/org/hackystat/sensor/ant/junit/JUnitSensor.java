@@ -24,9 +24,9 @@ import org.hackystat.sensor.ant.junit.resource.jaxb.Error;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Failure;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Testcase;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Testsuite;
-import org.hackystat.sensorbase.resource.sensordata.Tstamp;
 import org.hackystat.sensorshell.SensorProperties;
 import org.hackystat.sensorshell.SensorShell;
+import org.hackystat.utilities.tstamp.Tstamp;
 import org.hackystat.utilities.tstamp.TstampSet;
 
 /**

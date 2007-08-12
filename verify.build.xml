@@ -24,7 +24,7 @@
     
     System and Environment settings:
       Ant version:      ${ant.version}
-      SensorShell Home: ${env.SENSORSHELL_HOME}
+      SensorShell Home: ${env.HACKYSTAT_SENSORSHELL_HOME}
       Emma Home:        ${env.EMMA_HOME}
       FindBugs Home:    ${env.FINDBUGS_HOME} 
       Java version:     ${java.version}

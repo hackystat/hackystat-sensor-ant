@@ -2,12 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="HACKYSTAT_SENSORSHELL_HOME/sensorshell.java5.jar" sourcepath="/SENSOR_BASE_HOME/src"/>
+	<classpathentry kind="var" path="HACKYSTAT_SENSORSHELL_HOME/sensorshell.jar" sourcepath="/SENSOR_BASE_HOME/src"/>
 	<classpathentry kind="var" path="ANT_HOME/lib/ant.jar"/>
-	<classpathentry kind="var" path="JAXB_HOME/lib/activation.jar"/>
-	<classpathentry kind="var" path="JAXB_HOME/lib/jaxb-api.jar"/>
-	<classpathentry kind="var" path="JAXB_HOME/lib/jaxb-impl.jar"/>
-	<classpathentry kind="var" path="JAXB_HOME/lib/jsr173_1.0_api.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="var" path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar"/>
 	<classpathentry kind="output" path="bin"/>
