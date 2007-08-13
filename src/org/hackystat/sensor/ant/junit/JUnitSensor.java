@@ -113,6 +113,7 @@ public class JUnitSensor extends Task {
    * 
    * @throws BuildException If there is an error.
    */
+  @Override
   public void execute() throws BuildException {
     int numberOfTests = 0;
 
@@ -173,7 +174,8 @@ public class JUnitSensor extends Task {
     File xmlFile = new File(fileNameString);
 
     try {
-      JAXBContext context = JAXBContext.newInstance("org.hackystat.sensor.ant.junit.resource.jaxb");
+      JAXBContext context = JAXBContext.newInstance(
+          org.hackystat.sensor.ant.junit.resource.jaxb.ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
 
       // One JUnit test suite per file
