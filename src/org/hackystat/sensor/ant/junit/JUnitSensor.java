@@ -230,7 +230,7 @@ public class JUnitSensor extends Task {
         keyValMap.put("DevEvent-Type", "Test");
 
         // Required
-        keyValMap.put("Tstamp", startTimeGregorian.toString());
+        keyValMap.put("Timestamp", startTimeGregorian.toString());
         keyValMap.put("Name", name);
         keyValMap.put("Resource", testCaset2Path(name));
         keyValMap.put("Result", result);
