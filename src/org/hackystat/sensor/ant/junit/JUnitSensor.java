@@ -65,11 +65,9 @@ public class JUnitSensor extends Task {
   }
 
   /**
-   * Set the verbose attribute to "on", "true", or "yes" to enable trace
-   * messages while the JUnit sensor is running.
-   * 
-   * @param mode The new verbose value: should be "on", "true", or "yes" to
-   *          enable.
+   * Set the verbose attribute to "on", "true", or "yes" to enable trace messages while the 
+   *   JUnit sensor is running.
+   * @param mode The new verbose value: should be "on", "true", or "yes" to enable.
    */
   public void setVerbose(String mode) {
     this.verbose = Project.toBoolean(mode);
@@ -77,7 +75,6 @@ public class JUnitSensor extends Task {
 
   /**
    * Sets source path of the root.
-   * 
    * @param sourcePath Source file path.
    */
   public void setSourcePath(String sourcePath) {
@@ -93,9 +90,8 @@ public class JUnitSensor extends Task {
 
   /**
    * Initialize a new instance of a JUnitSensor, passing the host email, and
-   * password directly. This supports testing. Note that when this constructor
-   * is called, offline data recovery by the sensor is disabled.
-   * 
+   *   password directly. This supports testing. Note that when this constructor
+   *   is called, offline data recovery by the sensor is disabled.
    * @param host The hackystat host URL.
    * @param email The Hackystat email to use.
    * @param password The Hackystat password to use.
@@ -109,12 +105,15 @@ public class JUnitSensor extends Task {
 
   /**
    * Parses the JUnit XML files and sends the resulting JUnit test case results
-   * to the hackystat server. This method is invoked automatically by Ant.
-   * 
+   *   to the hackystat server. This method is invoked automatically by Ant.
    * @throws BuildException If there is an error.
    */
   @Override
   public void execute() throws BuildException {
+    if (!this.sensorProps.isFileAvailable()) {
+      System.out.println("Could not find sensor.properties file. ");
+      System.out.println("Expected in: " + this.sensorProps.getAbsolutePath());
+    }
     int numberOfTests = 0;
 
     Date startTime = new Date();
@@ -155,9 +154,7 @@ public class JUnitSensor extends Task {
 
   /**
    * Sends any accumulated data in the SensorShell to the server.
-   * 
-   * @return Returns the number of <code>SensorData</code> instances sent to
-   *         the server.
+   * @return Returns the number of SensorData instances sent to the server.
    */
   public int send() {
     return this.shell.send();
@@ -165,7 +162,6 @@ public class JUnitSensor extends Task {
 
   /**
    * Parses a JUnit XML file and sends the JUnitEntry instances to the shell.
-   * 
    * @param fileNameString The XML file name to be processed.
    * @exception BuildException if any error.
    * @return The number of test cases in this XML file.
@@ -253,17 +249,14 @@ public class JUnitSensor extends Task {
       return testcases.size();
     }
     catch (Exception e) {
-      e.printStackTrace();
       throw new BuildException("Failed to process " + fileNameString + "   " + e);
     }
   }
 
   /**
-   * Makes of file name path from source path directory and full-qualified test
-   * case name.
-   * 
-   * @param testCaseName Dot delimited testcase name.
-   * @return Source of testcase name.
+   * Makes of file name path from source path directory and full-qualified test case name.
+   * @param testCaseName Dot delimited test case name.
+   * @return Source of test case name.
    */
   private String testCaset2Path(String testCaseName) {
     String path = this.sourcePath == null ? "" : this.sourcePath;
@@ -288,7 +281,6 @@ public class JUnitSensor extends Task {
   /**
    * Add a fileset which contains the junit report xml file to be processed.
    * Invoked automatically by Ant.
-   * 
    * @param fs The new fileset of xml results.
    */
   public void addFileSet(FileSet fs) {
@@ -296,8 +288,7 @@ public class JUnitSensor extends Task {
   }
 
   /**
-   * Get all of the files in the fileset.
-   * 
+   * Returns all of the files in the fileset.
    * @return All files in the fileset.
    */
   private ArrayList<File> getFiles() {
@@ -341,9 +332,7 @@ public class JUnitSensor extends Task {
   }
 
   /**
-   * Converts a time represented in a long to an
-   * <code>XmlGregorianCalendar</code>.
-   * 
+   * Converts a time represented in a long to a XmlGregorianCalendar.
    * @param timeInMillis The time to convert in milliseconds.
    * @return Returns the time passed in as a <code>XmlGregorianCalendar</code>.
    */
