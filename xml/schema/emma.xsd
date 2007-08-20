@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Primitive elements and attributes -->
+  <xs:attribute name="name" type="xs:string" />
+  <xs:attribute name="type" type="xs:string" />  
+  <xs:attribute name="value" type="xs:string" />
+  
+  <!-- Complex elements -->  
+  <xs:element name="packages">
+    <xs:complexType>
+      <xs:attribute name="value" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="classes">
+    <xs:complexType>
+      <xs:attribute name="value" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="methods">
+    <xs:complexType>
+      <xs:attribute name="value" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="srcfiles">
+    <xs:complexType>
+      <xs:attribute name="value" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="srclines">
+    <xs:complexType>
+      <xs:attribute name="value" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="stats">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="packages" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="classes" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="methods" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="srcfiles" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="srclines" minOccurs="1" maxOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="coverage">
+    <xs:complexType>
+      <xs:attribute ref="type" />
+      <xs:attribute ref="value" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="method">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="coverage" minOccurs="3" maxOccurs="3" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="class">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="coverage" minOccurs="4" maxOccurs="4" />
+        <xs:element ref="method" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute ref="name" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="srcfile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="coverage" minOccurs="4" maxOccurs="4" />
+        <xs:element ref="class" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute ref="name" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="package">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="coverage" minOccurs="4" maxOccurs="4" />
+        <xs:element ref="srcfile" />
+      </xs:sequence>
+      <xs:attribute ref="name" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="all">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="coverage" minOccurs="4" maxOccurs="4" />
+        <xs:element ref="package" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute ref="name" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="all" minOccurs="1" maxOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="report">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="stats" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="data" minOccurs="1" maxOccurs="1" />        
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

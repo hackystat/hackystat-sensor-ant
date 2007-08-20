@@ -14,5 +14,6 @@
 
   <target name="jaxb" description="Runs the XJC compiler.">
     <xjc schema="${basedir}/xml/schema/junit.xsd" destdir="src" package="org.hackystat.sensor.ant.junit.resource.jaxb"/>
+  	<xjc schema="${basedir}/xml/schema/emma.xsd" destdir="src" package="org.hackystat.sensor.ant.emma.resource.jaxb"/>
   </target>
 </project>
