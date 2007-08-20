@@ -16,19 +16,15 @@
     <module name="JavadocType">
       <property name="authorFormat" value="\S"/>
     </module>  
-
     <!-- Suppress violations when can't find ServletException class etc. -->
     <module name="JavadocMethod">
       <property name="allowUndeclaredRTE" value="true"/>
     </module>
-           
     <module name="JavadocVariable">
-       <property name="scope" value="public"/>
+      <property name="scope" value="public"/>
     </module>
 
-    <!--  
-      <module name="JavadocStyle"/>    
-    -->
+    <module name="JavadocStyle"/>    
 
     <!-- IMPORTS -->
     <module name="AvoidStarImport"/>
@@ -39,6 +35,9 @@
     <module name="ConstantName">
       <property name="format" value="^[a-zA-Z0-9]*(_[a-zA-Z0-9]+)*$"/>
     </module>
+    <module name="MemberName"/>
+    <module name="PackageName"/>
+    <module name="StaticVariableName"/>
     <module name="MethodName"/>
     <module name="ParameterName"/>
     <module name="TypeName"/>
@@ -60,11 +59,12 @@
                                      MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, 
                                      RCURLY, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN"/>
     </module>
-
-    <!--  
-      <module name="TabCharacter"/> 
-    -->
-
+    <module name="TabCharacter"/> 
+    <module name="Indentation">
+      <property name="basicOffset" value="2"/>
+      <property name="caseIndent" value="2"/>
+    </module>
+    
     <!-- MODIFIERS -->
     <module name="ModifierOrder"/>
 
@@ -76,14 +76,16 @@
     <!-- CODING -->
     <module name="EqualsHashCode"/>      
     <module name="LeftCurly"/>
-    <!--
-      <module name="NeedBraces"/>
-      <module name="RightCurly">
-        <property name="option" value="alone"/>
-      </module>
-      <module name="AvoidNestedBlocks"/>
-    -->
+    <module name="NeedBraces"/>
+    <module name="RightCurly">
+      <property name="option" value="alone"/>
+    </module>
+    <module name="AvoidNestedBlocks"/>
     <module name="SimplifyBooleanExpression"/>
     <module name="SimplifyBooleanReturn"/>
+    <module name="EqualsHashCode"/>
+    <!-- i would like to enable this one, but it is buggy.. it says to require this for static variables.
+    <module name="RequireThis"/>
+    -->
   </module>
 </module>
