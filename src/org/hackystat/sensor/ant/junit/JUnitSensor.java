@@ -66,7 +66,7 @@ public class JUnitSensor extends Task {
     catch (SensorPropertiesException e) {
       System.out.println(e.getMessage());
       System.out.println("Exiting...");
-      throw new BuildException(e.getMessage());
+      throw new BuildException(e.getMessage(), e);
     }
     this.shell = new SensorShell(sensorProps, false, "JUnit");
     this.tstampSet = new TstampSet();
