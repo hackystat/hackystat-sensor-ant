@@ -28,6 +28,8 @@
       >
       <auxClasspath>
         <path refid="compile.classpath"/>
+      	<!-- Findbugs refuses to run on this project without this jar. -->
+      	<path location="${ant.home}/lib/ant-launcher.jar" />
       </auxClasspath>
       <sourcePath>
         <fileset dir="${src.dir}">
