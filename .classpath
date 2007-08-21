@@ -6,5 +6,5 @@
 	<classpathentry path="ANT_HOME/lib/ant.jar" kind="var"/>
 	<classpathentry path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4" kind="con"/>
 	<classpathentry path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar" kind="var"/>
-	<classpathentry path="bin" kind="output"/>
+	<classpathentry path="build/classes" kind="output"/>
 </classpath>
