@@ -90,7 +90,6 @@
   </target>
 
   <target name="emma.sensor" description="Sends Emma coverage data to Hackystat using the Emma sensor.">
-    <!-- Define the emma sensor taskdef, failing the build if the sensor is not installed. -->
   	<taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" 
   		uri="org.hackystat.sensor.ant"/>
     
