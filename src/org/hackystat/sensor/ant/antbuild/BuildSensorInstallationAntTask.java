@@ -32,18 +32,18 @@ public class BuildSensorInstallationAntTask extends Task {
   private boolean monitorCompilation = false;
   private boolean monitorJUnit = false;
 
-  private String keyValuePairString = null;
+  //private String keyValuePairString = null;
   private String tool = null;
   private String toolAccount = null;
 
-  /**
-   * Sets the key value pairs information.
-   * 
-   * @param keyValuePairString A comma-delimited string representing key value pair.
-   */
-  public void setKeyValuePairs(String keyValuePairString) {
-    this.keyValuePairString = keyValuePairString;
-  }
+//  /**
+//   * Sets the key value pairs information.
+//   * 
+//   * @param keyValuePairString A comma-delimited string representing key value pair.
+//   */
+//  public void setKeyValuePairs(String keyValuePairString) {
+//    this.keyValuePairString = keyValuePairString;
+//  }
 
   /**
    * Sets verbose mode.

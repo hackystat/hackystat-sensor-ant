@@ -27,7 +27,7 @@ import org.hackystat.sensorshell.usermap.SensorShellMap;
  */
 public class BuildSensorAntListener implements BuildListener {
 
-  private boolean verbose;
+  //private boolean verbose;
   private boolean debug;
 
   private String tool;
@@ -48,8 +48,8 @@ public class BuildSensorAntListener implements BuildListener {
 
   // build context
   private long startTimeMillis;
-  private String configuration = "Unknown";
-  private String startType = "Unknown";
+  //  private String configuration = "Unknown";
+  //  private String startType = "Unknown";
   // private String keyValuePairs = ""; //TODO: this infomation not sent to the server.
   private String lastTargetName = "Unknown";
 
@@ -71,7 +71,7 @@ public class BuildSensorAntListener implements BuildListener {
       boolean monitorCompilation, boolean monitorJUnit, Map<String, String> keyValueMap,
       String tool, String toolAccount) {
 
-    this.verbose = verbose;
+    //this.verbose = verbose;
     this.debug = debug;
 
     this.tool = tool;
@@ -108,20 +108,15 @@ public class BuildSensorAntListener implements BuildListener {
       Map.Entry<String, String> entry = i.next();
       String key = entry.getKey();
       String value = entry.getValue();
-      if ("configuration".equalsIgnoreCase(key)) {
-        this.configuration = value;
-      }
-      else if ("buildStartType".equalsIgnoreCase(key)) {
-        this.startType = value;
-      }
-      else {
-        buffer.append(key).append('=').append(value).append(',');
-      }
+      //      if ("configuration".equalsIgnoreCase(key)) {
+      //        this.configuration = value;
+      //      }
+      //      else if ("buildStartType".equalsIgnoreCase(key)) {
+      //        this.startType = value;
+      //      }
+      //      else {
+      buffer.append(key).append('=').append(value).append(',');
     }
-
-//    if (buffer.length() > 0) {
-//      // this.keyValuePairs = buffer.substring(0, buffer.length() - 1); //get rid of last ','
-//    }
   }
 
   /**
@@ -167,7 +162,7 @@ public class BuildSensorAntListener implements BuildListener {
 
     // put result in the map
     if (buildEvent.getException() == null) {
-      keyValMap.put("Result", "Success");      
+      keyValMap.put("Result", "Success");
     }
     else {
       keyValMap.put("Result", "Failure");
@@ -193,45 +188,6 @@ public class BuildSensorAntListener implements BuildListener {
       System.out.println("\nUnable to send build result.");
       System.out.println("\nBuild result is cached offline. It will be sent next time.");
     }
-
-//        try {
-//      long endTimeMillis = System.currentTimeMillis();
-//      String workingDirectory = buildEvent.getProject().getBaseDir().getAbsolutePath();
-//      BuildContext context = new BuildContext(this.startTimeMillis, endTimeMillis,
-//          this.configuration, this.startType, this.lastTargetName, workingDirectory);
-//
-//      // Handle possible generic exception here.
-//      // Record exception only if there is no other failure record to avoid duplication.
-//      Throwable exception = buildEvent.getException();
-//      if (this.buildResult.getBuildFailures().size() == 0 && exception != null) {
-//        this.buildResult.addFailureRecord("", "Generic", exception.getMessage());
-//      }
-//
-//      BuildReport buildReport = new BuildReport(context, this.buildResult);
-//
-//      // Remove this listener. Since we are listening messageLogged event, sometimes I get
-//      // logging infinite loop error if I send something to System.out or System.err.
-//      buildEvent.getProject().removeBuildListener(this);
-//
-//      // Send build result to Hackystat server.
-//      if (verbose) {
-//        System.out.println(buildReport.toString());
-//      }
-//      System.out.print("Sending build result to Hackystat server... ");
-//      if (buildReport.sendData(this.shell)) {
-//        System.out.println("Done!");
-//      }
-//      else {
-//        System.out.println("\nUnable to send build result.");
-//        System.out.println("\nBuild result is cached offline. It will be sent next time.");
-//      }
-//    }
-//    catch (Exception ex) {
-//      Project project = buildEvent.getProject();
-//      project.log("[Ant Build Sensor] Error detected.", Project.MSG_ERR);
-//      project.log("[Ant Build Sensor] Error message is: " + ex.getMessage(), Project.MSG_ERR);
-//      project.log("[Ant Build Sensor] Please report error to Hackystat group.", Project.MSG_ERR);
-//    }
   }
 
   /**
@@ -315,10 +271,10 @@ public class BuildSensorAntListener implements BuildListener {
     // String workingDirectory = buildEvent.getProject().getBaseDir().getAbsolutePath();
 
     this.taskNameStack.pop();
-    ArrayList<String> messages = this.messagesStack.pop();
-
-    Task task = buildEvent.getTask();
-    Throwable exception = buildEvent.getException();
+    //    ArrayList<String> messages = this.messagesStack.pop();
+    //
+    //    Task task = buildEvent.getTask();
+    //    Throwable exception = buildEvent.getException();
 
     //    if (this.isTask(task, TASK_CHECKSTYLE) && (this.monitorCheckstyle)) {
     //      String moduleName = this.guessModuleName(TASK_CHECKSTYLE);
@@ -409,110 +365,43 @@ public class BuildSensorAntListener implements BuildListener {
     }
   }
 
-//  private static final int TASK_UNKNOWN = -1;
-//  private static final int TASK_CHECKSTYLE = 1;
-//  private static final int TASK_COMPILATION = 2;
-//  private static final int TASK_JUNIT = 3;
-//
-//  /**
-//   * Determines if the task is the type of task specified. Note that this method assumes certain
-//   * knowledge, such as compilation task is called "javac". This may not be the case everywhere.
-//   * 
-//   * @param task An ant task.
-//   * @param taskType Task type.
-//   * @return True if the task is of the specified type.
-//   */
-//  private boolean isTask(Task task, int taskType) {
-//    if (task != null) {
-//      String taskName = task.getTaskName().toLowerCase();
-//      if (taskType == TASK_CHECKSTYLE) {
-//        return "checkstyle".equals(taskName);
-//      }
-//      else if (taskType == TASK_COMPILATION) {
-//        // hackystat presetdef "javac" with "hackyBuild.javac" in build.xml
-//        // As a result, we can no long listen for javac; we have to listen for hackyBuild.javac
-//        return "javac".equals(taskName) || taskName.endsWith(".javac");
-//      }
-//      else if (taskType == TASK_JUNIT) {
-//        return "junit".equals(taskName);
-//      }
-//      else {
-//        throw new RuntimeException("Ant build sensor, internal assertion failed, code 1, "
-//            + "taskName=" + taskName + ", taskType=" + taskType);
-//      }
-//    }
-//    else {
-//      return false;
-//    }
-//  }
+  //  private static final int TASK_UNKNOWN = -1;
+  //  private static final int TASK_CHECKSTYLE = 1;
+  //  private static final int TASK_COMPILATION = 2;
+  //  private static final int TASK_JUNIT = 3;
+  //
+  //  /**
+  //   * Determines if the task is the type of task specified. Note that this method assumes certain
+  //   * knowledge, such as compilation task is called "javac". This may not be the case everywhere.
+  //   * 
+  //   * @param task An ant task.
+  //   * @param taskType Task type.
+  //   * @return True if the task is of the specified type.
+  //   */
+  //  private boolean isTask(Task task, int taskType) {
+  //    if (task != null) {
+  //      String taskName = task.getTaskName().toLowerCase();
+  //      if (taskType == TASK_CHECKSTYLE) {
+  //        return "checkstyle".equals(taskName);
+  //      }
+  //      else if (taskType == TASK_COMPILATION) {
+  //        // hackystat presetdef "javac" with "hackyBuild.javac" in build.xml
+  //        // As a result, we can no long listen for javac; we have to listen for hackyBuild.javac
+  //        return "javac".equals(taskName) || taskName.endsWith(".javac");
+  //      }
+  //      else if (taskType == TASK_JUNIT) {
+  //        return "junit".equals(taskName);
+  //      }
+  //      else {
+  //        throw new RuntimeException("Ant build sensor, internal assertion failed, code 1, "
+  //            + "taskName=" + taskName + ", taskType=" + taskType);
+  //      }
+  //    }
+  //    else {
+  //      return false;
+  //    }
+  //  }
 
-  /**
-   * Guess the module name for the specified task. Note that this method is very hackystat specific,
-   * and it depends on how the build files are constructed. Be very careful. Probably in the future
-   * we need to find a way not to hard code the knowledge.
-   * 
-   * @param taskType The task type.
-   * @return The module name. If we cannot guess the module name, an empty string is returned. Note
-   *         that null is never returned.
-   */
-  private String guessModuleName(int taskType) {
-    if (this.debug) {
-      System.out.print("[ANT DEBUG TARGET NAME STACK] ");
-      for (int i = this.targetNameStack.size() - 1; i >= 0; i--) {
-        System.out.print(this.targetNameStack.get(i));
-        System.out.print(";  ");
-      }
-      System.out.println();
-    }
-
-    // Note if compile task is call by hackyXXX.shit, then there is exception.
-    // e.g. the overly complex and nightmarish CGQM module.
-    // String moduleName = "";
-    // for (int i = this.targetNameStack.size() - 1; i >= 0; i--) {
-    // String targetName = (String) this.targetNameStack.get(i);
-    // if (targetName.startsWith("hacky")) {
-    // if (taskType == TASK_CHECKSTYLE && targetName.endsWith(".checkstyle")) {
-    // moduleName = targetName.substring(0, targetName.length() - 11);
-    // break;
-    // }
-    // else if (taskType == TASK_COMPILATION && targetName.endsWith(".compile")) {
-    // moduleName = targetName.substring(0, targetName.length() - 8);
-    // break;
-    // }
-    // else if (taskType == TASK_JUNIT && targetName.endsWith(".junit")) {
-    // moduleName = targetName.substring(0, targetName.length() - 6);
-    // break;
-    // }
-    // else if (taskType == TASK_UNKNOWN) {
-    // int firstDotIndex = targetName.indexOf('.');
-    // if (firstDotIndex > 0) {
-    // moduleName = targetName.substring(0, firstDotIndex);
-    // break;
-    // }
-    // }
-    // else {
-    // throw new RuntimeException("Ant build sensor, internal assertion failed, code 2, "
-    // + "taskType=" + taskType + ", targetName=" + targetName);
-    // }
-    // } //outer if
-    // }
-
-    // If hackyXXX.A calls hackyYYY.A, which inturn calls javac
-    // then the module name = "hackyYYY" which may or may not be what you want.
-    String moduleName = "";
-    for (int i = this.targetNameStack.size() - 1; i >= 0; i--) {
-      String targetName = this.targetNameStack.get(i);
-      if (targetName.startsWith("hacky")) {
-        int firstDotIndex = targetName.indexOf('.');
-        if (firstDotIndex > 0) {
-          moduleName = targetName.substring(0, firstDotIndex);
-          break;
-        }
-      } // outer if
-    }
-    return moduleName;
-  }
-  
   /**
    * Gets whether or not this sensor instance is using a mapping in the UserMap.
    * 
