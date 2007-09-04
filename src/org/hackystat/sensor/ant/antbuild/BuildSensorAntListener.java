@@ -107,7 +107,7 @@ public class BuildSensorAntListener implements BuildListener {
     for (Iterator<Map.Entry<String, String>> i = keyValueMap.entrySet().iterator(); i.hasNext();) {
       Map.Entry<String, String> entry = i.next();
       String key = entry.getKey();
-      String value = (String) entry.getValue();
+      String value = entry.getValue();
       if ("configuration".equalsIgnoreCase(key)) {
         this.configuration = value;
       }
@@ -501,7 +501,7 @@ public class BuildSensorAntListener implements BuildListener {
     // then the module name = "hackyYYY" which may or may not be what you want.
     String moduleName = "";
     for (int i = this.targetNameStack.size() - 1; i >= 0; i--) {
-      String targetName = (String) this.targetNameStack.get(i);
+      String targetName = this.targetNameStack.get(i);
       if (targetName.startsWith("hacky")) {
         int firstDotIndex = targetName.indexOf('.');
         if (firstDotIndex > 0) {
