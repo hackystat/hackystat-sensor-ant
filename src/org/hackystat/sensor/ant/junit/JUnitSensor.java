@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +11,6 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.tools.ant.BuildException;
@@ -25,6 +22,7 @@ import org.hackystat.sensor.ant.junit.resource.jaxb.Error;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Failure;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Testcase;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Testsuite;
+import org.hackystat.sensor.ant.util.LongTimeConverter;
 import org.hackystat.sensorshell.SensorProperties;
 import org.hackystat.sensorshell.SensorPropertiesException;
 import org.hackystat.sensorshell.SensorShell;
@@ -68,6 +66,22 @@ public class JUnitSensor extends Task {
   /** Initialize a new instance of a JUnitSensor. */
   public JUnitSensor() {
     this.filesets = new ArrayList<FileSet>();
+    this.tstampSet = new TstampSet();
+  }
+  
+  /**
+   * Initialize a new instance of a JUnitSensor, passing the host email, and password directly. This
+   * supports testing. Note that when this constructor is called, offline data recovery by the
+   * sensor is disabled.
+   * 
+   * @param host The hackystat host URL.
+   * @param email The Hackystat email to use.
+   * @param password The Hackystat password to use.
+   */
+  public JUnitSensor(String host, String email, String password) {
+    this.filesets = new ArrayList<FileSet>();
+    this.sensorProps = new SensorProperties(host, email, password);
+    this.shell = new SensorShell(this.sensorProps, false, "test", false);
     this.tstampSet = new TstampSet();
   }
 
@@ -118,22 +132,6 @@ public class JUnitSensor extends Task {
    */
   public void setUserMapToolAccount(String toolAccount) {
     this.toolAccount = toolAccount;
-  }
-
-  /**
-   * Initialize a new instance of a JUnitSensor, passing the host email, and password directly. This
-   * supports testing. Note that when this constructor is called, offline data recovery by the
-   * sensor is disabled.
-   * 
-   * @param host The hackystat host URL.
-   * @param email The Hackystat email to use.
-   * @param password The Hackystat password to use.
-   */
-  public JUnitSensor(String host, String email, String password) {
-    this.filesets = new ArrayList<FileSet>();
-    this.sensorProps = new SensorProperties(host, email, password);
-    this.shell = new SensorShell(this.sensorProps, false, "test", false);
-    this.tstampSet = new TstampSet();
   }
 
   /**
@@ -305,7 +303,8 @@ public class JUnitSensor extends Task {
         long uniqueTstamp = this.tstampSet.getUniqueTstamp(tweakedStartTime);
 
         // Get altered start time as XMLGregorianCalendar
-        XMLGregorianCalendar startTimeGregorian = convertLongToGregorian(uniqueTstamp);
+        XMLGregorianCalendar startTimeGregorian = LongTimeConverter
+            .convertLongToGregorian(uniqueTstamp);
 
         Map<String, String> keyValMap = new HashMap<String, String>();
         keyValMap.put("Tool", "JUnit");
@@ -418,24 +417,5 @@ public class JUnitSensor extends Task {
       hash += (name.charAt(i) * i);
     }
     return hash;
-  }
-
-  /**
-   * Converts a time represented in a long to a XmlGregorianCalendar.
-   * 
-   * @param timeInMillis The time to convert in milliseconds.
-   * @return Returns the time passed in as a <code>XmlGregorianCalendar</code>.
-   */
-  private XMLGregorianCalendar convertLongToGregorian(long timeInMillis) {
-    DatatypeFactory factory = null;
-    try {
-      factory = DatatypeFactory.newInstance();
-      GregorianCalendar calendar = new GregorianCalendar();
-      calendar.setTimeInMillis(timeInMillis);
-      return factory.newXMLGregorianCalendar(calendar);
-    }
-    catch (DatatypeConfigurationException e) {
-      throw new BuildException("Error creating DatatypeFactory used for converting tstamp.", e);
-    }
   }
 }
