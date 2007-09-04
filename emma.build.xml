@@ -1,4 +1,4 @@
-<project name="emma" default="emma">
+<project name="emma" default="emma" xmlns:hackystat="org.hackystat.sensor.ant">
   <description>
   Provides the Emma tool and the Hackystat Emma sensor.
   </description>
@@ -47,6 +47,7 @@
       <sysproperty key="emma.coverage.out.file" value="${build.dir}/emma/coverage.emma" />
       <sysproperty key="emma.coverage.out.merge" value="true" />
     	<sysproperty key="junittestfiles" value="${basedir}/testdata/junit"/>
+    	<sysproperty key="emmatestfiles" value="${basedir}/testdata/emma"/>
       <formatter type="xml" />
       <batchtest todir="${junit.dir}">
         <fileset dir="${src.dir}">
@@ -90,14 +91,13 @@
 
   <target name="emma.sensor" description="Sends Emma coverage data to Hackystat using the Emma sensor.">
     <!-- Define the emma sensor taskdef, failing the build if the sensor is not installed. -->
-    <available classname="org.hackystat.sensor.emma.EmmaSensor" property="emma.sensor.available"/>
-    <fail unless="emma.sensor.available" message="Error: Emma sensor not installed."/>
-    <taskdef name="hacky-emma" classname="org.hackystat.sensor.emma.EmmaSensor"/>
+  	<taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" 
+  		uri="org.hackystat.sensor.ant"/>
     
     <!-- Send Coverage data to Hackystat using the Emma sensor. --> 
-    <hacky-emma verbose="${hackystat.verbose.mode}" emmaReportXmlFile="${emma.dir}/coverage.xml">
+    <hackystat:hacky-emma verbose="${hackystat.verbose.mode}" emmaReportXmlFile="${emma.dir}/coverage.xml">
       <fileset dir="${src.dir}" includes="**/*.java" />
-    </hacky-emma>
+    </hackystat:hacky-emma>
   </target>
   
 </project>

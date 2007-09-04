@@ -1,0 +1,9 @@
+<body>
+Implements a Emma sensor for the Ant build system, which sends coverage data generated 
+by Emma to the Hackystat server as a set of Coverage sensor data instances. 
+<br><br>
+This sensor is designed to run after the Emma Report task in Ant. The Emma Report 
+task must be included to create a XML file containing the coverage summary.  This 
+sensor reads in this file and uses its data to construct the notification that is 
+sent to the server.
+</body>

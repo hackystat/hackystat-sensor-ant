@@ -60,6 +60,7 @@
       <xs:sequence>
         <xs:element ref="coverage" minOccurs="3" maxOccurs="3" />
       </xs:sequence>
+      <xs:attribute ref="name" />
     </xs:complexType>
   </xs:element>
   
@@ -87,7 +88,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="coverage" minOccurs="4" maxOccurs="4" />
-        <xs:element ref="srcfile" />
+        <xs:element ref="srcfile" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute ref="name" />
     </xs:complexType>

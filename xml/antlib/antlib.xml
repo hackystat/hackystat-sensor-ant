@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <antlib>
     <taskdef name="hacky-junit" classname="org.hackystat.sensor.ant.junit.JUnitSensor" />
+    <taskdef name="hacky-emma" classname="org.hackystat.sensor.ant.emma.EmmaSensor" />
     <taskdef name="hacky-ant" classname="org.hackystat.sensor.ant.antbuild.BuildSensorInstallationAntTask" />
 </antlib>
