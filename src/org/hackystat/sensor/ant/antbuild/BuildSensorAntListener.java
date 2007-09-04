@@ -105,8 +105,8 @@ public class BuildSensorAntListener implements BuildListener {
   private void processKeyValueMap(Map<String, String> keyValueMap) {
     StringBuffer buffer = new StringBuffer(64);
     for (Iterator<Map.Entry<String, String>> i = keyValueMap.entrySet().iterator(); i.hasNext();) {
-      Map.Entry<String, String> entry = (Map.Entry<String, String>) i.next();
-      String key = (String) entry.getKey();
+      Map.Entry<String, String> entry = i.next();
+      String key = entry.getKey();
       String value = (String) entry.getValue();
       if ("configuration".equalsIgnoreCase(key)) {
         this.configuration = value;
