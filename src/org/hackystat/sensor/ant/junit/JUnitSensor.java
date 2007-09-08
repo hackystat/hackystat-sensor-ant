@@ -299,8 +299,7 @@ public class JUnitSensor extends Task {
 
         String name = testClassName + "." + testCaseName;
         // Alter startTime to guarantee uniqueness.
-        long tweakedStartTime = startTime + computeFileHash(name);
-        long uniqueTstamp = this.tstampSet.getUniqueTstamp(tweakedStartTime);
+        long uniqueTstamp = this.tstampSet.getUniqueTstamp(startTime);
 
         // Get altered start time as XMLGregorianCalendar
         XMLGregorianCalendar startTimeGregorian = LongTimeConverter
@@ -397,25 +396,5 @@ public class JUnitSensor extends Task {
       }
     }
     return fileList;
-  }
-
-  /**
-   * Computes a long value from the passed String. Equal strings will always compute the same long
-   * value and unequal strings will (usually) compute a different long value. This value is added on
-   * to the startTime associated with that TestClass (which is itself determined by the file's last
-   * mod date. The value computed generally varies between 70,000 and 250,000 (i.e. 70 and 250
-   * seconds). This hash is used to solve the problem of multiple files with the same last mod time
-   * being sent by different sensor shell instances (which results in clobbering of the data on the
-   * server side.)
-   * 
-   * @param name The name of the test class whose hash is to be computed.
-   * @return A hash value (generally between about 70,000 and 250,000).
-   */
-  private long computeFileHash(String name) {
-    long hash = 0;
-    for (int i = 0; i < name.length(); i++) {
-      hash += (name.charAt(i) * i);
-    }
-    return hash;
   }
 }
