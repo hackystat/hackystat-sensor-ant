@@ -2,7 +2,6 @@ package org.hackystat.sensor.ant.antbuild;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
@@ -15,20 +14,19 @@ import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Task;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
 import org.hackystat.sensorshell.SensorProperties;
+import org.hackystat.sensorshell.SensorPropertiesException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
+import org.hackystat.sensorshell.usermap.SensorShellMapException;
 
 /**
- * Ant build sensor. It's implemented as an ant listener. Note that whether is sensor is actually
- * enabled is determined by sensor.properties file.
+ * Ant build sensor. It's implemented as an ant listener.
  * 
- * @author (Cedric) Qin Zhang
- * @version $Id: BuildSensorAntListener.java,v 1.17 2005/10/28 04:09:59 qzhang Exp $
+ * @author (Cedric) Qin Zhang, Julie Ann Sakuda
  */
 public class BuildSensorAntListener implements BuildListener {
 
-  //private boolean verbose;
-  private boolean debug;
+  private boolean debug = false;
 
   private String tool;
   private String toolAccount;
@@ -44,78 +42,46 @@ public class BuildSensorAntListener implements BuildListener {
   /** Stack of target names. */
   private ArrayList<String> targetNameStack = new ArrayList<String>();
 
-  //private BuildResult buildResult = new BuildResult();
-
-  // build context
+  /** Build start time. */
   private long startTimeMillis;
-  //  private String configuration = "Unknown";
-  //  private String startType = "Unknown";
-  // private String keyValuePairs = ""; //TODO: this infomation not sent to the server.
+  /** The last Ant target executed. */
   private String lastTargetName = "Unknown";
 
   /**
-   * Constructs this instance. Note that the protect level is set to package private on purpose
-   * (i.e. Ant cannot use reflection to instantiate this class), which prevents user to install this
-   * listener through ant command line with "-l" option.
-   * 
-   * @param verbose Verbose mode.
-   * @param debug Debug mode.
-   * @param monitorCheckstyle True if we should treat checkstyle specially.
-   * @param monitorCompilation True if we should treat javac specially.
-   * @param monitorJUnit True if we should treat junit specially.
-   * @param keyValueMap Key value map.
-   * @param tool The tool in the UserMap file to use, null if not using UserMap.
-   * @param toolAccount The tool account in the UserMap file to user, null if not using UserMap.
+   * Constructs an instance of the build sensor listener. This constructor allows the build sensor
+   * to be installed using the -listener ant argument. Unfortunately, using this approach we lose
+   * the ability to pass in constructor arguments. This constructor must be public with no
+   * parameters.
    */
-  BuildSensorAntListener(boolean verbose, boolean debug, boolean monitorCheckstyle,
-      boolean monitorCompilation, boolean monitorJUnit, Map<String, String> keyValueMap,
-      String tool, String toolAccount) {
+  public BuildSensorAntListener() {
+    // Check for debug, tool, and tool account properties
+    String debugString = System.getProperty("hackystat.ant.debug");
+    if (debugString != null) {
+      this.debug = Boolean.valueOf(debugString);
+    }
 
-    //this.verbose = verbose;
-    this.debug = debug;
+    this.tool = System.getProperty("hackystat.ant.tool");
+    this.toolAccount = System.getProperty("hackystat.ant.toolAccount");
 
-    this.tool = tool;
-    this.toolAccount = toolAccount;
-
-    this.processKeyValueMap(keyValueMap);
-
-    try {
-      if (isUsingUserMap()) {
+    if (isUsingUserMap()) {
+      try {
         // get shell from SensorShellMap/UserMap
         SensorShellMap map = new SensorShellMap(this.tool);
         this.shell = map.getUserShell(this.toolAccount);
       }
-      else {
+      catch (SensorShellMapException e) {
+        throw new BuildException(e.getMessage(), e);
+      }
+    }
+    else {
+      try {
+        // use value in sensor.properties
         SensorProperties sensorProps = new SensorProperties();
         this.shell = new SensorShell(sensorProps, false, "Ant");
       }
-    }
-    catch (Exception e) {
-      throw new BuildException(e.getMessage(), e);
-    }
-
-    this.startTimeMillis = System.currentTimeMillis();
-  }
-
-  /**
-   * Processes key value pairs.
-   * 
-   * @param keyValueMap Key value pairs.
-   */
-  private void processKeyValueMap(Map<String, String> keyValueMap) {
-    StringBuffer buffer = new StringBuffer(64);
-    for (Iterator<Map.Entry<String, String>> i = keyValueMap.entrySet().iterator(); i.hasNext();) {
-      Map.Entry<String, String> entry = i.next();
-      String key = entry.getKey();
-      String value = entry.getValue();
-      //      if ("configuration".equalsIgnoreCase(key)) {
-      //        this.configuration = value;
-      //      }
-      //      else if ("buildStartType".equalsIgnoreCase(key)) {
-      //        this.startType = value;
-      //      }
-      //      else {
-      buffer.append(key).append('=').append(value).append(',');
+      catch (SensorPropertiesException e) {
+        throw new BuildException("Unable to initialize sensor properties.", e);
+      }
     }
   }
 
@@ -137,8 +103,7 @@ public class BuildSensorAntListener implements BuildListener {
    * @param buildEvent The build event object.
    */
   public void buildStarted(BuildEvent buildEvent) {
-    // We don't set build start time here, because this listener is installed through an ant
-    // task, which means build has already started when this listener is installed.
+    this.startTimeMillis = System.currentTimeMillis();
   }
 
   /**
@@ -172,7 +137,7 @@ public class BuildSensorAntListener implements BuildListener {
     XMLGregorianCalendar endTime = LongTimeConverter.convertLongToGregorian(endTimeMillis);
     keyValMap.put("EndTime", endTime.toString());
 
-    System.out.println("Sending build result to Hackystat server... ");
+    System.out.print("Sending build result to Hackystat server... ");
     try {
       this.shell.add(keyValMap);
     }
@@ -182,7 +147,7 @@ public class BuildSensorAntListener implements BuildListener {
     }
 
     if (this.shell.send() > 0) {
-      System.out.print("Done!");
+      System.out.println("Done!");
     }
     else {
       System.out.println("\nUnable to send build result.");
@@ -235,16 +200,6 @@ public class BuildSensorAntListener implements BuildListener {
     this.logDebugMessage("TaskStarted - " + taskName);
     this.taskNameStack.push(taskName);
     this.messagesStack.push(new ArrayList<String>());
-
-    //    if (this.isTask(task, TASK_CHECKSTYLE)) {
-    //      this.buildResult.setCheckstyleRan();
-    //    }
-    //    else if (this.isTask(task, TASK_COMPILATION)) {
-    //      this.buildResult.setCompilationRan();
-    //    }
-    //    else if (this.isTask(task, TASK_JUNIT)) {
-    //      this.buildResult.setUnitTestRan();
-    //    }
   }
 
   /**
@@ -271,72 +226,6 @@ public class BuildSensorAntListener implements BuildListener {
     // String workingDirectory = buildEvent.getProject().getBaseDir().getAbsolutePath();
 
     this.taskNameStack.pop();
-    //    ArrayList<String> messages = this.messagesStack.pop();
-    //
-    //    Task task = buildEvent.getTask();
-    //    Throwable exception = buildEvent.getException();
-
-    //    if (this.isTask(task, TASK_CHECKSTYLE) && (this.monitorCheckstyle)) {
-    //      String moduleName = this.guessModuleName(TASK_CHECKSTYLE);
-    //      CheckstyleOutputParser parser = new CheckstyleOutputParser(messages);
-    //      List failureRecords = parser.getFailureRecords();
-    //      // record checkstyle errors
-    //      for (Iterator i = failureRecords.iterator(); i.hasNext();) {
-    //        CheckstyleFailureRecord record = (CheckstyleFailureRecord) i.next();
-    //        String msg = record.getFileName() + "::" + record.getLineNumber() + "::"
-    //            + record.getMessage();
-    //        this.buildResult.addFailureRecord(moduleName, "Checkstyle", msg);
-    //      }
-    //      // in case we are unable to parse checkstyle output, we still need to record error.
-    //      if (failureRecords.size() == 0 && exception != null) {
-    //        this.buildResult.addFailureRecord(moduleName, "Checkstyle", null);
-    //      }
-    //    }
-    //    else if (this.isTask(task, TASK_COMPILATION) && (this.monitorCompilation)) {
-    //      String moduleName = this.guessModuleName(TASK_COMPILATION);
-    //      CompilationOutputParser parser = new CompilationOutputParser(messages);
-    //      List failureRecords = parser.getFailureRecords();
-    //      // record compilaton errors
-    //      for (Iterator i = failureRecords.iterator(); i.hasNext();) {
-    //        CompilationFailureRecord record = (CompilationFailureRecord) i.next();
-    //        String msg = record.getFileName() + "::" + record.getLineNumber() + "::"
-    //            + record.getMessage();
-    //        this.buildResult.addFailureRecord(moduleName, "Compilation", msg);
-    //      }
-    //      // in case we are unable to parse compilation output, we still need to record error.
-    //      if (failureRecords.size() == 0 && exception != null) {
-    //        this.buildResult.addFailureRecord(moduleName, "Compilation", null);
-    //      }
-    //    }
-    //    else if (this.isTask(task, TASK_JUNIT) && (this.monitorJUnit)) {
-    //      String moduleName = this.guessModuleName(TASK_JUNIT);
-    //      JUnitOutputParser parser = new JUnitOutputParser(messages);
-    //      List failureRecords = parser.getFailureRecords();
-    //      // record junit errors
-    //      for (Iterator i = failureRecords.iterator(); i.hasNext();) {
-    //        JUnitFailureRecord record = (JUnitFailureRecord) i.next();
-    //        StringBuffer messageBuffer = new StringBuffer(record.getClassName());
-    //        if (record.getMethodName() != null) {
-    //          messageBuffer.append("::" + record.getMethodName());
-    //        }
-    //        if (record.getMessage() != null) {
-    //          messageBuffer.append(":: " + record.getMessage());
-    //        }
-    //        this.buildResult.addFailureRecord(moduleName, "JUnit", messageBuffer.toString());
-    //      }
-    //      // in case we are unable to parse junit output, we still need to record error.
-    //      if (failureRecords.size() == 0 && exception != null) {
-    //        this.buildResult.addFailureRecord(moduleName, "JUnit", null);
-    //      }
-    //    }
-    //    else {
-    //      // We might encountered a generic error, if exception != null.
-    //      // We only record the exception once to avoid duplicated build error entries.
-    //      if (this.buildResult.getBuildFailures().size() == 0 && exception != null) {
-    //        this.buildResult.addFailureRecord(this.guessModuleName(TASK_UNKNOWN), "Generic",
-    //                                          buildEvent.getException().getMessage());
-    //      }
-    //    }
   }
 
   /**
@@ -356,51 +245,10 @@ public class BuildSensorAntListener implements BuildListener {
       }
     }
     catch (EmptyStackException ex) {
-      // The TaskStarted event for the "task" in which this message is issued was not caught
-      // by this Ant listener, therefore, the stack is empty and we do nothing.
-      // The asymmetry is caused by the fact this listener is installed using an ant task!
-
-      // FindBugs does not approve of this empty catch
-      ex.getMessage();
+      // This shouldn't actually happen
+      System.out.println("Error: internal stack structure has nothing to peek at.");
     }
   }
-
-  //  private static final int TASK_UNKNOWN = -1;
-  //  private static final int TASK_CHECKSTYLE = 1;
-  //  private static final int TASK_COMPILATION = 2;
-  //  private static final int TASK_JUNIT = 3;
-  //
-  //  /**
-  //   * Determines if the task is the type of task specified. Note that this method assumes certain
-  //   * knowledge, such as compilation task is called "javac". This may not be the case everywhere.
-  //   * 
-  //   * @param task An ant task.
-  //   * @param taskType Task type.
-  //   * @return True if the task is of the specified type.
-  //   */
-  //  private boolean isTask(Task task, int taskType) {
-  //    if (task != null) {
-  //      String taskName = task.getTaskName().toLowerCase();
-  //      if (taskType == TASK_CHECKSTYLE) {
-  //        return "checkstyle".equals(taskName);
-  //      }
-  //      else if (taskType == TASK_COMPILATION) {
-  //        // hackystat presetdef "javac" with "hackyBuild.javac" in build.xml
-  //        // As a result, we can no long listen for javac; we have to listen for hackyBuild.javac
-  //        return "javac".equals(taskName) || taskName.endsWith(".javac");
-  //      }
-  //      else if (taskType == TASK_JUNIT) {
-  //        return "junit".equals(taskName);
-  //      }
-  //      else {
-  //        throw new RuntimeException("Ant build sensor, internal assertion failed, code 1, "
-  //            + "taskName=" + taskName + ", taskType=" + taskType);
-  //      }
-  //    }
-  //    else {
-  //      return false;
-  //    }
-  //  }
 
   /**
    * Gets whether or not this sensor instance is using a mapping in the UserMap.
