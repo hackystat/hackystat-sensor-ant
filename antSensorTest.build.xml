@@ -1,0 +1,29 @@
+<project name="Ant sensors test" default="test.sensors">
+  <description>
+  Provides sample Ant sensor tasks for each sensor bundled in the release.
+  </description>
+	
+  <property name="testdata.dir" location="${basedir}/testdata" />
+	
+	<target name="test.sensors" description="Tests all sensors with test data." 
+	  depends="test.junit.sensor, test.emma.sensor"/>
+	
+  <target name="test.junit.sensor" description="Sends UnitTest data to Hackystat using the JUnit sensor.">
+    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar"/>
+    
+    <!-- Send JUnit test data to hackystat using the JUnit sensor. -->
+    <hacky-junit verbose="false" 
+                 sourcePath="${src.dir}">
+      <fileset dir="${testdata.dir}/junit" includes="TEST-*.xml"/>
+    </hacky-junit>
+  </target>
+	
+  <target name="test.emma.sensor" description="Sends Emma coverage data to Hackystat using the Emma sensor.">
+    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar"/>
+    
+    <!-- Send Coverage data to Hackystat using the Emma sensor. --> 
+    <hacky-emma verbose="false" emmaReportXmlFile="${testdata.dir}/emma/coverage.xml">
+      <fileset dir="${basedir}/src" includes="**/*.java" />
+    </hacky-emma>
+  </target>
+</project>
