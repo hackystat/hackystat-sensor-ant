@@ -13,10 +13,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 /**
- * Tests the Ant JUnitSensor.
+ * Tests the Ant EmmaSensor.
  * 
- * @author Aaron A. Kagawa, Philip Johnson, Hongbing Kou, Joy Agustin, Julie Ann Sakuda
- * @version $Id: TestJUnitSensor.java,v 1.1.1.1 2005/10/20 23:56:58 johnson Exp $
+ * @author Aaron A. Kagawa
  */
 public class TestEmmaSensor extends TestCase {
   
@@ -52,13 +51,13 @@ public class TestEmmaSensor extends TestCase {
   }
   
   /**
-   * Tests JUnitSensor by processing some test JUnit files. This test case does
+   * Tests EmmaSensor by processing some test coverage files. This test case does
    * not check that the server received the data, as long as we can send the
    * data then we assume everything is ok.
    * 
    * @throws Exception If a program error occurs.
    */
-  public void testJUnitSensorOnTestDataSetFiles() throws Exception {
+  public void testEmmaSensorOnTestDataSetFiles() throws Exception {
     EmmaSensor sensor = new EmmaSensor(host, user, user);
     sensor.setVerbose("false");
     //FileSet javaSourceFiles = new FileSet();
@@ -83,16 +82,16 @@ public class TestEmmaSensor extends TestCase {
       }
     };
     
-    int testcases = 0;
+    int coverageEntries = 0;
     // Process all files
     for (int j = 0; j < files.length; j++) {
       if (filter.accept(files[j])) {
         String fileName = files[j].getName();
         // Process the file.
-        testcases += sensor.processCoverageXmlFile(directory.getCanonicalPath() + 
+        coverageEntries += sensor.processCoverageXmlFile(directory.getCanonicalPath() + 
             File.separator + fileName);
       }
     }
-    assertSame("Should have 24 entries.", 24, testcases);
+    assertSame("Should have 20 entries.", 20, coverageEntries);
   }
 }
