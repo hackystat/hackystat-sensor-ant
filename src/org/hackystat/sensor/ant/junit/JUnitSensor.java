@@ -48,6 +48,9 @@ public class JUnitSensor extends Task {
   /** The sensor shell instance used by this sensor. */
   private SensorShell shell;
 
+  /** Specifies the runtime of the sensor. All issues sent will have the same runtime. */
+  private long runtime = 0;
+  
   /** Root of the source path, e.g. C:/svn/hackystat/hackySensor_JUnit. */
   private String sourcePath;
 
@@ -67,6 +70,7 @@ public class JUnitSensor extends Task {
   public JUnitSensor() {
     this.filesets = new ArrayList<FileSet>();
     this.tstampSet = new TstampSet();
+    this.runtime = new Date().getTime();
   }
   
   /**
@@ -83,6 +87,7 @@ public class JUnitSensor extends Task {
     this.sensorProps = new SensorProperties(host, email, password);
     this.shell = new SensorShell(this.sensorProps, false, "test", false);
     this.tstampSet = new TstampSet();
+    this.runtime = new Date().getTime();
   }
 
   /**
@@ -252,6 +257,7 @@ public class JUnitSensor extends Task {
    * @return The number of test cases in this XML file.
    */
   public int processJunitXmlFile(String fileNameString) throws BuildException {
+    XMLGregorianCalendar runtimeGregorian = LongTimeConverter.convertLongToGregorian(this.runtime);
     File xmlFile = new File(fileNameString);
 
     try {
@@ -311,6 +317,7 @@ public class JUnitSensor extends Task {
         keyValMap.put("DevEvent-Type", "Test");
 
         // Required
+        keyValMap.put("Runtime", runtimeGregorian.toString());
         keyValMap.put("Timestamp", startTimeGregorian.toString());
         keyValMap.put("Name", name);
         keyValMap.put("Resource", testCaset2Path(name));
