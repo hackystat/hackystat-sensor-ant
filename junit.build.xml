@@ -22,7 +22,7 @@
       </classpath>
     	<sysproperty key="junittestfiles" value="${basedir}/testdata/junit"/>
     	<sysproperty key="emmatestfiles" value="${basedir}/testdata/emma"/>
-      <formatter type="xml" />
+      <formatter type="xml" /> 
       <batchtest todir="${junit.dir}">
       	<!-- Must exclude the jaxb folders because jaxb created Testsuite class. -->
         <fileset dir="${src.dir}" includes="**/Test*.java" excludes="**/jaxb/**"/>
