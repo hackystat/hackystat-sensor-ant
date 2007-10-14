@@ -103,7 +103,7 @@ public class CheckstyleSensor extends Task {
       // use the sensor.properties file
       try {
         this.sensorProps = new SensorProperties();
-        this.sensorShell = new SensorShell(this.sensorProps, false, "JUnit");
+        this.sensorShell = new SensorShell(this.sensorProps, false, "Checkstyle");
       }
       catch (SensorPropertiesException e) {
         System.out.println(e.getMessage());
