@@ -5,12 +5,12 @@
 	
   <property name="testdata.dir" location="${basedir}/testdata" />
 	
+  <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar"/>
+	
 	<target name="test.sensors" description="Tests all sensors with test data." 
-	  depends="test.junit.sensor, test.emma.sensor"/>
+	  depends="test.junit.sensor, test.emma.sensor, test.checkstyle.sensor"/>
 	
   <target name="test.junit.sensor" description="Sends UnitTest data to Hackystat using the JUnit sensor.">
-    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar"/>
-    
     <!-- Send JUnit test data to hackystat using the JUnit sensor. -->
     <hacky-junit verbose="false" 
                  sourcePath="${src.dir}">
@@ -19,11 +19,16 @@
   </target>
 	
   <target name="test.emma.sensor" description="Sends Emma coverage data to Hackystat using the Emma sensor.">
-    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar"/>
-    
     <!-- Send Coverage data to Hackystat using the Emma sensor. --> 
     <hacky-emma verbose="false" emmaReportXmlFile="${testdata.dir}/emma/coverage.xml">
       <fileset dir="${basedir}/src" includes="**/*.java" />
     </hacky-emma>
   </target>
+	
+	<target name="test.checkstyle.sensor" description="Sends Checkstyle CodeIssue data to Hackystat using the Checkstyle sensor.">
+		<!-- Send Checkstyle data to Hackystat. -->
+		<hacky-checkstyle verbose="false">
+			<fileset file="${testdata.dir}/checkstyle/checkstyle.xml"/>
+		</hacky-checkstyle>
+	</target>
 </project>
