@@ -2,4 +2,5 @@
 <antlib>
     <taskdef name="hacky-junit" classname="org.hackystat.sensor.ant.junit.JUnitSensor" />
     <taskdef name="hacky-emma" classname="org.hackystat.sensor.ant.emma.EmmaSensor" />
+    <taskdef name="hacky-checkstyle" classname="org.hackystat.sensor.ant.checkstyle.CheckstyleSensor" />
 </antlib>

@@ -1,4 +1,4 @@
-<project name="checkstyle" default="checkstyle.tool">
+<project name="checkstyle" default="checkstyle.tool" xmlns:hackystat="org.hackystat.sensor.ant">
   <description>
   Provides the Checkstyle tool and the Hackystat Checkstyle sensor. 
   Note: The error message "Unable to create a Checker" indicates you have an old version of Checkstyle in ant/lib.
@@ -31,14 +31,13 @@
   </target>
   
   <target name="checkstyle.sensor" description="Sends CodeIssue data to Hackystat using the Checkstyle Sensor.">
-    <!-- Define the checkstyle sensor taskdef, failing the build if the sensor is not installed. -->
-    <available classname="org.hackystat.sensor.checkstyle.CheckstyleSensor" property="checkstyle.sensor.available"/>
-    <fail unless="checkstyle.sensor.available" message="Error: Checkstyle sensor not installed."/>
-    <taskdef name="hacky-checkstyle" classname="org.hackystat.sensor.checkstyle.CheckstyleSensor"/>
-
-    <hacky-checkstyle verbose="${hackystat.verbose.mode}" >
-      <fileset file="${checkstyle.dir}/checkstyle.xml"/>
-    </hacky-checkstyle>
+    <!-- Define the checkstyle sensor taskdef. -->
+    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" uri="org.hackystat.sensor.ant"/>
+    
+    <!-- Send Checkstyle data to hackystat using the Checkstyle sensor. -->
+    <hackystat:hacky-checkstyle verbose="${hackystat.verbose.mode}">
+    	<fileset file="${checkstyle.dir}/checkstyle.xml"/>
+    </hackystat:hacky-checkstyle>
   </target>
 </project>
 
