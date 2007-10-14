@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle>
+<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\package.html">
+</file>
+<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\BogusStack.java">
+<error line="3" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - java.io.*." source="com.puppycrawl.tools.checkstyle.checks.AvoidStarImportCheck"/>
+<error line="5" column="8" severity="error" message="Unused import - java.applet.Applet." source="com.puppycrawl.tools.checkstyle.checks.UnusedImportsCheck"/>
+<error line="6" column="8" severity="error" message="Unused import - java.applet.AppletContext." source="com.puppycrawl.tools.checkstyle.checks.UnusedImportsCheck"/>
+<error line="19" column="3" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.JavadocMethodCheck"/>
+<error line="27" severity="error" message="Expected an @return tag." source="com.puppycrawl.tools.checkstyle.checks.JavadocMethodCheck"/>
+<error line="27" column="33" severity="error" message="Expected @throws tag for &apos;EmptyStackException&apos;." source="com.puppycrawl.tools.checkstyle.checks.JavadocMethodCheck"/>
+<error line="31" column="3" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.JavadocMethodCheck"/>
+<error line="31" column="15" severity="error" message="Name &apos;RealyBogusMethod&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.MethodNameCheck"/>
+<error line="40" column="3" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.JavadocMethodCheck"/>
+</file>
+<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\ClearStack.java">
+</file>
+<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\EmptyStackException.java">
+</file>
+<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\Stack.java">
+</file>
+<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\TestClearStack.java">
+</file>
+<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\TestStack.java">
+</file>
+</checkstyle>

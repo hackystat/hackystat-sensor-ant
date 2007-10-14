@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Primitive elements and attributes -->
+  <xs:attribute name="name" type="xs:string"/>
+  <xs:attribute name="line" type="xs:int"/>
+  <xs:attribute name="severity" type="xs:string"/>
+  <xs:attribute name="message" type="xs:string"/>
+  <xs:attribute name="source" type="xs:string"/>
+  
+  <!-- Complex elements -->  
+  <xs:element name="error">
+    <xs:complexType>
+      <xs:attribute ref="line"/>
+      <xs:attribute name="column" type="xs:int" use="optional"/>
+      <xs:attribute ref="severity"/>
+      <xs:attribute ref="message"/>
+      <xs:attribute ref="source"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="file">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="error" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute ref="name"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="checkstyle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="file" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>  
+  </xs:element>
+</xs:schema>
