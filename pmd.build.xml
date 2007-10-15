@@ -1,4 +1,4 @@
-<project name="pmd" default="pmd">
+<project name="pmd" default="pmd" xmlns:hackystat="org.hackystat.sensor.ant">
   <description>
   Provides the PMD tool and the Hackystat PMD sensor.
 
@@ -42,14 +42,12 @@
   </target>
 
   <target name="pmd.sensor" description="Sends CodeIssue data to Hackystat using the PMD sensor.">
-    <!-- Define the pmd sensor taskdef, failing the build if the sensor is not installed. -->
-    <available classname="org.hackystat.sensor.pmd.PmdSensor" property="pmd.sensor.available"/>
-    <fail unless="pmd.sensor.available" message="Error: PMD sensor not installed."/>
-    <taskdef name="hacky-pmd" classname="org.hackystat.sensor.pmd.PmdSensor"/>
+    <!-- Define the checkstyle sensor taskdef. -->
+    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" uri="org.hackystat.sensor.ant"/>
 
-    <hacky-pmd verbose="${hackystat.verbose.mode}">
+    <hackystat:hacky-pmd verbose="${hackystat.verbose.mode}">
       <fileset file="${pmd.dir}/pmd.xml"/>
-    </hacky-pmd>
+    </hackystat:hacky-pmd>
   </target>  
 
 </project>

@@ -23,6 +23,7 @@
     	<sysproperty key="junittestfiles" value="${basedir}/testdata/junit"/>
     	<sysproperty key="emmatestfiles" value="${basedir}/testdata/emma"/>
     	<sysproperty key="checkstyletestfiles" value="${basedir}/testdata/checkstyle"/>
+    	<sysproperty key="pmdtestfiles" value="${basedir}/testdata/pmd"/>
       <formatter type="xml" /> 
       <batchtest todir="${junit.dir}">
       	<!-- Must exclude the jaxb folders because jaxb created Testsuite class. -->

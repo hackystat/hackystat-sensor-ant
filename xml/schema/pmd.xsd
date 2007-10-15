@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Primitive elements and attributes -->
+  <xs:attribute name="version" type="xs:string" />
+  <xs:attribute name="timestamp" type="xs:dateTime" />
+  <xs:attribute name="elapsedTime" type="xs:string" />
+  <xs:attribute name="name" type="xs:string" />
+  <xs:attribute name="line" type="xs:int" />
+  <xs:attribute name="rule" type="xs:string" />
+  <xs:attribute name="ruleset" type="xs:string" />
+  <xs:attribute name="package" type="xs:string" />
+  <xs:attribute name="priority" type="xs:int" />
+  
+  <!-- Complex elements -->
+  <xs:element name="violation">
+    <xs:complexType>
+      <xs:attribute ref="line"/>
+      <xs:attribute ref="rule"/>
+      <xs:attribute ref="ruleset"/>
+      <xs:attribute ref="package"/>
+      <xs:attribute ref="priority"/>
+      <xs:attribute name="class" use="optional" />
+      <xs:attribute name="method" use="optional" />
+      <xs:attribute name="externalInfoUrl" use="optional" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="file">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="violation" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute ref="name"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="pmd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="file" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="version"/>
+      <xs:attribute name="timestamp"/>
+      <xs:attribute name="elaspsedTime"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

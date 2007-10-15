@@ -8,7 +8,7 @@
   <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar"/>
 	
 	<target name="test.sensors" description="Tests all sensors with test data." 
-	  depends="test.junit.sensor, test.emma.sensor, test.checkstyle.sensor"/>
+	  depends="test.junit.sensor, test.emma.sensor, test.checkstyle.sensor, test.pmd.sensor"/>
 	
   <target name="test.junit.sensor" description="Sends UnitTest data to Hackystat using the JUnit sensor.">
     <!-- Send JUnit test data to hackystat using the JUnit sensor. -->
@@ -31,4 +31,11 @@
 			<fileset file="${testdata.dir}/checkstyle/checkstyle.xml"/>
 		</hacky-checkstyle>
 	</target>
+	
+	 <target name="test.pmd.sensor" description="Sends PMD CodeIssue data to Hackystat using the PMD sensor.">
+	    <!-- Send PMD data to Hackystat. -->
+	    <hacky-pmd verbose="false">
+	      <fileset file="${testdata.dir}/pmd/pmd.xml"/>
+	    </hacky-pmd>
+	  </target>
 </project>

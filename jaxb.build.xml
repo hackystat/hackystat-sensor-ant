@@ -13,6 +13,9 @@
   </taskdef>   
 
   <target name="jaxb" description="Runs the XJC compiler.">
+    <xjc schema="${basedir}/xml/schema/junit.xsd" destdir="src" package="org.hackystat.sensor.ant.junit.resource.jaxb"/>
+    <xjc schema="${basedir}/xml/schema/emma.xsd" destdir="src" package="org.hackystat.sensor.ant.emma.resource.jaxb"/>
   	<xjc schema="${basedir}/xml/schema/checkstyle.xsd" destdir="src" package="org.hackystat.sensor.ant.checkstyle.resource.jaxb"/>
+  	<xjc schema="${basedir}/xml/schema/pmd.xsd" destdir="src" package="org.hackystat.sensor.ant.pmd.resource.jaxb"/>
   </target>
 </project>
