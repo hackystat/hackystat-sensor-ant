@@ -4,4 +4,5 @@
     <taskdef name="hacky-emma" classname="org.hackystat.sensor.ant.emma.EmmaSensor" />
     <taskdef name="hacky-checkstyle" classname="org.hackystat.sensor.ant.checkstyle.CheckstyleSensor" />
     <taskdef name="hacky-pmd" classname="org.hackystat.sensor.ant.pmd.PmdSensor" />
+    <taskdef name="hacky-findbugs" classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" />
 </antlib>
