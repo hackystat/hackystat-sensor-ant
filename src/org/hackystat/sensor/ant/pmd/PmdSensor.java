@@ -312,7 +312,7 @@ public class PmdSensor extends Task {
     ArrayList<File> fileList = new ArrayList<File>();
     final int size = filesets.size();
     for (int i = 0; i < size; i++) {
-      FileSet fs = (FileSet) filesets.get(i);
+      FileSet fs = filesets.get(i);
       DirectoryScanner ds = fs.getDirectoryScanner(getProject());
       ds.scan();
       String[] f = ds.getIncludedFiles();
