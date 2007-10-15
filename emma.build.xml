@@ -48,6 +48,9 @@
       <sysproperty key="emma.coverage.out.merge" value="true" />
     	<sysproperty key="junittestfiles" value="${basedir}/testdata/junit"/>
     	<sysproperty key="emmatestfiles" value="${basedir}/testdata/emma"/>
+    	<sysproperty key="findbugstestfiles" value="${basedir}/testdata/findbugs"/>
+    	<sysproperty key="checkstyletestfiles" value="${basedir}/testdata/checkstyle"/>
+    	<sysproperty key="pmdtestfiles" value="${basedir}/testdata/pmd"/>
       <formatter type="xml" />
       <batchtest todir="${junit.dir}">
         <fileset dir="${src.dir}">

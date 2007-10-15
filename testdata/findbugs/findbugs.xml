@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="1.2.0" sequence="0" timestamp="1192267735640" analysisTimestamp="1192267736593" release="">
+  <Project filename="&lt;&lt;unnamed project&gt;&gt;" projectName="">
+    <Jar>C:\java\svn-hackv8\hackystat-sensor-ant\build\classes</Jar>
+    <AuxClasspathEntry>C:\java\hackystat-dev\apache-ant-1.7.0-bin\apache-ant-1.7.0\lib\ant.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\java\hackystat-dev\junit4.3.1\junit4.3.1\junit-4.3.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\java\hackystat-dev\findbugs-1.2.0\findbugs-1.2.0\lib\annotations.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\java\svn-hackv8\hackystat-sensor-shell\sensorshell.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\java\svn-hackv8\hackystat-utilities\tstamp.lib.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\java\hackystat-dev\apache-ant-1.7.0-bin\apache-ant-1.7.0\lib\ant-launcher.jar</AuxClasspathEntry>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\antbuild\BuildSensorAntListener.java</SrcDir>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\emma\EmmaSensor.java</SrcDir>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\emma\TestEmmaSensor.java</SrcDir>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\findbugs\FindBugsSensor.java</SrcDir>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\findbugs\TestFindBugsSensor.java</SrcDir>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\junit\JUnitSensor.java</SrcDir>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\junit\TestJUnitSensor.java</SrcDir>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\util\JavaClass2FilePathMapper.java</SrcDir>
+    <SrcDir>C:\java\svn-hackv8\hackystat-sensor-ant\src\org\hackystat\sensor\ant\util\LongTimeConverter.java</SrcDir>
+  </Project>
+  <BugInstance type="NP_ALWAYS_NULL" priority="1" abbrev="NP" category="CORRECTNESS" instanceHash="491d38b34e742a182b53b0d42cd62002" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Null pointer dereference</ShortMessage>
+    <LongMessage>Null pointer dereference of nullString in org.hackystat.sensor.ant.findbugs.FindBugsSensor.processFindBugsXmlFile(String)</LongMessage>
+    <Class classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor">
+      <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+        <Message>In FindBugsSensor.java</Message>
+      </SourceLine>
+      <Message>In class org.hackystat.sensor.ant.findbugs.FindBugsSensor</Message>
+    </Class>
+    <Method classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" name="processFindBugsXmlFile" signature="(Ljava/lang/String;)I" isStatic="false">
+      <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" start="249" end="281" startBytecode="0" endBytecode="576" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java"/>
+      <Message>In method org.hackystat.sensor.ant.findbugs.FindBugsSensor.processFindBugsXmlFile(String)</Message>
+    </Method>
+    <LocalVariable name="nullString" register="15" pc="180" role="LOCAL_VARIABLE_NAMED">
+      <Message>Local variable named nullString</Message>
+    </LocalVariable>
+    <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" start="272" end="272" startBytecode="182" endBytecode="182" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java" role="SOURCE_LINE_DEREF">
+      <Message>Dereferenced at FindBugsSensor.java:[line 272]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED" priority="2" abbrev="RV" category="CORRECTNESS" instanceHash="9cc6e7272d14ef356b461bd8f7db5a1d" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Method ignores return value</ShortMessage>
+    <LongMessage>org.hackystat.sensor.ant.findbugs.FindBugsSensor.processFindBugsXmlFile(String) ignores return value of java.lang.String.getBytes()</LongMessage>
+    <Class classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor">
+      <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+        <Message>In FindBugsSensor.java</Message>
+      </SourceLine>
+      <Message>In class org.hackystat.sensor.ant.findbugs.FindBugsSensor</Message>
+    </Class>
+    <Method classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" name="processFindBugsXmlFile" signature="(Ljava/lang/String;)I" isStatic="false">
+      <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" start="249" end="281" startBytecode="0" endBytecode="576" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java"/>
+      <Message>In method org.hackystat.sensor.ant.findbugs.FindBugsSensor.processFindBugsXmlFile(String)</Message>
+    </Method>
+    <Method classname="java.lang.String" name="getBytes" signature="()[B" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.lang.String" start="987" end="987" startBytecode="0" endBytecode="39" sourcefile="String.java" sourcepath="java/lang/String.java"/>
+      <Message>Called method java.lang.String.getBytes()</Message>
+    </Method>
+    <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" start="272" end="272" startBytecode="182" endBytecode="182" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+      <Message>At FindBugsSensor.java:[line 272]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_FIELD" priority="2" abbrev="UrF" category="PERFORMANCE" instanceHash="cd08a2fe36575daffb09655ecc660ba5" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Unread field</ShortMessage>
+    <LongMessage>Unread field: org.hackystat.sensor.ant.findbugs.FindBugsSensor.sourcePath</LongMessage>
+    <Class classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor">
+      <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+        <Message>In FindBugsSensor.java</Message>
+      </SourceLine>
+      <Message>In class org.hackystat.sensor.ant.findbugs.FindBugsSensor</Message>
+    </Class>
+    <Field classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" name="sourcePath" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+        <Message>In FindBugsSensor.java</Message>
+      </SourceLine>
+      <Message>Field org.hackystat.sensor.ant.findbugs.FindBugsSensor.sourcePath</Message>
+    </Field>
+    <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" start="100" end="100" startBytecode="14" endBytecode="14" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+      <Message>At FindBugsSensor.java:[line 100]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_FIELD" priority="2" abbrev="UrF" category="PERFORMANCE" instanceHash="7ae4b486f03adf7d88dba90e0f7425e7" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Unread field</ShortMessage>
+    <LongMessage>Unread field: org.hackystat.sensor.ant.findbugs.FindBugsSensor.tstampSet</LongMessage>
+    <Class classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor">
+      <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+        <Message>In FindBugsSensor.java</Message>
+      </SourceLine>
+      <Message>In class org.hackystat.sensor.ant.findbugs.FindBugsSensor</Message>
+    </Class>
+    <Field classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" name="tstampSet" signature="Lorg/hackystat/utilities/tstamp/TstampSet;" isStatic="false">
+      <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+        <Message>In FindBugsSensor.java</Message>
+      </SourceLine>
+      <Message>Field org.hackystat.sensor.ant.findbugs.FindBugsSensor.tstampSet</Message>
+    </Field>
+    <SourceLine classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" start="63" end="63" startBytecode="28" endBytecode="28" sourcefile="FindBugsSensor.java" sourcepath="org/hackystat/sensor/ant/findbugs/FindBugsSensor.java">
+      <Message>At FindBugsSensor.java:[line 63]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugCategory category="CORRECTNESS">
+    <Description>Correctness</Description>
+  </BugCategory>
+  <BugCategory category="PERFORMANCE">
+    <Description>Performance</Description>
+  </BugCategory>
+  <BugPattern type="URF_UNREAD_FIELD" abbrev="UrF" category="PERFORMANCE">
+    <ShortDescription>Unread field</ShortDescription>
+    <Details><![CDATA[
+
+  <p> This field is never read.&nbsp; Consider removing it from the class.</p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="NP_ALWAYS_NULL" abbrev="NP" category="CORRECTNESS">
+    <ShortDescription>Null pointer dereference</ShortDescription>
+    <Details><![CDATA[
+
+<p> A null pointer is dereferenced here.&nbsp; This will lead to a
+<code>NullPointerException</code> when the code is executed.</p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="RV_RETURN_VALUE_IGNORED" abbrev="RV" category="CORRECTNESS">
+    <ShortDescription>Method ignores return value</ShortDescription>
+    <Details><![CDATA[
+
+   <p> The return value of this method should be checked. One common
+cause of this warning is to invoke a method on an immutable object,
+thinking that it updates the object. For example, in the following code
+fragment,</p>
+<blockquote>
+<pre>
+String dateString = getHeaderField(name);
+dateString.trim();
+</pre>
+</blockquote>
+<p>the programmer seems to be thinking that the trim() method will update
+the String referenced by dateString. But since Strings are immutable, the trim()
+function returns a new String value, which is being ignored here. The code
+should be corrected to: </p>
+<blockquote>
+<pre>
+String dateString = getHeaderField(name);
+dateString = dateString.trim();
+</pre>
+</blockquote>
+
+    ]]></Details>
+  </BugPattern>
+  <BugCode abbrev="UrF">
+    <Description>Unread field</Description>
+  </BugCode>
+  <BugCode abbrev="RV">
+    <Description>Bad use of return value from method</Description>
+  </BugCode>
+  <BugCode abbrev="NP">
+    <Description>Null pointer dereference</Description>
+  </BugCode>
+  <Errors></Errors>
+  <FindBugsSummary timestamp="Fri, 12 Oct 2007 23:28:55 -1000" total_classes="40" total_bugs="4" total_size="1276" num_packages="8" cpu_seconds="4.64" clock_seconds="3.67" peak_mbytes="48.30" gc_seconds="0.67" priority_2="3" priority_1="1">
+    <PackageStats package="org.hackystat.sensor.ant.antbuild" total_bugs="0" total_types="1" total_size="111">
+      <ClassStats class="org.hackystat.sensor.ant.antbuild.BuildSensorAntListener" interface="false" size="111" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.hackystat.sensor.ant.emma" total_bugs="0" total_types="3" total_size="185">
+      <ClassStats class="org.hackystat.sensor.ant.emma.EmmaSensor" interface="false" size="140" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.TestEmmaSensor" interface="false" size="37" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.TestEmmaSensor$1" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.hackystat.sensor.ant.emma.resource.jaxb" total_bugs="0" total_types="15" total_size="239">
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.All" interface="false" size="19" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Class" interface="false" size="19" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Classes" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Coverage" interface="false" size="15" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Data" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Method" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Methods" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.ObjectFactory" interface="false" size="32" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Package" interface="false" size="19" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Packages" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Report" interface="false" size="15" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Srcfile" interface="false" size="19" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Srcfiles" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Srclines" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.emma.resource.jaxb.Stats" interface="false" size="33" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.hackystat.sensor.ant.findbugs" total_bugs="4" total_types="3" total_size="171" priority_2="3" priority_1="1">
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.FindBugsSensor" interface="false" size="126" bugs="4" priority_2="3" priority_1="1"/>
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.TestFindBugsSensor" interface="false" size="37" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.TestFindBugsSensor$1" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.hackystat.sensor.ant.findbugs.resource.jaxb" total_bugs="0" total_types="6" total_size="125">
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.resource.jaxb.BugCollection" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.resource.jaxb.BugInstance" interface="false" size="51" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.resource.jaxb.Class" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.resource.jaxb.ObjectFactory" interface="false" size="28" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.resource.jaxb.Project" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.findbugs.resource.jaxb.SourceLine" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.hackystat.sensor.ant.junit" total_bugs="0" total_types="3" total_size="214">
+      <ClassStats class="org.hackystat.sensor.ant.junit.JUnitSensor" interface="false" size="168" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.junit.TestJUnitSensor" interface="false" size="38" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.junit.TestJUnitSensor$1" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.hackystat.sensor.ant.junit.resource.jaxb" total_bugs="0" total_types="7" total_size="161">
+      <ClassStats class="org.hackystat.sensor.ant.junit.resource.jaxb.Error" interface="false" size="15" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.junit.resource.jaxb.Failure" interface="false" size="15" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.junit.resource.jaxb.ObjectFactory" interface="false" size="25" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.junit.resource.jaxb.Properties" interface="false" size="8" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.junit.resource.jaxb.Property" interface="false" size="15" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.junit.resource.jaxb.Testcase" interface="false" size="33" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.junit.resource.jaxb.Testsuite" interface="false" size="50" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.hackystat.sensor.ant.util" total_bugs="0" total_types="2" total_size="70">
+      <ClassStats class="org.hackystat.sensor.ant.util.JavaClass2FilePathMapper" interface="false" size="58" bugs="0"/>
+      <ClassStats class="org.hackystat.sensor.ant.util.LongTimeConverter" interface="false" size="12" bugs="0"/>
+    </PackageStats>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>
