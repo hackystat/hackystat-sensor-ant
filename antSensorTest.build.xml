@@ -3,9 +3,14 @@
   Provides sample Ant sensor tasks for each sensor bundled in the release.
   </description>
 	
-  <property name="testdata.dir" location="${basedir}/testdata" />
+  <!-- Always make environment variables available with the "env." prefix. --> 
+  <property environment="env"/> 
+
+	<available file="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar" type="file" property="hackystat.antsensors.available"/>
+  <fail message="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar could not be found." unless="hackystat.antsensors.available"/>   
+  <taskdef resource="antlib.xml" classpath="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar"/>
 	
-  <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar"/>
+  <property name="testdata.dir" location="${basedir}/testdata" />
 	
 	<target name="test.sensors" description="Tests all sensors with test data." 
 	  depends="test.junit.sensor, test.emma.sensor, test.checkstyle.sensor, test.pmd.sensor"/>
@@ -32,10 +37,10 @@
 		</hacky-checkstyle>
 	</target>
 	
-	 <target name="test.pmd.sensor" description="Sends PMD CodeIssue data to Hackystat using the PMD sensor.">
-	    <!-- Send PMD data to Hackystat. -->
-	    <hacky-pmd verbose="false">
-	      <fileset file="${testdata.dir}/pmd/pmd.xml"/>
-	    </hacky-pmd>
-	  </target>
+	<target name="test.pmd.sensor" description="Sends PMD CodeIssue data to Hackystat using the PMD sensor.">
+	  <!-- Send PMD data to Hackystat. -->
+	  <hacky-pmd verbose="false">
+	    <fileset file="${testdata.dir}/pmd/pmd.xml"/>
+	  </hacky-pmd>
+	</target>
 </project>
