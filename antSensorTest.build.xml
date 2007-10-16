@@ -43,4 +43,11 @@
 	    <fileset file="${testdata.dir}/pmd/pmd.xml"/>
 	  </hacky-pmd>
 	</target>
+
+	<target name="test.findbugs.sensor" description="Sends FindBugs CodeIssue data to Hackystat using the FindBugs sensor.">
+	  <!-- Send FindBugs data to Hackystat. -->
+          <hacky-findbugs verbose="${hackystat.verbose.mode}">
+            <fileset file="${testdata.dir}/findbugs/findbugs.xml"/>
+          </hacky-findbugs>
+	</target>
 </project>
