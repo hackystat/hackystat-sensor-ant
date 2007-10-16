@@ -13,7 +13,7 @@
   <property name="testdata.dir" location="${basedir}/testdata" />
 	
 	<target name="test.sensors" description="Tests all sensors with test data." 
-	  depends="test.junit.sensor, test.emma.sensor, test.checkstyle.sensor, test.pmd.sensor"/>
+	  depends="test.junit.sensor, test.emma.sensor, test.checkstyle.sensor, test.pmd.sensor, test.findbugs.sensor"/>
 	
   <target name="test.junit.sensor" description="Sends UnitTest data to Hackystat using the JUnit sensor.">
     <!-- Send JUnit test data to hackystat using the JUnit sensor. -->
