@@ -1,182 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="3.3" timestamp="2005-10-15T12:03:57.265" elapsedTime="1s">
-<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\BogusStack.java">
-<violation line="5" rule="UnusedImports" ruleset="Import Statement Rules" package="edu.hawaii.stack" priority="4">
-Avoid unused imports such as 'java.applet.Applet'
-</violation>
-<violation line="6" rule="UnusedImports" ruleset="Import Statement Rules" package="edu.hawaii.stack" priority="4">
-Avoid unused imports such as 'java.applet.AppletContext'
-</violation>
-<violation line="15" rule="MissingSerialVersionUID" ruleset="JavaBean Rules" package="edu.hawaii.stack" priority="3">
-Classes implementing Serializable should set a serialVersionUID
-</violation>
-<violation line="15" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="edu.hawaii.stack" priority="3">
-Each class should declare at least one constructor
-</violation>
-<violation line="17" rule="SingularField" ruleset="Controversial Rules" package="edu.hawaii.stack" class="BogusStack" priority="3">
-Perhaps 'bogus' could be replaced by a local variable.
-</violation>
-<violation line="17" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="BogusStack" priority="3">
-Private field could be made final.  It is only initialized in the declaration or constructor.
-</violation>
-<violation line="31" rule="MethodNamingConventions" ruleset="Naming Rules" package="edu.hawaii.stack" class="BogusStack" method="RealyBogusMethod" priority="1">
-Method name does not begin with a lower case character.
-</violation>
-<violation line="33" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="BogusStack" method="RealyBogusMethod" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="34" rule="ShortVariable" ruleset="Naming Rules" package="edu.hawaii.stack" class="BogusStack" method="RealyBogusMethod" priority="3">
-Avoid variables with short names like Avoid variables with short names like i
-</violation>
-<violation line="34" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="BogusStack" method="RealyBogusMethod" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="35" rule="EqualsNull" ruleset="Design Rules" package="edu.hawaii.stack" class="BogusStack" method="RealyBogusMethod" priority="1">
-Avoid using equals() to compare against null
-</violation>
-<violation line="35" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="edu.hawaii.stack" class="BogusStack" method="RealyBogusMethod" priority="3">
-Avoid using if statements without curly braces
-</violation>
-<violation line="35" rule="PositionLiteralsFirstInComparisons" ruleset="Design Rules" package="edu.hawaii.stack" class="BogusStack" method="RealyBogusMethod" priority="3">
-Position literals first in String comparisons
-</violation>
-<violation line="40" rule="AvoidReassigningParameters" ruleset="Design Rules" package="edu.hawaii.stack" class="BogusStack" method="setBogus" priority="2">
-Avoid reassigning parameters such as 'bogus'
-</violation>
-<violation line="41" rule="IdempotentOperations" ruleset="Design Rules" package="edu.hawaii.stack" class="BogusStack" method="setBogus" priority="3">
-Avoid idempotent operations (like assigning a variable to itself)
+<pmd version="4.0" timestamp="2007-10-26T09:27:28.855">
+<file name="edu/hawaii/stack/ClearStack.java">
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="20" rule="UnusedImports" ruleset="Import Statement Rules" package="edu.hawaii.stack" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.io.File'
 </violation>
 </file>
-<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\ClearStack.java">
-<violation line="14" rule="MissingSerialVersionUID" ruleset="JavaBean Rules" package="edu.hawaii.stack" priority="3">
-Classes implementing Serializable should set a serialVersionUID
+<file name="edu/hawaii/stack/TestClearStack.java">
+<violation beginline="18" endline="18" begincolumn="19" endcolumn="21" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" variable="ONE" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'ONE' could be made final; it is only initialized in the declaration or constructor.
 </violation>
-<violation line="14" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="edu.hawaii.stack" priority="3">
-Each class should declare at least one constructor
+<violation beginline="19" endline="19" begincolumn="19" endcolumn="21" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" variable="TWO" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'TWO' could be made final; it is only initialized in the declaration or constructor.
 </violation>
-</file>
-<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\EmptyStackException.java">
-<violation line="15" rule="ShortVariable" ruleset="Naming Rules" package="edu.hawaii.stack" class="EmptyStackException" priority="3">
-Avoid variables with short names like Avoid variables with short names like e
+<violation beginline="20" endline="20" begincolumn="19" endcolumn="23" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" variable="THREE" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'THREE' could be made final; it is only initialized in the declaration or constructor.
 </violation>
-</file>
-<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\Stack.java">
-<violation line="16" rule="MissingSerialVersionUID" ruleset="JavaBean Rules" package="edu.hawaii.stack" priority="3">
-Classes implementing Serializable should set a serialVersionUID
+<violation beginline="38" endline="38" begincolumn="5" endcolumn="14" rule="JUnitAssertionsShouldIncludeMessage" ruleset="JUnit Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" externalInfoUrl="http://pmd.sourceforge.net/rules/junit.html#JUnitAssertionsShouldIncludeMessage" priority="3">
+JUnit assertions should include a message
 </violation>
-<violation line="16" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="edu.hawaii.stack" priority="3">
-Each class should declare at least one constructor
+<violation beginline="39" endline="39" begincolumn="5" endcolumn="14" rule="JUnitAssertionsShouldIncludeMessage" ruleset="JUnit Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" externalInfoUrl="http://pmd.sourceforge.net/rules/junit.html#JUnitAssertionsShouldIncludeMessage" priority="3">
+JUnit assertions should include a message
 </violation>
-<violation line="22" rule="BeanMembersShouldSerialize" ruleset="JavaBean Rules" package="edu.hawaii.stack" class="Stack" priority="3">
-Found non-transient, non-static member. Please mark as transient or provide accessors.
-</violation>
-<violation line="30" rule="MethodArgumentCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="Stack" method="push" priority="3">
-Parameter 'obj' is not assigned and could be declared final
-</violation>
-<violation line="43" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="Stack" method="pop" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="61" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="Stack" method="top" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="62" rule="UnnecessaryLocalBeforeReturn" ruleset="Design Rules" package="edu.hawaii.stack" class="Stack" method="top" priority="3">
-Consider simply returning the value vs storing it in local variable 'obj'
-</violation>
-<violation line="76" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="Stack" method="toArray" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="88" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="Stack" method="getVersion" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="91" rule="EmptyCatchBlock" ruleset="Basic Rules" package="edu.hawaii.stack" class="Stack" method="getVersion" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
-Avoid empty catch blocks
-</violation>
-<violation line="111" rule="MethodArgumentCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="Stack" method="main" priority="3">
-Parameter 'args' is not assigned and could be declared final
+<violation beginline="40" endline="40" begincolumn="5" endcolumn="14" rule="JUnitAssertionsShouldIncludeMessage" ruleset="JUnit Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" externalInfoUrl="http://pmd.sourceforge.net/rules/junit.html#JUnitAssertionsShouldIncludeMessage" priority="3">
+JUnit assertions should include a message
 </violation>
 </file>
-<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\TestClearStack.java">
-<violation line="15" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="edu.hawaii.stack" priority="3">
-Each class should declare at least one constructor
-</violation>
-<violation line="18" rule="BeanMembersShouldSerialize" ruleset="JavaBean Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Found non-transient, non-static member. Please mark as transient or provide accessors.
-</violation>
-<violation line="18" rule="SingularField" ruleset="Controversial Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Perhaps 'one' could be replaced by a local variable.
-</violation>
-<violation line="18" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Private field could be made final.  It is only initialized in the declaration or constructor.
-</violation>
-<violation line="19" rule="BeanMembersShouldSerialize" ruleset="JavaBean Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Found non-transient, non-static member. Please mark as transient or provide accessors.
-</violation>
-<violation line="19" rule="SingularField" ruleset="Controversial Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Perhaps 'two' could be replaced by a local variable.
-</violation>
-<violation line="19" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Private field could be made final.  It is only initialized in the declaration or constructor.
-</violation>
-<violation line="20" rule="BeanMembersShouldSerialize" ruleset="JavaBean Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Found non-transient, non-static member. Please mark as transient or provide accessors.
-</violation>
-<violation line="20" rule="SingularField" ruleset="Controversial Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Perhaps 'three' could be replaced by a local variable.
-</violation>
-<violation line="20" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" priority="3">
-Private field could be made final.  It is only initialized in the declaration or constructor.
-</violation>
-<violation line="26" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="30" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="32" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="33" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" priority="3">
-Local variable could be declared final
-</violation>
-</file>
-<file name="C:\java\cvs\stackyHack\src\edu\hawaii\stack\TestStack.java">
-<violation line="13" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="edu.hawaii.stack" priority="3">
-Each class should declare at least one constructor
-</violation>
-<violation line="16" rule="BeanMembersShouldSerialize" ruleset="JavaBean Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Found non-transient, non-static member. Please mark as transient or provide accessors.
-</violation>
-<violation line="16" rule="SingularField" ruleset="Controversial Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Perhaps 'one' could be replaced by a local variable.
-</violation>
-<violation line="16" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Private field could be made final.  It is only initialized in the declaration or constructor.
-</violation>
-<violation line="17" rule="BeanMembersShouldSerialize" ruleset="JavaBean Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Found non-transient, non-static member. Please mark as transient or provide accessors.
-</violation>
-<violation line="17" rule="SingularField" ruleset="Controversial Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Perhaps 'two' could be replaced by a local variable.
-</violation>
-<violation line="17" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Private field could be made final.  It is only initialized in the declaration or constructor.
-</violation>
-<violation line="18" rule="BeanMembersShouldSerialize" ruleset="JavaBean Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Found non-transient, non-static member. Please mark as transient or provide accessors.
-</violation>
-<violation line="18" rule="SingularField" ruleset="Controversial Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Perhaps 'three' could be replaced by a local variable.
-</violation>
-<violation line="18" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestStack" priority="3">
-Private field could be made final.  It is only initialized in the declaration or constructor.
-</violation>
-<violation line="27" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="TestStack" method="testNormalOperation" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="43" rule="LocalVariableCouldBeFinal" ruleset="Optimization Rules" package="edu.hawaii.stack" class="TestStack" method="testIllegalPop" priority="3">
-Local variable could be declared final
-</violation>
-<violation line="48" rule="EmptyCatchBlock" ruleset="Basic Rules" package="edu.hawaii.stack" class="TestStack" method="testIllegalPop" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+<file name="edu/hawaii/stack/TestStack.java">
+<violation beginline="70" endline="72" begincolumn="5" endcolumn="5" rule="EmptyCatchBlock" ruleset="Basic Rules" package="edu.hawaii.stack" class="TestStack" method="testIllegalTop" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
 </violation>
 </file>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="3.9" timestamp="2007-10-28T01:02:17.759" elapsedTime="0s">
+<file name="edu/hawaii/stack/ClearStack.java">
+<violation line="4" rule="UnusedImports" ruleset="Import Statement Rules" package="edu.hawaii.stack" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.io.File'
+</violation>
+</file>
+<file name="edu/hawaii/stack/TestClearStack.java">
+<violation line="18" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'ONE' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation line="19" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'TWO' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation line="20" rule="ImmutableField" ruleset="Design Rules" package="edu.hawaii.stack" class="TestClearStack" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'THREE' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation line="38" rule="JUnitAssertionsShouldIncludeMessage" ruleset="JUnit Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" externalInfoUrl="http://pmd.sourceforge.net/rules/junit.html#JUnitAssertionsShouldIncludeMessage" priority="3">
+JUnit assertions should include a message
+</violation>
+<violation line="39" rule="JUnitAssertionsShouldIncludeMessage" ruleset="JUnit Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" externalInfoUrl="http://pmd.sourceforge.net/rules/junit.html#JUnitAssertionsShouldIncludeMessage" priority="3">
+JUnit assertions should include a message
+</violation>
+<violation line="40" rule="JUnitAssertionsShouldIncludeMessage" ruleset="JUnit Rules" package="edu.hawaii.stack" class="TestClearStack" method="testNormalOperation" externalInfoUrl="http://pmd.sourceforge.net/rules/junit.html#JUnitAssertionsShouldIncludeMessage" priority="3">
+JUnit assertions should include a message
+</violation>
+</file>
+<file name="edu/hawaii/stack/TestStack.java">
+<violation line="70" rule="EmptyCatchBlock" ruleset="Basic Rules" package="edu.hawaii.stack" class="TestStack" method="testIllegalTop" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+</pmd>

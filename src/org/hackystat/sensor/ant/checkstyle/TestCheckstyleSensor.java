@@ -90,6 +90,6 @@ public class TestCheckstyleSensor extends TestCase {
             File.separator + fileName);
       }
     }
-    assertEquals("Should have 9 issues.", 9, codeIssues);
+    assertEquals("Should have 15 issues.", 15, codeIssues);
   }  
 }
