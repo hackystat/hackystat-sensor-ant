@@ -5,9 +5,6 @@ import java.io.FileFilter;
 
 import junit.framework.TestCase;
 
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.FileSet;
-import org.apache.tools.ant.types.Path;
 import org.hackystat.sensorbase.client.SensorBaseClient;
 import org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataIndex;
 import org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataRef;
@@ -52,39 +49,28 @@ public class TestPmdSensor extends TestCase {
     // Now delete the user too.
     client.deleteUser(user);
   }
-  
+
   /**
    * Tests PmdSensor by processing some test pmd files. This test case does not 
-   *   check that the server received the data, s long as we can send the data 
+   *   check that the server recieved the data, s long as we can send the data 
    *   then we assume everything is ok.
    * @throws Exception If a program occurs.
    */
   public void testPmdSensorOnTestDataSetFiles() throws Exception {
-    String testFileDirPath = System.getProperty("pmdtestfiles");
-
     PmdSensor sensor = new PmdSensor(host, user, user);
     sensor.setVerbose("on");
     
-    sensor.setProject(new Project());
-    Path path = sensor.createSourcePath();
-    FileSet fileSet = new FileSet();
-    fileSet.setDir(new File(testFileDirPath + "/src"));
-    fileSet.setExcludes("**/jaxb/**");
-    fileSet.setIncludes("**/*.java");
-    fileSet.setProject(path.getProject());
-    path.addFileset(fileSet);
-    sensor.setSourcePath(path);
-    
+    String testFileDirPath = System.getProperty("pmdtestfiles");
     File directory = new File(testFileDirPath);
     if (!directory.isDirectory()) {
       fail("cannot find pmd test files");
     }
 
     File[] files = directory.listFiles();
-    // create a file filter that only accepts pmd.xml
+    // create a file filter that only accepts xml files
     FileFilter filter = new FileFilter() {
       public boolean accept(File pathname) {
-        if ("pmd.xml".equals(pathname.getName())) {
+        if (pathname.getName().endsWith(".xml")) {
           return true;
         }
         return false;
@@ -98,7 +84,7 @@ public class TestPmdSensor extends TestCase {
         // Process the file and send it.
         int count = sensor.processIssueXmlFile(directory.getCanonicalPath() 
             + File.separator + fileName);
-        assertEquals("Checkin number of CodeIssue entries", 10, count);
+        assertEquals("checking number of issues", 56, count);
       }
     }
   }  

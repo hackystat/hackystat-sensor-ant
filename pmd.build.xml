@@ -47,9 +47,6 @@
 
     <hackystat:hacky-pmd verbose="${hackystat.verbose.mode}">
       <fileset file="${pmd.dir}/pmd.xml"/>
-      <sourcePath>
-        <fileset dir="${src.dir}" includes="**/*.java" excludes="**/jaxb/**"/>
-      </sourcePath>
     </hackystat:hacky-pmd>
   </target>  
 

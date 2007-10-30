@@ -39,14 +39,8 @@
 	
 	<target name="test.pmd.sensor" description="Sends PMD CodeIssue data to Hackystat using the PMD sensor.">
 	  <!-- Send PMD data to Hackystat. -->
-	  <hacky-pmd verbose="false" sourcePath="${testdata.dir}/pmd/src">
+	  <hacky-pmd verbose="false">
 	    <fileset file="${testdata.dir}/pmd/pmd.xml"/>
-      <sourcePath>
-        <fileset dir="${testdata.dir}/pmd/src">
-          <include name="**/*.java"/>
-        	<exclude name="**/jaxb/**"/>
-        </fileset>
-      </sourcePath>
 	  </hacky-pmd>
 	</target>
 
