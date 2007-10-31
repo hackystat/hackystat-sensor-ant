@@ -173,7 +173,7 @@ public class SvnSensor extends Task {
         }
       }
       catch (ParseException ex) {
-        throw new BuildException("Unable to parse 'fromDate' or 'toDate'.");
+        throw new BuildException("Unable to parse 'fromDate' or 'toDate'.", ex);
       }
 
       if (this.fromDate.compareTo(this.toDate) > 0) {
