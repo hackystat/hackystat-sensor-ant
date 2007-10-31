@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.hackystat.sensor.vcs.GenericDiffCounter;
-import org.hackystat.sensor.vcs.GenericSizeCounter;
+import org.hackystat.sensor.ant.vcs.GenericDiffCounter;
+import org.hackystat.sensor.ant.vcs.GenericSizeCounter;
 import org.tmatesoft.svn.core.SVNNodeKind;
 import org.tmatesoft.svn.core.io.SVNRepository;
 

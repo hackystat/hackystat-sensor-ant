@@ -1,4 +1,4 @@
-package org.hackystat.sensor.vcs;
+package org.hackystat.sensor.ant.vcs;
 
 /**
  * Generic size counter. Note that this class is not desinged to count binary files.

@@ -1,4 +1,4 @@
-package org.hackystat.sensor.vcs;
+package org.hackystat.sensor.ant.vcs;
 
 import org.apache.commons.jrcs.diff.Chunk;
 import org.apache.commons.jrcs.diff.Delta;

@@ -11,7 +11,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildListener;
-import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
 import org.hackystat.sensorshell.SensorProperties;
@@ -115,8 +114,6 @@ public class BuildSensorAntListener implements BuildListener {
    */
   public void buildFinished(BuildEvent buildEvent) {
     long endTimeMillis = System.currentTimeMillis();
-    Project project = (Project) buildEvent.getSource();
-    System.out.println("Base Dir: " + project.getBaseDir());
     String workingDirectory = buildEvent.getProject().getBaseDir().getAbsolutePath();
 
     Map<String, String> keyValMap = new TreeMap<String, String>();
@@ -175,7 +172,6 @@ public class BuildSensorAntListener implements BuildListener {
    * @param buildEvent The build event object.
    */
   public void targetFinished(BuildEvent buildEvent) {
-//    System.out.println("target finished=" + buildEvent);
     String targetName = buildEvent.getTarget().getName();
     this.logDebugMessage("TargetFinished - " + targetName);
 
@@ -193,7 +189,7 @@ public class BuildSensorAntListener implements BuildListener {
   }
 
   /**
-   * Callback function when ant starts a build task.
+   * Callback function when ant starts a build task. Not used in this class.
    * 
    * @param buildEvent The build event object.
    */
@@ -212,7 +208,6 @@ public class BuildSensorAntListener implements BuildListener {
    * @param buildEvent The build event object.
    */
   public void taskFinished(BuildEvent buildEvent) {
-    System.out.println("");
     String taskName = buildEvent.getTask().getTaskName();
     this.logDebugMessage("TaskFinished - " + taskName + ";  error = "
         + (buildEvent.getException() != null));
@@ -222,6 +217,13 @@ public class BuildSensorAntListener implements BuildListener {
     if (this.taskNameStack.isEmpty()) {
       return;
     }
+
+    // In version 6 build script, javac is executed in local.build.xml, all junit and checkstyle
+    // are executed in build.util.xml file (in hackyBuild). Therefore, only for compilation task
+    // the workingDirectory is correct. For junit and checkstyle task, the working directory is
+    // always hackyBuild.
+    // In version 7 hackystat build script, the working diretory will always be hackyBuild/version7.
+    // String workingDirectory = buildEvent.getProject().getBaseDir().getAbsolutePath();
 
     this.taskNameStack.pop();
   }
@@ -234,8 +236,8 @@ public class BuildSensorAntListener implements BuildListener {
   public void messageLogged(BuildEvent buildEvent) {
     try {
       Task task = buildEvent.getTask();
-      if (task != null && !this.taskNameStack.isEmpty()
-          && task.getTaskName().equals(this.taskNameStack.peek())) {
+      if (task != null && task.getTaskName().equals(this.taskNameStack.peek())) {
+
         String message = buildEvent.getMessage();
         if (message != null) {
           ArrayList<String> list = this.messagesStack.peek();
