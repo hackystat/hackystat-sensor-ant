@@ -234,18 +234,17 @@ public class CheckstyleSensor extends Task {
         // Fully qualified name of the file checked
         String fileName = file.getName();
 
-        // Base unique timestamp off of the runtime (which is when it start running)
-        long uniqueTstamp = this.tstampSet.getUniqueTstamp(this.runtime);
-
-        // Get altered time as XMLGregorianCalendar
-        XMLGregorianCalendar uniqueTstampGregorian = LongTimeConverter
-            .convertLongToGregorian(uniqueTstamp);
-        
-
         // gets all error elements for the file
         List<Error> errors = file.getError();
         
         if (errors.isEmpty()) {
+          // Base unique timestamp off of the runtime (which is when it start running)
+          long uniqueTstamp = this.tstampSet.getUniqueTstamp(this.runtime);
+
+          // Get altered time as XMLGregorianCalendar
+          XMLGregorianCalendar uniqueTstampGregorian = LongTimeConverter
+              .convertLongToGregorian(uniqueTstamp);
+          
           // this resource has no errors, just send required information
           Map<String, String> keyValMap = new HashMap<String, String>();
           keyValMap.put("Tool", "Checkstyle");
@@ -265,6 +264,13 @@ public class CheckstyleSensor extends Task {
           String severity = error.getSeverity(); // warning, ignore, or error
           String source = error.getSource();
           Integer column = error.getColumn(); // not all errors will have a column
+          
+          // Base unique timestamp off of the runtime (which is when it start running)
+          long uniqueTstamp = this.tstampSet.getUniqueTstamp(this.runtime);
+
+          // Get altered time as XMLGregorianCalendar
+          XMLGregorianCalendar uniqueTstampGregorian = LongTimeConverter
+              .convertLongToGregorian(uniqueTstamp);
           
           // required
           Map<String, String> keyValMap = new HashMap<String, String>();
