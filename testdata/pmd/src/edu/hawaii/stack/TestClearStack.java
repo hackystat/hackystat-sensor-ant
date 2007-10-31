@@ -1,6 +1,6 @@
 package edu.hawaii.stack;
 
-import org.junit.Test;
+import org.junit.Test; 
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -8,7 +8,7 @@ import java.util.Iterator;
 /**
  * Checks to see that a ClearStack
  * containing three elements can be iterated through and that this iteration retrieves the
- * elements in the correct order.
+ * elements in the correct order.  
  *
  * @author Philip Johnson
  */
@@ -39,16 +39,16 @@ public class TestClearStack extends junit.framework.TestCase {
     assertSame(TWO, list.get(1));
     assertSame(THREE, list.get(2));
   }
-
+  
   /**
    * Test getTop operation.
    * @exception EmptyStackException If errors during stack processing.
    */
-
+  
   @Test
   public void testGetTop() throws EmptyStackException {
     ClearStack stack = new ClearStack();
-
+    
     try {
       stack.getTop();
       fail("Top of empty stack did not generate exception.");

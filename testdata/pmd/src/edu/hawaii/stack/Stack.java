@@ -5,8 +5,8 @@ import java.util.List;
 
 /**
  * Implements the stack abstract data type.
- *
- * @author Philip M. Johnson
+ * 
+ * @author Philip M. Johnson 
  */
 public class Stack {
 
@@ -15,7 +15,7 @@ public class Stack {
    * Visibility is protected to allow subclass access to internal representation.
    */
   protected List<Object> elements = new ArrayList<Object>();
-
+  
   /**
    * Pushes obj onto the stack.
    *
@@ -63,7 +63,7 @@ public class Stack {
    *
    * @return An array containing the elements of the stack.
    */
-  public Object[] toArray() {
+  public Object[] toArray() {    
     return this.elements.toArray();
   }
 

@@ -25,23 +25,23 @@ public class TestCheckstyleSensor extends TestCase {
   private static Server server;
 
   /**
-   * Starts the server going for these tests, and makes sure our test user is registered.
-   * @throws Exception If problems occur setting up the server.
+   * Starts the server going for these tests, and makes sure our test user is registered. 
+   * @throws Exception If problems occur setting up the server. 
    */
   @BeforeClass public static void setupServer() throws Exception {
     TestCheckstyleSensor.server = Server.newInstance();
     TestCheckstyleSensor.host = TestCheckstyleSensor.server.getHostName();
     SensorBaseClient.registerUser(host, user);
   }
-
+  
   /**
-   * Gets rid of the sent sensor data and the user.
-   * @throws Exception If problems occur setting up the server.
+   * Gets rid of the sent sensor data and the user. 
+   * @throws Exception If problems occur setting up the server. 
    */
   @AfterClass public static void teardownServer() throws Exception {
     // Now delete all data sent by this user.
     SensorBaseClient client = new SensorBaseClient(host, user, user);
-    // First, delete all sensor data sent by this user.
+    // First, delete all sensor data sent by this user. 
     SensorDataIndex index = client.getSensorDataIndex(user);
     for (SensorDataRef ref : index.getSensorDataRef()) {
       client.deleteSensorData(user, ref.getTimestamp());
@@ -49,25 +49,25 @@ public class TestCheckstyleSensor extends TestCase {
     // Now delete the user too.
     client.deleteUser(user);
   }
-
+  
   /**
-   * Tests CheckstyleSensor by processing some test checkstyle files. This test case does not
-   *   check that the server received the data, s long as we can send the data then we assume
+   * Tests CheckstyleSensor by processing some test checkstyle files. This test case does not 
+   *   check that the server received the data, s long as we can send the data then we assume 
    *   everything is ok.
    * @throws Exception If a program occurs.
    */
   public void testCheckstyleSensorOnTestDataSetFiles() throws Exception {
     CheckstyleSensor sensor = new CheckstyleSensor(host, user, user);
     sensor.setVerbose("on");
-
+    
     String testFileDirPath = System.getProperty("checkstyletestfiles");
     File directory = new File(testFileDirPath);
-
+    
     // look for an existing XML Checkstyle report.
     if (!directory.isDirectory()) {
       fail("cannot find checkstyle test files");
     }
-
+    
     File[] files = directory.listFiles();
 
     // create a file filter that only accepts xml files
@@ -79,17 +79,17 @@ public class TestCheckstyleSensor extends TestCase {
         return false;
       }
     };
-
+    
     int codeIssues = 0;
     // Process all files
     for (int j = 0; j < files.length; j++) {
       if (filter.accept(files[j])) {
         String fileName = files[j].getName();
         // Process the file.
-        codeIssues += sensor.processIssueXmlFile(directory.getCanonicalPath() +
+        codeIssues += sensor.processIssueXmlFile(directory.getCanonicalPath() + 
             File.separator + fileName);
       }
     }
-    assertEquals("Should have 9 issues.", 9, codeIssues);
-  }
+    assertEquals("Should have 15 issues.", 15, codeIssues);
+  }  
 }

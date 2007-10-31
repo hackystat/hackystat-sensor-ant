@@ -2,11 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="HACKYSTAT_SENSORSHELL_HOME/sensorshell.jar" sourcepath="/SENSOR_BASE_HOME/src"/>
+	<classpathentry kind="var" path="HACKYSTAT_SENSORSHELL_HOME/sensorshell.jar" sourcepath="/HACKYSTAT_SENSORSHELL_HOME/src"/>
 	<classpathentry kind="var" path="ANT_HOME/lib/ant.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="var" path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar"/>
-	<classpathentry kind="lib" path="lib/svn/javasvn.jar"/>
 	<classpathentry kind="lib" path="lib/vcs/JRCS.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="lib/svn/javasvn.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -21,30 +21,30 @@ import org.junit.BeforeClass;
  * @author Aaron A. Kagawa, Julie Ann Sakuda
  */
 public class TestPmdSensor extends TestCase {
-
+  
   /** The test user. */
   private static String user = "TestAntSensors@hackystat.org";
   private static String host = "http://localhost";
   private static Server server;
 
   /**
-   * Starts the server going for these tests, and makes sure our test user is registered.
-   * @throws Exception If problems occur setting up the server.
+   * Starts the server going for these tests, and makes sure our test user is registered. 
+   * @throws Exception If problems occur setting up the server. 
    */
   @BeforeClass public static void setupServer() throws Exception {
     TestPmdSensor.server = Server.newInstance();
     TestPmdSensor.host = TestPmdSensor.server.getHostName();
     SensorBaseClient.registerUser(host, user);
   }
-
+  
   /**
-   * Gets rid of the sent sensor data and the user.
-   * @throws Exception If problems occur setting up the server.
+   * Gets rid of the sent sensor data and the user. 
+   * @throws Exception If problems occur setting up the server. 
    */
   @AfterClass public static void teardownServer() throws Exception {
     // Now delete all data sent by this user.
     SensorBaseClient client = new SensorBaseClient(host, user, user);
-    // First, delete all sensor data sent by this user.
+    // First, delete all sensor data sent by this user. 
     SensorDataIndex index = client.getSensorDataIndex(user);
     for (SensorDataRef ref : index.getSensorDataRef()) {
       client.deleteSensorData(user, ref.getTimestamp());
@@ -52,10 +52,10 @@ public class TestPmdSensor extends TestCase {
     // Now delete the user too.
     client.deleteUser(user);
   }
-
+  
   /**
-   * Tests PmdSensor by processing some test pmd files. This test case does not
-   *   check that the server received the data, s long as we can send the data
+   * Tests PmdSensor by processing some test pmd files. This test case does not 
+   *   check that the server received the data, s long as we can send the data 
    *   then we assume everything is ok.
    * @throws Exception If a program occurs.
    */
@@ -64,7 +64,7 @@ public class TestPmdSensor extends TestCase {
 
     PmdSensor sensor = new PmdSensor(host, user, user);
     sensor.setVerbose("on");
-
+    
     sensor.setProject(new Project());
     Path path = sensor.createSourcePath();
     FileSet fileSet = new FileSet();
@@ -74,7 +74,7 @@ public class TestPmdSensor extends TestCase {
     fileSet.setProject(path.getProject());
     path.addFileset(fileSet);
     sensor.setSourcePath(path);
-
+    
     File directory = new File(testFileDirPath);
     if (!directory.isDirectory()) {
       fail("cannot find pmd test files");
@@ -90,16 +90,16 @@ public class TestPmdSensor extends TestCase {
         return false;
       }
     };
-
+    
     // Process all files
     for (int j = 0; j < files.length; j++) {
       if (filter.accept(files[j])) {
         String fileName = (files[j]).getName();
         // Process the file and send it.
-        int count = sensor.processIssueXmlFile(directory.getCanonicalPath()
+        int count = sensor.processIssueXmlFile(directory.getCanonicalPath() 
             + File.separator + fileName);
         assertEquals("Checkin number of CodeIssue entries", 10, count);
       }
     }
-  }
+  }  
 }

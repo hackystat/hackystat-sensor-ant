@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-   <!-- Primitive elements and attributes -->
+  <!-- Primitive elements and attributes -->
   <xs:attribute name="version" type="xs:string" />
   <xs:attribute name="timestamp" type="xs:dateTime" />
   <xs:attribute name="elapsedTime" type="xs:string" />

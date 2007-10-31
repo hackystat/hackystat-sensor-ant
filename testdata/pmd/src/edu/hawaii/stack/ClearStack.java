@@ -6,8 +6,8 @@ import java.io.File;
 /**
  * Implements a clear stack Abstract Data Type
  * to see the internal contents of the stack.
- *
- * @author Philip M. Johnson
+ * 
+ * @author Philip M. Johnson 
  * @version $Id: ClearStack.java,v 1.5 2004/10/27 02:41:57 johnson Exp $
  */
 public class ClearStack extends Stack {
@@ -21,7 +21,7 @@ public class ClearStack extends Stack {
    */
   public Iterator<Object> getIterator() {
     return this.elements.iterator();
-  }
+  } 
 
   /**
    * Gets the top attribute of the ClearStack object.

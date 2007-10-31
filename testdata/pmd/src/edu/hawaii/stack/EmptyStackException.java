@@ -33,7 +33,7 @@ public class EmptyStackException extends Exception {
 
   /**
    * Indicates an illegal operation on an empty stack was performed.
-   *
+   * 
    * @param message provides more information about the error.
    * @param cause for the chained exception facility
    */
