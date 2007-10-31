@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <!-- Primitive elements and attributes -->
+   <!-- Primitive elements and attributes -->
   <xs:attribute name="version" type="xs:string" />
   <xs:attribute name="timestamp" type="xs:dateTime" />
   <xs:attribute name="elapsedTime" type="xs:string" />
   <xs:attribute name="name" type="xs:string" />
-  <xs:attribute name="line" type="xs:int" />
   <xs:attribute name="rule" type="xs:string" />
   <xs:attribute name="ruleset" type="xs:string" />
   <xs:attribute name="package" type="xs:string" />
@@ -14,14 +13,22 @@
   <!-- Complex elements -->
   <xs:element name="violation">
     <xs:complexType>
-      <xs:attribute ref="line"/>
+      <!-- line is used in PMD 3.9 and earlier -->
+      <xs:attribute name="line" type="xs:int" use="optional"/>
+      
+      <!-- beginline, endline, beingcolumn, and end column are used in PMD 4.0  -->
+      <xs:attribute name="beginline" type="xs:int" use="optional"/>
+      <xs:attribute name="endline" type="xs:int" use="optional"/>
+      <xs:attribute name="begincolumn" type="xs:int" use="optional"/>
+      <xs:attribute name="endcolumn" type="xs:int" use="optional"/>
+      
       <xs:attribute ref="rule"/>
       <xs:attribute ref="ruleset"/>
       <xs:attribute ref="package"/>
       <xs:attribute ref="priority"/>
-      <xs:attribute name="class" use="optional" />
-      <xs:attribute name="method" use="optional" />
-      <xs:attribute name="externalInfoUrl" use="optional" />
+      <xs:attribute name="class" type="xs:string" use="optional" />
+      <xs:attribute name="method" type="xs:string" use="optional" />
+      <xs:attribute name="externalInfoUrl" type="xs:string" use="optional" />
     </xs:complexType>
   </xs:element>
   

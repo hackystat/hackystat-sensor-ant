@@ -196,7 +196,7 @@ public class CheckstyleSensor extends Task {
       System.out.println("No data to send.");
     }
     else {
-      System.out.println("Failed to send Hackystat Code Issue data.");
+      System.out.println("Failed to send Checkstyle data.");
     }
   }
 
@@ -229,20 +229,36 @@ public class CheckstyleSensor extends Task {
       List<org.hackystat.sensor.ant.checkstyle.resource.jaxb.File> checkedFiles = checkstyle
           .getFile();
       
-      // TODO when zero data is implemented this should count entries sent
-      int errorCount = 0;
+      int codeIssueCount = 0;
       for (org.hackystat.sensor.ant.checkstyle.resource.jaxb.File file : checkedFiles) {
         // Fully qualified name of the file checked
         String fileName = file.getName();
 
+        // Base unique timestamp off of the runtime (which is when it start running)
+        long uniqueTstamp = this.tstampSet.getUniqueTstamp(this.runtime);
+
+        // Get altered time as XMLGregorianCalendar
+        XMLGregorianCalendar uniqueTstampGregorian = LongTimeConverter
+            .convertLongToGregorian(uniqueTstamp);
+        
+
         // gets all error elements for the file
         List<Error> errors = file.getError();
-
-        // TODO take zero data into account and remove this
+        
         if (errors.isEmpty()) {
+          // this resource has no errors, just send required information
+          Map<String, String> keyValMap = new HashMap<String, String>();
+          keyValMap.put("Tool", "Checkstyle");
+          keyValMap.put("SensorDataType", "CodeIssue");
+          keyValMap.put("Timestamp", uniqueTstampGregorian.toString());
+          keyValMap.put("Runtime", runtimeGregorian.toString());
+          keyValMap.put("Resource", fileName);
+          this.sensorShell.add(keyValMap);
+          codeIssueCount++;
           continue;
         }
         
+        // file has errors, send one entry per error
         for (Error error : errors) {
           int line = error.getLine();
           String errorMessage = error.getMessage();
@@ -250,24 +266,16 @@ public class CheckstyleSensor extends Task {
           String source = error.getSource();
           Integer column = error.getColumn(); // not all errors will have a column
           
-          // Base unique timestamp off of the runtime (which is when it start running)
-          long uniqueTstamp = this.tstampSet.getUniqueTstamp(this.runtime);
-
-          // Get altered time as XMLGregorianCalendar
-          XMLGregorianCalendar uniqueTstampGregorian = LongTimeConverter
-              .convertLongToGregorian(uniqueTstamp);
-          
+          // required
           Map<String, String> keyValMap = new HashMap<String, String>();
           keyValMap.put("Tool", "Checkstyle");
           keyValMap.put("SensorDataType", "CodeIssue");
-          
-          // Required
           keyValMap.put("Timestamp", uniqueTstampGregorian.toString());
           keyValMap.put("Runtime", runtimeGregorian.toString());
           keyValMap.put("Resource", fileName);
-          keyValMap.put("Type", source);
           
-          // Optional
+          // add information about the error to the mapping
+          keyValMap.put("Type", source);
           keyValMap.put("Line", String.valueOf(line));
           keyValMap.put("Severity", severity);
           keyValMap.put("Message", errorMessage);
@@ -275,11 +283,10 @@ public class CheckstyleSensor extends Task {
             keyValMap.put("Column", String.valueOf(column));
           }
           this.sensorShell.add(keyValMap);
-          errorCount++;
+          codeIssueCount++;
         }
       }
-      // TODO this should return the number of issues and zero data entries
-      return errorCount;
+      return codeIssueCount;
     }
     catch (Exception e) {
       throw new BuildException("Failed to process " + fileNameString + "   " + e);
