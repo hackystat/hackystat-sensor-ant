@@ -23,7 +23,12 @@
     
      <unjar src="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" dest="${tmp.dir}"/>
   	 <unjar src="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar" dest="${tmp.dir}"/>
-   
+     <unjar dest="${tmp.dir}">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+     </unjar>
+  
      <jar destfile="${basedir}/antsensors.jar" basedir="${tmp.dir}">
        <manifest>
          <attribute name="Implementation-Title" value="AntSensors"/>
