@@ -62,10 +62,13 @@ public class EmmaSensor extends Task {
   private SensorShell sensorShell;
   /** The mapper used to map class names to file paths. */
   private JavaClass2FilePathMapper javaClass2FilePathMapper;
+  /** The batch runtime. */
+  private long runtime = 0;
   
   /** Initialize a new instance of a EmmaSensor. */
   public EmmaSensor() {
     this.tstampSet = new TstampSet();
+    this.runtime = new Date().getTime();
   }
 
   /**
@@ -81,6 +84,7 @@ public class EmmaSensor extends Task {
     this.sensorProps = new SensorProperties(host, email, password);
     this.sensorShell = new SensorShell(this.sensorProps, false, "test", false);
     this.tstampSet = new TstampSet();
+    this.runtime = new Date().getTime();
   }
   
   /**
@@ -238,6 +242,7 @@ public class EmmaSensor extends Task {
    * @return The number of coverage entries in this XML file.
    */
   public int processCoverageXmlFile(String fileNameString) throws BuildException {
+    XMLGregorianCalendar runtimeGregorian = LongTimeConverter.convertLongToGregorian(this.runtime);
     File xmlFile = new File(fileNameString);
     // The start time for all entries will be approximated by the XML file's last mod time.
     // The shell will ensure that it's unique by tweaking the millisecond field.
@@ -293,6 +298,7 @@ public class EmmaSensor extends Task {
               keyValMap.put("DevEvent-Type", "Test");
 
               // Required
+              keyValMap.put("Runtime", runtimeGregorian.toString());
               keyValMap.put("Timestamp", startTimeGregorian.toString());
               keyValMap.put("Granularity", granularity);
               keyValMap.put("Resource", javaSourceFilePath);
