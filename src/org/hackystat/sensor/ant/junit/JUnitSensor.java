@@ -320,7 +320,7 @@ public class JUnitSensor extends Task {
         keyValMap.put("Runtime", runtimeGregorian.toString());
         keyValMap.put("Timestamp", startTimeGregorian.toString());
         keyValMap.put("Name", name);
-        keyValMap.put("Resource", testCaset2Path(name));
+        keyValMap.put("Resource", testCaseToPath(testClassName));
         keyValMap.put("Result", result);
 
         // Optional
@@ -351,7 +351,7 @@ public class JUnitSensor extends Task {
    * @param testCaseName Dot delimited test case name.
    * @return Source of test case name.
    */
-  private String testCaset2Path(String testCaseName) {
+  private String testCaseToPath(String testCaseName) {
     String path = this.sourcePath == null ? "" : this.sourcePath;
     if (path.length() > 0 && !path.endsWith("/")) {
       path += File.separator;
