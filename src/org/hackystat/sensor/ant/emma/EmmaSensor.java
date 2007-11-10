@@ -174,7 +174,6 @@ public class EmmaSensor extends Task {
 
   /**
    * Gets whether or not this sensor instance is using a mapping in the UserMap.
-   * 
    * @return Returns true of the tool and tool account are set, otherwise false.
    */
   private boolean isUsingUserMap() {
@@ -183,7 +182,6 @@ public class EmmaSensor extends Task {
 
   /**
    * Sends any accumulated data in the SensorShell to the server.
-   * 
    * @return Returns the number of SensorData instances sent to the server.
    */
   public int send() {
@@ -265,6 +263,38 @@ public class EmmaSensor extends Task {
         for (Srcfile srcfile : packageReport.getSrcfile()) {
           for (Class classReport : srcfile.getClazz()) {
             String className = classReport.getName();
+            String javaClassName = packageName + '.' + className;
+            String javaSourceFilePath = 
+              this.getJavaClass2FilePathMapper().getFilePath(javaClassName);
+            if (javaSourceFilePath == null) {
+              if (this.verbose) {
+                System.out.println("Warning: Unable to find java source file path for class '" 
+                    + javaClassName + "'. Use empty string for file path.");
+              }
+              javaSourceFilePath = "";
+            }
+            
+            // Alter startTime to guarantee uniqueness.
+            long uniqueTstamp = this.tstampSet.getUniqueTstamp(startTime);
+
+            // Get altered start time as XMLGregorianCalendar
+            XMLGregorianCalendar startTimeGregorian = 
+              LongTimeConverter.convertLongToGregorian(uniqueTstamp);
+
+            Map<String, String> keyValMap = new HashMap<String, String>();
+            keyValMap.put("Tool", "Emma");
+            keyValMap.put("SensorDataType", "Coverage");
+            keyValMap.put("DevEvent-Type", "Test");
+
+            // Required
+            keyValMap.put("Runtime", runtimeGregorian.toString());
+            keyValMap.put("Timestamp", startTimeGregorian.toString());
+            keyValMap.put("Resource", javaSourceFilePath);
+
+            // Optional
+            keyValMap.put("ClassName", javaClassName);
+                          
+            
             for (Coverage coverage : classReport.getCoverage()) {
               String type = coverage.getType();
               String granularity = type.substring(0, type.indexOf(", %"));
@@ -274,44 +304,12 @@ public class EmmaSensor extends Task {
               double covered = new Double(coveredString); 
               double total = new Double(totalString);
 
-              String javaClassName = packageName + '.' + className;
-              String javaSourceFilePath = 
-                this.getJavaClass2FilePathMapper().getFilePath(javaClassName);
-              if (javaSourceFilePath == null) {
-                if (this.verbose) {
-                  System.out.println("Warning: Unable to find java source file path for class '" 
-                      + javaClassName + "'. Use empty string for file path.");
-                }
-                javaSourceFilePath = "";
-              }
-              
-              // Alter startTime to guarantee uniqueness.
-              long uniqueTstamp = this.tstampSet.getUniqueTstamp(startTime);
-
-              // Get altered start time as XMLGregorianCalendar
-              XMLGregorianCalendar startTimeGregorian = 
-                LongTimeConverter.convertLongToGregorian(uniqueTstamp);
-
-              Map<String, String> keyValMap = new HashMap<String, String>();
-              keyValMap.put("Tool", "Emma");
-              keyValMap.put("SensorDataType", "Coverage");
-              keyValMap.put("DevEvent-Type", "Test");
-
-              // Required
-              keyValMap.put("Runtime", runtimeGregorian.toString());
-              keyValMap.put("Timestamp", startTimeGregorian.toString());
-              keyValMap.put("Granularity", granularity);
-              keyValMap.put("Resource", javaSourceFilePath);
-              keyValMap.put("Covered", String.valueOf(covered));
-              keyValMap.put("Uncovered", String.valueOf(total - covered));
-
-              // Optional
-              keyValMap.put("ClassName", javaClassName);
-              
-              this.sensorShell.add(keyValMap); // add data to sensorshell
-              
-              coverageEntriesCount++;
+              keyValMap.put(granularity  + ":Covered", String.valueOf(covered));
+              keyValMap.put(granularity + ":Uncovered", String.valueOf(total - covered));
             }
+            
+            this.sensorShell.add(keyValMap); // add data to sensorshell
+            coverageEntriesCount++;
           }
         }
       }

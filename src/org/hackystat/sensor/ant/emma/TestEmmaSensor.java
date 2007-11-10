@@ -92,6 +92,6 @@ public class TestEmmaSensor extends TestCase {
             File.separator + fileName);
       }
     }
-    assertSame("Should have 20 entries.", 20, coverageEntries);
+    assertSame("Should have 5 entries; 4 granularities per entry", 5, coverageEntries);
   }
 }
