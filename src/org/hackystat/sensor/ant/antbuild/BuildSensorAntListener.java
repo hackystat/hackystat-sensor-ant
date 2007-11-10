@@ -122,7 +122,6 @@ public class BuildSensorAntListener implements BuildListener {
     keyValMap.put("Timestamp", startTime.toString());
     keyValMap.put("Resource", workingDirectory);
     keyValMap.put("SensorDataType", "Build");
-    keyValMap.put("DevEvent-Type", "Build");
     keyValMap.put("Target", this.lastTargetName);
 
     // put result in the map
