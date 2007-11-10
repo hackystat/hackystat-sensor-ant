@@ -299,7 +299,7 @@ public class JUnitSensor extends Task {
         }
 
         String result = "pass";
-        if (!stringErrorList.isEmpty() || stringFailureList.isEmpty()) {
+        if (!stringErrorList.isEmpty() || !stringFailureList.isEmpty()) {
           result = "fail";
         }
 
