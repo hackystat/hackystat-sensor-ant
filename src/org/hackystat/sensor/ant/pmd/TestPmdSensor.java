@@ -98,7 +98,7 @@ public class TestPmdSensor extends TestCase {
         // Process the file and send it.
         int count = sensor.processIssueXmlFile(directory.getCanonicalPath() 
             + File.separator + fileName);
-        assertEquals("Checkin number of CodeIssue entries", 10, count);
+        assertEquals("Checking number of CodeIssue entries", 5, count);
       }
     }
   }  
