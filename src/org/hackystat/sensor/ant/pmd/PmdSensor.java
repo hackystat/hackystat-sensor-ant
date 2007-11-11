@@ -315,6 +315,7 @@ public class PmdSensor extends Task {
           String ruleset = violation.getRuleset();
 
           String key = ruleset + ":" + rule;
+          key = key.replaceAll(" ", ""); // remove spaces
           if (issueCounts.containsKey(key)) {
             Integer count = issueCounts.get(key);
             issueCounts.put(key, ++count);
