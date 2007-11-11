@@ -262,18 +262,15 @@ public class CheckstyleSensor extends Task {
           String source = error.getSource();
           
           String[] tokens = source.split("\\.");
-          String ruleset = tokens[tokens.length - 2];
           String rule = tokens[tokens.length - 1];
           
-          String key = ruleset + ":" + rule;
-          
-          if (issueCounts.containsKey(key)) {
-            Integer count = issueCounts.get(key);
-            issueCounts.put(key, ++count);
+          if (issueCounts.containsKey(rule)) {
+            Integer count = issueCounts.get(rule);
+            issueCounts.put(rule, ++count);
           }
           else {
             // no mapping, first occurrence
-            issueCounts.put(key, 1);
+            issueCounts.put(rule, 1);
           }
         }
         
