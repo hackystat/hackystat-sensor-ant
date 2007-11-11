@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -240,51 +241,68 @@ public class FindBugsSensor extends Task {
       BugCollection bugCollection = (BugCollection) unmarshaller.unmarshal(xmlFile);
       Set<String> allSrcFiles = new HashSet<String>(bugCollection.getProject().getSrcDir());
       
-      Set<String> srcFilesWithBugInstances = new HashSet<String>();
-      int codeIssueCount = 0;
       List<BugInstance> bugInstanceCollection = bugCollection.getBugInstance();
+      
+      // Sort all the bugs by the file they are from
+      HashMap<String, List<BugInstance>> fileToBugs = new HashMap<String, List<BugInstance>>();
       for (BugInstance bugInstance : bugInstanceCollection) {
-        String type = bugInstance.getType();
-        int priority = bugInstance.getPriority();
-        String category = bugInstance.getCategory();
-        String shortMessage = bugInstance.getShortMessage();
+        String abstractSourcePath = bugInstance.getSourceLine().getSourcepath();
+        String fullSourcePath = this.findSrcFile(allSrcFiles, abstractSourcePath);
         
-        String className = bugInstance.getClazz().getClassname();
-        int sourceLine = bugInstance.getSourceLine().getStart();
-        String sourcePath = bugInstance.getSourceLine().getSourcepath();
-        String fullSourcePath = this.findSrcFile(allSrcFiles, sourcePath);
-        srcFilesWithBugInstances.add(fullSourcePath);
-        
+        if (fileToBugs.containsKey(fullSourcePath)) {
+          List<BugInstance> bugs = fileToBugs.get(fullSourcePath);
+          bugs.add(bugInstance);
+        }
+        else {
+          List<BugInstance> bugs = new ArrayList<BugInstance>();
+          bugs.add(bugInstance);
+          fileToBugs.put(fullSourcePath, bugs);
+        }
+      }
+      
+      // now process all files with bugs
+      int codeIssueCount = 0;
+      for (Entry<String, List<BugInstance>> entry : fileToBugs.entrySet()) {
         // Alter startTime to guarantee uniqueness.
         long uniqueTstamp = this.tstampSet.getUniqueTstamp(startTime);
-
+        
         // Get altered start time as XMLGregorianCalendar
         XMLGregorianCalendar timestamp = 
           LongTimeConverter.convertLongToGregorian(uniqueTstamp);
-
+        
         Map<String, String> keyValMap = new HashMap<String, String>();
         keyValMap.put("Tool", "FindBugs");
         keyValMap.put("SensorDataType", "CodeIssue");
-
-        // Required
         keyValMap.put("Runtime", runtimeGregorian.toString());
         keyValMap.put("Timestamp", timestamp.toString());
-        keyValMap.put("Resource", fullSourcePath);
+        keyValMap.put("Resource", entry.getKey());
+
+        HashMap<String, Integer> issueCounts = new HashMap<String, Integer>();
+        for (BugInstance bugInstance : entry.getValue()) {
+          String category = bugInstance.getCategory();
+          String type = bugInstance.getType();
+          String key = category + ":" + type;
+
+          if (issueCounts.containsKey(key)) {
+            Integer count = issueCounts.get(key);
+            issueCounts.put(key, ++count);
+          }
+          else {
+            // no previous mapping, add 1st issue to map
+            issueCounts.put(key, 1);
+          }
+        }
+        for (Entry<String, Integer> issueCountEntry : issueCounts.entrySet()) {
+          String typeKey = "Type:" + issueCountEntry.getKey();
+          keyValMap.put(typeKey, issueCountEntry.getValue().toString());
+        }
         
-        // Optional
-        keyValMap.put("Type", type);
-        keyValMap.put("Category", category);
-        keyValMap.put("Severity", String.valueOf(priority));
-        keyValMap.put("Message", shortMessage);
-        keyValMap.put("Line", String.valueOf(sourceLine));
-        keyValMap.put("ClassName", className);
-        
-        this.sensorShell.add(keyValMap); // add data to sensorshell
+        this.sensorShell.add(keyValMap);
         codeIssueCount++;
       }
       
       //process the zero issues 
-      allSrcFiles.removeAll(srcFilesWithBugInstances);
+      allSrcFiles.removeAll(fileToBugs.keySet());
       for (String srcFile : allSrcFiles) {
         // Alter startTime to guarantee uniqueness.
         long uniqueTstamp = this.tstampSet.getUniqueTstamp(startTime);
@@ -294,13 +312,13 @@ public class FindBugsSensor extends Task {
           LongTimeConverter.convertLongToGregorian(uniqueTstamp);
 
         Map<String, String> keyValMap = new HashMap<String, String>();
+        // Required
         keyValMap.put("Tool", "FindBugs");
         keyValMap.put("SensorDataType", "CodeIssue");
-
-        // Required
         keyValMap.put("Runtime", runtimeGregorian.toString());
         keyValMap.put("Timestamp", timestamp.toString());
         keyValMap.put("Resource", srcFile);
+
         this.sensorShell.add(keyValMap); // add data to sensorshell
         codeIssueCount++;
       }

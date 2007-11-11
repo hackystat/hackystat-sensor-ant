@@ -92,6 +92,6 @@ public class TestFindBugsSensor extends TestCase {
             File.separator + fileName);
       }
     }
-    assertSame("Should have 12 entries.", 12, coverageEntries);
+    assertSame("Should have 9 entries.", 9, coverageEntries);
   }
 }
