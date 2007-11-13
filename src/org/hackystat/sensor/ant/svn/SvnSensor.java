@@ -34,6 +34,7 @@ public class SvnSensor extends Task {
   private String fileNamePrefix;
   private String defaultHackystatAccount = "";
   private String defaultHackystatPassword = "";
+  private String defaultHackystatSensorbase = "";
   private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
   private String fromDateString, toDateString;
   private Date fromDate, toDate;
@@ -117,6 +118,14 @@ public class SvnSensor extends Task {
    */
   public void setDefaultHackystatPassword(String defaultHackystatPassword) {
     this.defaultHackystatPassword = defaultHackystatPassword;
+  }
+
+  /**
+   * Sets the default Hackystat sensorbase server.
+   * @param defaultHackystatSensorbase the default sensorbase server.
+   */
+  public void setDefaultHackystatSensorbase(String defaultHackystatSensorbase) {
+    this.defaultHackystatSensorbase = defaultHackystatSensorbase;
   }
 
   /**
@@ -290,12 +299,13 @@ public class SvnSensor extends Task {
       }
       else { // Create a new shell and add it to the cache.
         if ("".equals(this.defaultHackystatAccount)
-            || "".equals(this.defaultHackystatPassword)) {
+            || "".equals(this.defaultHackystatPassword)
+            || "".equals(this.defaultHackystatSensorbase)) {
           throw new BuildException("A user mapping for the user, " + author
-              + " was not found and no default Hackystat account was provided.");
+              + " was not found and no default Hackystat account login, password, "
+              + "or server was provided.");
         }
-        SensorProperties currentProps = new SensorProperties();
-        SensorProperties props = new SensorProperties(currentProps.getHackystatHost(),
+        SensorProperties props = new SensorProperties(this.defaultHackystatSensorbase,
             this.defaultHackystatAccount, this.defaultHackystatPassword);
 
         SensorShell shell = new SensorShell(props, false, "svn");
