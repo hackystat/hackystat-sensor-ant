@@ -281,7 +281,7 @@ public class FindBugsSensor extends Task {
         for (BugInstance bugInstance : entry.getValue()) {
           String category = bugInstance.getCategory();
           String type = bugInstance.getType();
-          String key = category + ":" + type;
+          String key = category + "_" + type;
 
           if (issueCounts.containsKey(key)) {
             Integer count = issueCounts.get(key);
@@ -293,7 +293,7 @@ public class FindBugsSensor extends Task {
           }
         }
         for (Entry<String, Integer> issueCountEntry : issueCounts.entrySet()) {
-          String typeKey = "Type:" + issueCountEntry.getKey();
+          String typeKey = "Type_" + issueCountEntry.getKey();
           keyValMap.put(typeKey, issueCountEntry.getValue().toString());
         }
         
