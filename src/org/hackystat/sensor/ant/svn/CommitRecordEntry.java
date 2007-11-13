@@ -206,14 +206,14 @@ public class CommitRecordEntry {
 
       if (this.isFile) {
         // check isTextFile
-        TreeMap properties = new TreeMap();
+        TreeMap<String, String> properties = new TreeMap<String, String>();
         if (useToPath) {
           this.getVersionedProperties(this.toPath, this.toRevision, properties);
         }
         else {
           this.getVersionedProperties(this.fromPath, this.fromRevision, properties);
         }
-        String svnFileMineType = (String) properties.get("svn:mime-type");
+        String svnFileMineType = properties.get("svn:mime-type");
         this.isTextFile = (svnFileMineType == null || svnFileMineType.toLowerCase()
             .startsWith("/text"));
 
@@ -272,8 +272,8 @@ public class CommitRecordEntry {
    * @return The content as a byte array.
    * @throws Exception If there is any error.
    */
-  private byte[] getVersionedContent(String filePath, long revision, Map properties)
-    throws Exception {
+  private byte[] getVersionedContent(String filePath, long revision,
+      Map<String, String> properties) throws Exception {
     ByteArrayOutputStream output = new ByteArrayOutputStream(4096);
     this.svnRepository.getFile(filePath, revision, properties, output);
     output.flush();
@@ -289,8 +289,8 @@ public class CommitRecordEntry {
    * map. Null is a valid value.
    * @throws Exception If there is any error.
    */
-  private void getVersionedProperties(String filePath, long revision, Map properties)
-    throws Exception {
+  private void getVersionedProperties(String filePath, long revision,
+      Map<String, String> properties) throws Exception {
     this.svnRepository.getFile(filePath, revision, properties, null);
   }
 

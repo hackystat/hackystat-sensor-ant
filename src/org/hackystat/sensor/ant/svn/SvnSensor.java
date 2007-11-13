@@ -15,12 +15,14 @@ import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
 import org.hackystat.utilities.time.period.Day;
+import org.hackystat.utilities.tstamp.Tstamp;
+import org.hackystat.utilities.tstamp.TstampSet;
 
 /**
  * Ant task to extract the svn commits and send those information to Hackystat
  * server. Note: For binary files, the values for lines addes, lines deleted,
  * and total lines are meaningless.
- *
+ * 
  * @author Qin ZHANG
  * @author Austen Ito (v8 port)
  */
@@ -40,7 +42,7 @@ public class SvnSensor extends Task {
   /**
    * Sets the svn repository name. This name can be any string. It's used in
    * commit metric to identify from which svn repository metric is retrieved.
-   *
+   * 
    * @param repositoryName The name of the svn repository.
    */
   public void setRepositoryName(String repositoryName) {
@@ -51,7 +53,7 @@ public class SvnSensor extends Task {
    * Sets the url to the svn repository. It can points to any subdirectory in
    * the repository. However, note that this sensor only supports http|https|svn
    * protocol.
-   *
+   * 
    * @param repositoryUrl The url to the svn repository.
    */
   public void setRepositoryUrl(String repositoryUrl) {
@@ -61,7 +63,7 @@ public class SvnSensor extends Task {
   /**
    * Sets the user name to access the SVN repository. If not set, then anonymous
    * credential is used.
-   *
+   * 
    * @param userName The user name.
    */
   public void setUserName(String userName) {
@@ -78,7 +80,7 @@ public class SvnSensor extends Task {
 
   /**
    * Sets the password for the user name.
-   *
+   * 
    * @param password The password.
    */
   public void setPassword(String password) {
@@ -91,7 +93,7 @@ public class SvnSensor extends Task {
    * however, most hackystat analysis requires fully qualified file path. This
    * prefix can be used to turn relative file path into some pseudo fully
    * qualified file path.
-   *
+   * 
    * @param fileNamePrefix The string to be prepended to the file path in commit
    * metric.
    */
@@ -102,7 +104,7 @@ public class SvnSensor extends Task {
   /**
    * Sets a default Hackystat account to which to send commit data when there is
    * no svn committer to Hackystat account mapping.
-   *
+   * 
    * @param defaultHackystatAccount The default Hackystat account.
    */
   public void setDefaultHackystatAccount(String defaultHackystatAccount) {
@@ -120,7 +122,7 @@ public class SvnSensor extends Task {
   /**
    * Sets the optional fromDate. If fromDate is set, toDate must be set. This
    * field must be conform to yyyy-MM-dd format.
-   *
+   * 
    * @param fromDateString The first date from which we send commit information
    * to Hackystat server.
    */
@@ -131,7 +133,7 @@ public class SvnSensor extends Task {
   /**
    * Sets the optional toDate. If toDate is set, fromDate must be set. This
    * field must be conform to yyyy-MM-dd format.
-   *
+   * 
    * @param toDateString The last date to which we send commit information to
    * Hackystat server.
    */
@@ -141,7 +143,7 @@ public class SvnSensor extends Task {
 
   /**
    * Checks and make sure all properties are set up correctly.
-   *
+   * 
    * @throws BuildException If any error is detected in the property setting.
    */
   private void processProperties() throws BuildException {
@@ -195,7 +197,7 @@ public class SvnSensor extends Task {
   /**
    * Extracts commit information from SVN server, and sends them to the
    * Hackystat server.
-   *
+   * 
    * @throws BuildException If the task fails.
    */
   public void execute() throws BuildException {
@@ -213,19 +215,21 @@ public class SvnSensor extends Task {
       long startRevision = processor.getRevisionNumber(this.fromDate) + 1;
       long endRevision = processor.getRevisionNumber(this.toDate);
       int entriesAdded = 0;
+      TstampSet tstampSet = new TstampSet();
       for (long revision = startRevision; revision <= endRevision; revision++) {
         CommitRecord commitRecord = processor.getCommitRecord(revision);
         if (commitRecord != null) {
-          if (this.isVerbose) {
-            System.out.println(commitRecord);
-          }
           String author = commitRecord.getAuthor();
           String message = commitRecord.getMessage();
           Date commitTime = commitRecord.getCommitTime();
 
           for (CommitRecordEntry entry : commitRecord.getCommitRecordEntries()) {
+            if (this.isVerbose) {
+              System.out.println(commitRecord.toString() + " - " + entry.toString());
+            }
             SensorShell shell = this.getShell(shellCache, shellMap, author);
-            this.processCommitEntry(shell, author, message, commitTime, revision, entry);
+            this.processCommitEntry(shell, author, message, tstampSet
+                .getUniqueTstamp(commitTime.getTime()), commitTime, revision, entry);
             entriesAdded++;
           }
         }
@@ -278,8 +282,13 @@ public class SvnSensor extends Task {
       return shellCache.get(author); // Returns a cached shell instance.
     }
     else {
-      // If there is no user mapping, attempt to create a default user shell.
-      if (!shellMap.hasUserShell(author)) {
+      // If the shell user mapping has a shell, add it to the shell cache.
+      if (shellMap.hasUserShell(author)) {
+        SensorShell shell = shellMap.getUserShell(author);
+        shellCache.put(author, shell);
+        return shell;
+      }
+      else { // Create a new shell and add it to the cache.
         if ("".equals(this.defaultHackystatAccount)
             || "".equals(this.defaultHackystatPassword)) {
           throw new BuildException("A user mapping for the user, " + author
@@ -293,24 +302,26 @@ public class SvnSensor extends Task {
         shellCache.put(author, shell);
         return shell;
       }
-      return shellMap.getUserShell(author); // Returns the usermap shell.
     }
   }
 
   /**
    * Processes a commit record entry and extracts relevant metrics.
-   *
+   * 
    * @param shell The shell that the commit record information is added to.
    * @param author The author of the commit.
    * @param message The commit log message.
+   * @param timestamp the unique timestamp that is associated with the specified
+   * entry.
    * @param commitTime The commit time.
    * @param revision The revision number.
    * @param entry The commit record entry.
-   *
+   * 
    * @throws Exception If there is any error.
    */
   private void processCommitEntry(SensorShell shell, String author, String message,
-      Date commitTime, long revision, CommitRecordEntry entry) throws Exception {
+      long timestamp, Date commitTime, long revision, CommitRecordEntry entry)
+    throws Exception {
     if (shell != null && entry.isFile()) {
       String file = this.fileNamePrefix == null ? "" : this.fileNamePrefix;
       if (entry.getToPath() == null) {
@@ -328,6 +339,9 @@ public class SvnSensor extends Task {
       Map<String, String> pMap = new HashMap<String, String>();
       pMap.put("SensorDataType", "Commit");
       pMap.put("Resource", file);
+      pMap.put("Tool", "Subversion");
+      pMap.put("Timestamp", Tstamp.makeTimestamp(timestamp).toString());
+      pMap.put("Runtime", Tstamp.makeTimestamp(commitTime.getTime()).toString());
       pMap.put("repository", this.repositoryName);
       pMap.put("totalLines", String.valueOf(totalLines));
       pMap.put("linesAdded", String.valueOf(linesAdded));
