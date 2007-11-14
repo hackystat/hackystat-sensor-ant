@@ -284,7 +284,6 @@ public class EmmaSensor extends Task {
             Map<String, String> keyValMap = new HashMap<String, String>();
             keyValMap.put("Tool", "Emma");
             keyValMap.put("SensorDataType", "Coverage");
-            keyValMap.put("DevEvent-Type", "Test");
 
             // Required
             keyValMap.put("Runtime", runtimeGregorian.toString());
@@ -304,8 +303,8 @@ public class EmmaSensor extends Task {
               double covered = new Double(coveredString); 
               double total = new Double(totalString);
 
-              keyValMap.put(granularity  + ":Covered", String.valueOf(covered));
-              keyValMap.put(granularity + ":Uncovered", String.valueOf(total - covered));
+              keyValMap.put(granularity  + "_Covered", String.valueOf(covered));
+              keyValMap.put(granularity + "_Uncovered", String.valueOf(total - covered));
             }
             
             this.sensorShell.add(keyValMap); // add data to sensorshell
