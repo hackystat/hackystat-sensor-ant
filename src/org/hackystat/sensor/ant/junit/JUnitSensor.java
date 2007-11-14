@@ -314,7 +314,6 @@ public class JUnitSensor extends Task {
         Map<String, String> keyValMap = new HashMap<String, String>();
         keyValMap.put("Tool", "JUnit");
         keyValMap.put("SensorDataType", "UnitTest");
-        keyValMap.put("DevEvent-Type", "Test");
 
         // Required
         keyValMap.put("Runtime", runtimeGregorian.toString());
