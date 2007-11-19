@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Primitive elements and attributes -->
+  <xs:attribute name="name" type="xs:string" />
+  <xs:attribute name="type" type="xs:string" />  
+  <xs:attribute name="value" type="xs:string" />
+ 
+  
+  <xs:element name="file">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="metrics" minOccurs="1" maxOccurs="1" />
+      </xs:sequence>
+      <xs:attribute ref="name" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="package">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="metrics" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="file" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute ref="name" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="metrics">
+    <xs:complexType>
+      <xs:attribute name="classes" type="xs:int" />
+      <xs:attribute name="methods" type="xs:int" />
+      <xs:attribute name="conditionals" type="xs:int" />
+      <xs:attribute name="ncloc" type="xs:int" />
+      <xs:attribute name="coveredstatements" type="xs:int" />
+      <xs:attribute name="coveredmethods" type="xs:int" />
+      <xs:attribute name="coveredconditionals" type="xs:int" />
+      <xs:attribute name="statements" type="xs:int" />
+      <xs:attribute name="loc" type="xs:int" />
+      <xs:attribute name="coveredelements" type="xs:int" />
+      <xs:attribute name="elements" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="project">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="metrics" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="package" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="timestamp" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="testproject">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="metrics" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="package" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="timestamp" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="coverage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="project" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="testproject" minOccurs="1" maxOccurs="1" />        
+      </xs:sequence>
+      <xs:attribute name="generated" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

@@ -51,6 +51,7 @@
     	<sysproperty key="findbugstestfiles" value="${basedir}/testdata/findbugs"/>
     	<sysproperty key="checkstyletestfiles" value="${basedir}/testdata/checkstyle"/>
     	<sysproperty key="pmdtestfiles" value="${basedir}/testdata/pmd"/>
+    	<sysproperty key="clovertestfiles" value="${basedir}/testdata/clover"/>
       <formatter type="xml" />
       <batchtest todir="${junit.dir}">
         <fileset dir="${src.dir}">

@@ -1,0 +1,70 @@
+<project name="clover" default="clover">
+  <description>
+    Runs clover on system to generate information on size.
+    Invocation: ant -f clover.build.xml
+  </description>
+
+  <import file="build.xml" />
+  <property name="clover.dir" location="${build.dir}/clover" />
+  <property name="junit.dir" location="${build.dir}/junit" />
+  <property name="junit.haltonfailure" value="false" />
+
+  <target name="clean" depends="build.clean" >
+    <delete dir="${basedir}/.clover" /> 
+  </target>
+
+  <taskdef resource="cloverlib.xml" classpath="${env.CLOVER_HOME}\lib\clover.jar"/>
+  <target name="pre-compile" >
+    <clover-setup>
+      <files excludes="org/hackystat/**/jaxb/*.java" />
+    </clover-setup>
+  </target>
+
+  <target name="clover" depends="pre-compile, compile, clover.tool" description="Runs Clover and the Clover sensor." />
+
+  <target name="clover.tool" depends="pre-compile, compile" 
+      description="Cleans, compiles, instruments byte codes, runs unit tests, generates clover report.">
+    <mkdir dir="${clover.dir}" />
+    <mkdir dir="${junit.dir}" />
+    <junit printsummary="withOutAndErr" haltonfailure="${junit.haltonfailure}">
+      <classpath>
+        <pathelement location="${env.CLOVER_HOME}\lib\clover.jar" />
+        <pathelement location="${build.dir}/classes" />
+        <pathelement location="${java.class.path}" />
+        <path refid="compile.classpath" />
+      </classpath>
+    	<sysproperty key="junittestfiles" value="${basedir}/testdata/junit"/>
+    	<sysproperty key="emmatestfiles" value="${basedir}/testdata/emma"/>
+    	<sysproperty key="findbugstestfiles" value="${basedir}/testdata/findbugs"/>
+    	<sysproperty key="checkstyletestfiles" value="${basedir}/testdata/checkstyle"/>
+    	<sysproperty key="pmdtestfiles" value="${basedir}/testdata/pmd"/>
+    	<sysproperty key="clovertestfiles" value="${basedir}/testdata/clover"/>
+      <formatter type="xml" />
+      <batchtest todir="${junit.dir}">
+        <fileset dir="${src.dir}" includes="**/Test*.java" excludes="**/jaxb/*.java" />
+      </batchtest>
+    </junit>
+    <clover-report>
+      <current outfile="${clover.dir}/coverage.xml">
+        <format type="xml"/>
+      </current>
+    </clover-report>
+
+  </target>
+
+  <target name="clover.xslt" description="Runs XSL Transform over SCLC XML to make the XML compatible with XmlData.">
+    <!-- Transform SCLC v2.5 data to work with XmlData sensor for Hackystat v8. -->
+    <xslt in="${clover.dir}/coverage.xml" out="${clover.dir}/transform-coverage.xml" style="${lib.dir}/clover/clover.xsl" />
+  </target>
+
+  <target name="clover.sensor" description="Sends data to Hackystat via the XmlData sensor.">
+    <available file="${env.HACKYSTAT_XMLDATA_HOME}/xmldata-cli.jar" property="xmldata.available" />
+    <fail unless="xmldata.available" message="Error: HACKYSTAT_XMLDATA_HOME not set or ${env.HACKYSTAT_XMLDATA_HOME}/xmldata-cli.jar not found." />
+
+    <!-- Invoke XmlData by executing the jar file and passing in command line args. -->
+    <java jar="${env.HACKYSTAT_XMLDATA_HOME}/xmldata-cli.jar" fork="true">
+      <arg line="-uniqueTimestamps -file ${clover.dir}/transform-coverage.xml" />
+    </java>
+  </target>
+</project>
+
