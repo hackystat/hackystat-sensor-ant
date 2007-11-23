@@ -1,0 +1,39 @@
+<project name="sclc" default="sclc">
+  <description>
+    Runs sclc on system to generate information on size.
+    Invocation: ant -f sclc.build.xml
+  </description>
+
+  <import file="build.xml" />
+  <property name="sclc.dir" location="${build.dir}/sclc" />
+
+  <target name="sclc" depends="sclc.tool" description="Runs SCLC and the SCLC sensor." />
+
+  <target name="sclc.tool" depends="compile" description="Compute size data on the source code using SCLC.">
+    <!-- Check for the SCLC_HOME environment variable, failing the build if it can't be found. -->
+    <available file="${env.SCLC_HOME}/src/sclc" property="sclc.available" />
+    <fail unless="sclc.available" message="Error: SCLC_HOME not set or file 'sclc' not found, indicating SCLC is not installed." />
+    <mkdir dir="${sclc.dir}" />
+
+    <!-- Run size data using SCLC.  Invoke Perl via the exec task to run SCLC. -->
+    <exec executable="perl" dir="${build.dir}">
+      <arg line="${env.SCLC_HOME}/src/sclc -default_exclude -ignore -xml_output ${sclc.dir}/size.xml -recurse ${basedir}" />
+    </exec>
+  </target>
+
+  <target name="sclc.xslt" description="Runs XSL Transform over SCLC XML to make the XML compatible with XmlData.">
+    <!-- Transform SCLC v2.5 data to work with XmlData sensor for Hackystat v8. -->
+    <xslt in="${sclc.dir}/size.xml" out="${sclc.dir}/transform-size.xml" style="${lib.dir}/sclc/sclc.xsl" />
+  </target>
+
+  <target name="sclc.sensor" depends="sclc.xslt" description="Sends data to Hackystat via the XmlData sensor.">
+    <available file="${env.HACKYSTAT_XMLDATA_HOME}/xmldata-cli.jar" property="xmldata.available" />
+    <fail unless="xmldata.available" message="Error: HACKYSTAT_XMLDATA_HOME not set or ${env.HACKYSTAT_XMLDATA_HOME}/xmldata-cli.jar not found." />
+
+    <!-- Invoke XmlData by executing the jar file and passing in command line args. -->
+    <java jar="${env.HACKYSTAT_XMLDATA_HOME}/xmldata-cli.jar" fork="true">
+      <arg line="-uniqueTimestamps -file ${sclc.dir}/transform-size.xml" />
+    </java>
+  </target>
+</project>
+
