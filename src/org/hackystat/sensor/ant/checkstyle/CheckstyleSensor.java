@@ -20,8 +20,8 @@ import org.apache.tools.ant.types.FileSet;
 import org.hackystat.sensor.ant.checkstyle.resource.jaxb.Checkstyle;
 import org.hackystat.sensor.ant.checkstyle.resource.jaxb.Error;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
-import org.hackystat.sensorshell.SensorProperties;
-import org.hackystat.sensorshell.SensorPropertiesException;
+import org.hackystat.sensorshell.SensorShellProperties;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
@@ -50,7 +50,7 @@ public class CheckstyleSensor extends Task {
   private SensorShell sensorShell;
 
   /** Sensor properties to be used with the sensor. */
-  private SensorProperties sensorProps;
+  private SensorShellProperties sensorProps;
 
   /** Guarantees unique timestamps for each code issue generated. */
   private TstampSet tstampSet = null;
@@ -79,8 +79,13 @@ public class CheckstyleSensor extends Task {
    */
   public CheckstyleSensor(String host, String email, String password) {
     this.filesets = new ArrayList<FileSet>();
-    this.sensorProps = new SensorProperties(host, email, password);
-    this.sensorShell = new SensorShell(this.sensorProps, false, "test", false);
+    try {
+      this.sensorProps = new SensorShellProperties(host, email, password);
+    }
+    catch (SensorShellException e) {
+      throw new BuildException("Bad or missing sensorshell.properties", e);
+    }
+    this.sensorShell = new SensorShell(this.sensorProps, false, "Checkstyle");
     this.tstampSet = new TstampSet();
     this.runtime = new Date().getTime();
   }

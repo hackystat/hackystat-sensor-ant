@@ -13,8 +13,8 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Task;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
-import org.hackystat.sensorshell.SensorProperties;
-import org.hackystat.sensorshell.SensorPropertiesException;
+import org.hackystat.sensorshell.SensorShellProperties;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
@@ -76,10 +76,10 @@ public class BuildSensorAntListener implements BuildListener {
     else {
       try {
         // use value in sensor.properties
-        SensorProperties sensorProps = new SensorProperties();
+        SensorShellProperties sensorProps = new SensorShellProperties();
         this.shell = new SensorShell(sensorProps, false, "Ant");
       }
-      catch (SensorPropertiesException e) {
+      catch (SensorShellException e) {
         throw new BuildException("Unable to initialize sensor properties.", e);
       }
     }
@@ -141,16 +141,13 @@ public class BuildSensorAntListener implements BuildListener {
       this.shell.add(keyValMap);
     }
     catch (Exception e) {
-      e.printStackTrace();
-      throw new BuildException("Error occurred adding data to SensorShell.", e);
+      throw new BuildException("Error adding Hackystat data to SensorShell.", e);
     }
-
-    if (this.shell.send() > 0) {
-      System.out.println("Done!");
+    try {
+     this.shell.send();
     }
-    else {
-      System.out.println("\nUnable to send build result.");
-      System.out.println("\nBuild result is cached offline. It will be sent next time.");
+    catch (SensorShellException e) {
+      throw new BuildException("Error sending Hackystat sensor data.", e);
     }
   }
 
