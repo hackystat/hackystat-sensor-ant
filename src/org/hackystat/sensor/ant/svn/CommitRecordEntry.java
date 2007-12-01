@@ -329,6 +329,7 @@ public class CommitRecordEntry {
    * 
    * @return The string representation.
    */
+  @Override
   public String toString() {
     StringBuffer buff = new StringBuffer(64);
     buff.append("CommitRecordEntry (");

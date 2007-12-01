@@ -46,6 +46,8 @@ public class BuildSensorAntListener implements BuildListener {
   private long startTimeMillis;
   /** The last Ant target executed. */
   private String lastTargetName = "Unknown";
+  /** The string that prefixes all error messages from this sensor. */
+  private String errMsgPrefix = "Hackystat Build Sensor Error: ";
 
   /**
    * Constructs an instance of the build sensor listener. This constructor allows the build sensor
@@ -56,44 +58,39 @@ public class BuildSensorAntListener implements BuildListener {
   public BuildSensorAntListener() {
     // Check for debug, tool, and tool account properties
     String debugString = System.getProperty("hackystat.ant.debug");
-    if (debugString != null) {
-      this.debug = Boolean.valueOf(debugString);
-    }
-
+    this.debug = (debugString == null) ? false : Boolean.valueOf(debugString);
     this.tool = System.getProperty("hackystat.ant.tool");
     this.toolAccount = System.getProperty("hackystat.ant.toolAccount");
 
     if (isUsingUserMap()) {
       try {
-        // get shell from SensorShellMap/UserMap
+        // get shell from SensorShellMap/UserMap when user supplies tool and toolAccount.
         SensorShellMap map = new SensorShellMap(this.tool);
         this.shell = map.getUserShell(this.toolAccount);
       }
       catch (SensorShellMapException e) {
-        throw new BuildException(e.getMessage(), e);
+        throw new BuildException(errMsgPrefix + "Could not create SensorShellMap", e);
       }
     }
+    // User did not supply tool/toolAccount, so do a normal default instantiation of SensorShell.
     else {
       try {
-        // use value in sensor.properties
-        SensorShellProperties sensorProps = new SensorShellProperties();
-        this.shell = new SensorShell(sensorProps, false, "Ant");
+        this.shell = new SensorShell(new SensorShellProperties(), false, "Ant");
       }
       catch (SensorShellException e) {
-        throw new BuildException("Unable to initialize sensor properties.", e);
+        throw new BuildException(errMsgPrefix + "Unable to initialize sensor properties.", e);
       }
     }
   }
 
   /**
-   * Logs debug message.
+   * Prints out debug message.
    * 
    * @param message The debug message.
    */
   private void logDebugMessage(String message) {
     if (this.debug) {
-      System.out.print("[Ant Build Sensor DEBUG] ");
-      System.out.println(message);
+      System.out.println("[Hackystat Build Sensor] " + message);
     }
   }
 
@@ -141,13 +138,13 @@ public class BuildSensorAntListener implements BuildListener {
       this.shell.add(keyValMap);
     }
     catch (Exception e) {
-      throw new BuildException("Error adding Hackystat data to SensorShell.", e);
+      throw new BuildException(errMsgPrefix + "Error adding data to SensorShell.", e);
     }
     try {
-     this.shell.send();
+      this.shell.send();
     }
     catch (SensorShellException e) {
-      throw new BuildException("Error sending Hackystat sensor data.", e);
+      throw new BuildException("errMsgPrefix + Error sensor data.", e);
     }
   }
 

@@ -21,6 +21,7 @@ public class TestAll extends TestCase {
    * 
    * @throws Exception If we cannot set up this test case.
    */
+  @Override
   protected void setUp() throws Exception {
     //we only run test in a environment we can access a testing svn server.
     //To bad, JavaSVN does not support file protocol in verions 1.0 release.

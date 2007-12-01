@@ -127,6 +127,7 @@ public class JavaClass2FilePathMapper {
    * 
    * @return The array of canonical file names.
    */
+  @Override
   public String toString() {
     return this.originalFileNames.toString();
   }

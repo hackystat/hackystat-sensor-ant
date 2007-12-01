@@ -23,8 +23,8 @@ import org.hackystat.sensor.ant.junit.resource.jaxb.Failure;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Testcase;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Testsuite;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
-import org.hackystat.sensorshell.SensorProperties;
-import org.hackystat.sensorshell.SensorPropertiesException;
+import org.hackystat.sensorshell.SensorShellProperties;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
@@ -35,7 +35,6 @@ import org.hackystat.utilities.tstamp.TstampSet;
  * results to the Hackystat server.
  * 
  * @author Philip Johnson, Hongbing Kou, Joy Agustin, Julie Ann Sakuda, Aaron A. Kagawa
- * @version $Id: JUnitSensor.java,v 1.1.1.1 2005/10/20 23:56:58 johnson Exp $
  */
 public class JUnitSensor extends Task {
 
@@ -46,7 +45,7 @@ public class JUnitSensor extends Task {
   private boolean verbose = false;
 
   /** The sensor shell instance used by this sensor. */
-  private SensorShell shell;
+  private SensorShell sensorShell;
 
   /** Specifies the runtime of the sensor. All issues sent will have the same runtime. */
   private long runtime = 0;
@@ -55,7 +54,7 @@ public class JUnitSensor extends Task {
   private String sourcePath;
 
   /** Sensor properties to be used with the sensor. */
-  private SensorProperties sensorProps;
+  private SensorShellProperties sensorProps;
 
   /** Timestamp set that will guarantee uniqueness of JUnit timestamps. */
   private TstampSet tstampSet;
@@ -65,6 +64,10 @@ public class JUnitSensor extends Task {
 
   /** Tool account in the UserMap to use. */
   private String toolAccount;
+  
+  /** The string that prefixes all error messages from this sensor. */
+  private String errMsgPrefix = "Hackystat JUnit Sensor Error: ";
+
 
   /** Initialize a new instance of a JUnitSensor. */
   public JUnitSensor() {
@@ -84,8 +87,13 @@ public class JUnitSensor extends Task {
    */
   public JUnitSensor(String host, String email, String password) {
     this.filesets = new ArrayList<FileSet>();
-    this.sensorProps = new SensorProperties(host, email, password);
-    this.shell = new SensorShell(this.sensorProps, false, "test", false);
+    try {
+      this.sensorProps = SensorShellProperties.getTestInstance(host, email, password);
+      this.sensorShell = new SensorShell(this.sensorProps, false, "test");
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Problems creating SensorShell", e);
+    }
     this.tstampSet = new TstampSet();
     this.runtime = new Date().getTime();
   }
@@ -177,7 +185,7 @@ public class JUnitSensor extends Task {
         }
         else {
           System.out.println("Hackystat data on " + numberOfTests + " JUnit tests sent to "
-              + this.sensorProps.getHackystatHost() + " (" + elapsedTime + " secs.)");
+              + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
         }
       }
       else if (numberOfTests == 0) {
@@ -188,10 +196,10 @@ public class JUnitSensor extends Task {
       }
     }
     catch (Exception e) {
-      throw new BuildException("Errors occurred while processing the junit report file " + e);
+      throw new BuildException(errMsgPrefix + "Errors occurred while processing junit files.", e);
     }
     finally { // After send-out, close the sensor shell.
-      this.shell.quit();
+      this.sensorShell.quit();
     }
   }
 
@@ -204,29 +212,22 @@ public class JUnitSensor extends Task {
     if (isUsingUserMap()) {
       try {
         SensorShellMap map = new SensorShellMap(this.tool);
-        this.shell = map.getUserShell(this.toolAccount);
+        this.sensorShell = map.getUserShell(this.toolAccount);
       }
       catch (SensorShellMapException e) {
-        throw new BuildException(e.getMessage(), e);
+        throw new BuildException(errMsgPrefix + "Problem getting data from UserMap.", e);
       }
     }
     // sanity check to make sure the prop and shell haven't already been set by the
     // constructor that takes in the email, password, and host
-    else if (this.sensorProps == null && this.shell == null) {
+    else if (this.sensorProps == null && this.sensorShell == null) {
       // use the sensor.properties file
       try {
-        this.sensorProps = new SensorProperties();
-        this.shell = new SensorShell(this.sensorProps, false, "JUnit");
+        this.sensorProps = new SensorShellProperties();
+        this.sensorShell = new SensorShell(this.sensorProps, false, "JUnit");
       }
-      catch (SensorPropertiesException e) {
-        System.out.println(e.getMessage());
-        System.out.println("Exiting...");
-        throw new BuildException(e.getMessage(), e);
-      }
-
-      if (!this.sensorProps.isFileAvailable()) {
-        System.out.println("Could not find sensor.properties file. ");
-        System.out.println("Expected in: " + this.sensorProps.getAbsolutePath());
+      catch (SensorShellException e) {
+        throw new BuildException(errMsgPrefix + "Problem instantiating SensorShell", e);
       }
     }
   }
@@ -246,7 +247,12 @@ public class JUnitSensor extends Task {
    * @return Returns the number of SensorData instances sent to the server.
    */
   public int send() {
-    return this.shell.send();
+    try {
+      return this.sensorShell.send();
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Problem sending sensor data.", e);
+    }
   }
 
   /**
@@ -335,7 +341,7 @@ public class JUnitSensor extends Task {
           keyValMap.put("ErrorString", stringErrorList.get(0));
         }
 
-        this.shell.add(keyValMap); // add data to sensorshell
+        this.sensorShell.add(keyValMap); // add data to sensorshell
       }
       return testcases.size();
     }

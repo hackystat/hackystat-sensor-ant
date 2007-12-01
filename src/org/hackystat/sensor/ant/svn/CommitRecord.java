@@ -19,7 +19,6 @@ import org.tmatesoft.svn.core.io.SVNRepository;
  * a single file.
  * 
  * @author (Cedric) Qin ZHANG
- * @version $Id$
  */
 public class CommitRecord {
 
@@ -185,6 +184,7 @@ public class CommitRecord {
    * Returns the string representation of this record.
    * @return the string representation.
    */
+  @Override
   public String toString() {
     return "Author=" + this.getAuthor() + ", Message=" + this.getMessage() + ", CommitTime="
         + this.getCommitTime();

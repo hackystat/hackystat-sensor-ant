@@ -9,8 +9,8 @@ import java.util.Map;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
-import org.hackystat.sensorshell.SensorProperties;
-import org.hackystat.sensorshell.SensorPropertiesException;
+import org.hackystat.sensorshell.SensorShellProperties;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
@@ -209,6 +209,7 @@ public class SvnSensor extends Task {
    * 
    * @throws BuildException If the task fails.
    */
+  @Override
   public void execute() throws BuildException {
     this.processProperties(); // sanity check.
     if (this.isVerbose) {
@@ -252,9 +253,9 @@ public class SvnSensor extends Task {
         shell.quit();
       }
 
-      SensorProperties props = new SensorProperties();
+      SensorShellProperties props = new SensorShellProperties();
       if (isServerAvailable) {
-        System.out.println(entriesAdded + " entries sent to " + props.getHackystatHost());
+        System.out.println(entriesAdded + " entries sent to " + props.getSensorBaseHost());
       }
       else {
         System.out.println("Server not available. Storing " + entriesAdded
@@ -282,11 +283,11 @@ public class SvnSensor extends Task {
    * @return the shell instance associated with the author name.
    * @throws SensorShellMapException thrown if there is a problem retrieving the
    * shell instance.
-   * @throws SensorPropertiesException thrown if there is a problem retrieving
+   * @throws SensorShellException thrown if there is a problem retrieving
    * the Hackystat host from the v8.sensor.properties file.
    */
   private SensorShell getShell(Map<String, SensorShell> shellCache, SensorShellMap shellMap,
-      String author) throws SensorShellMapException, SensorPropertiesException {
+      String author) throws SensorShellMapException, SensorShellException {
     if (shellCache.containsKey(author)) {
       return shellCache.get(author); // Returns a cached shell instance.
     }
@@ -305,7 +306,7 @@ public class SvnSensor extends Task {
               + " was not found and no default Hackystat account login, password, "
               + "or server was provided.");
         }
-        SensorProperties props = new SensorProperties(this.defaultHackystatSensorbase,
+        SensorShellProperties props = new SensorShellProperties(this.defaultHackystatSensorbase,
             this.defaultHackystatAccount, this.defaultHackystatPassword);
 
         SensorShell shell = new SensorShell(props, false, "svn");

@@ -60,6 +60,10 @@ public class CheckstyleSensor extends Task {
 
   /** Tool account in the UserMap to use. */
   private String toolAccount;
+  
+  /** The string that prefixes all error messages from this sensor. */
+  private String errMsgPrefix = "Hackystat Checkstyle Sensor Error: ";
+
 
   /** Initialize a new instance of a CheckstyleSensor. */
   public CheckstyleSensor() {
@@ -80,10 +84,10 @@ public class CheckstyleSensor extends Task {
   public CheckstyleSensor(String host, String email, String password) {
     this.filesets = new ArrayList<FileSet>();
     try {
-      this.sensorProps = new SensorShellProperties(host, email, password);
+      this.sensorProps = SensorShellProperties.getTestInstance(host, email, password);
     }
     catch (SensorShellException e) {
-      throw new BuildException("Bad or missing sensorshell.properties", e);
+      throw new BuildException(errMsgPrefix + "Unable to instantiate test sensorshell props", e);
     }
     this.sensorShell = new SensorShell(this.sensorProps, false, "Checkstyle");
     this.tstampSet = new TstampSet();
@@ -102,7 +106,7 @@ public class CheckstyleSensor extends Task {
         this.sensorShell = map.getUserShell(this.toolAccount);
       }
       catch (SensorShellMapException e) {
-        throw new BuildException(e.getMessage(), e);
+        throw new BuildException(errMsgPrefix + "Problem finding account info in UserMaps.", e);
       }
     }
     // sanity check to make sure the prop and shell haven't already been set by the
@@ -110,18 +114,11 @@ public class CheckstyleSensor extends Task {
     else if (this.sensorProps == null && this.sensorShell == null) {
       // use the sensor.properties file
       try {
-        this.sensorProps = new SensorProperties();
+        this.sensorProps = new SensorShellProperties();
         this.sensorShell = new SensorShell(this.sensorProps, false, "Checkstyle");
       }
-      catch (SensorPropertiesException e) {
-        System.out.println(e.getMessage());
-        System.out.println("Exiting...");
-        throw new BuildException(e.getMessage(), e);
-      }
-
-      if (!this.sensorProps.isFileAvailable()) {
-        System.out.println("Could not find sensor.properties file. ");
-        System.out.println("Expected in: " + this.sensorProps.getAbsolutePath());
+      catch (SensorShellException e) {
+        throw new BuildException(errMsgPrefix + "Problem creating Hackystat Checkstyle Sensor.", e);
       }
     }
   }
@@ -165,6 +162,7 @@ public class CheckstyleSensor extends Task {
    * 
    * @throws BuildException If there is an error.
    */
+  @Override
   public void execute() throws BuildException {
     setupSensorShell();
 
@@ -197,7 +195,7 @@ public class CheckstyleSensor extends Task {
       }
       else {
         System.out.println("Hackystat data on " + numberOfCodeIssues + " Checkstyle issues sent to "
-            + this.sensorProps.getHackystatHost() + " (" + elapsedTime + " secs.)");
+            + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
       }
     }
     else if (numberOfCodeIssues == 0) {
@@ -214,7 +212,12 @@ public class CheckstyleSensor extends Task {
    * @return Returns the number of entries sent.
    */
   public int send() {
-    return this.sensorShell.send();
+    try {
+      return this.sensorShell.send();
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Problem sending data.", e);
+    }
   }
 
   /**

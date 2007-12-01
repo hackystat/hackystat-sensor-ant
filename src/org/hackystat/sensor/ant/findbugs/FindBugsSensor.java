@@ -23,8 +23,8 @@ import org.apache.tools.ant.types.FileSet;
 import org.hackystat.sensor.ant.findbugs.resource.jaxb.BugCollection;
 import org.hackystat.sensor.ant.findbugs.resource.jaxb.BugInstance;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
-import org.hackystat.sensorshell.SensorProperties;
-import org.hackystat.sensorshell.SensorPropertiesException;
+import org.hackystat.sensorshell.SensorShellProperties;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
@@ -35,7 +35,6 @@ import org.hackystat.utilities.tstamp.TstampSet;
  * results to the Hackystat server.
  * 
  * @author Philip Johnson, Hongbing Kou, Joy Agustin, Julie Ann Sakuda, Aaron A. Kagawa
- * @version $Id: FindBugsSensor.java,v 1.1.1.1 2005/10/20 23:56:58 johnson Exp $
  */
 public class FindBugsSensor extends Task {
 
@@ -51,9 +50,13 @@ public class FindBugsSensor extends Task {
   /** The sensor shell instance used by this sensor. */
   private SensorShell sensorShell;
   /** Sensor properties to be used with the sensor. */
-  private SensorProperties sensorProps;
+  private SensorShellProperties sensorProps;
   /** Timestamp set that will guarantee uniqueness of FindBugs timestamps. */
   private TstampSet tstampSet;
+  
+  /** The string that prefixes all error messages from this sensor. */
+  private String errMsgPrefix = "Hackystat FindBugs Sensor Error: ";
+
 
   /** Initialize a new instance of a FindBugsSensor. */
   public FindBugsSensor() {
@@ -72,8 +75,13 @@ public class FindBugsSensor extends Task {
    */
   public FindBugsSensor(String host, String email, String password) {
     this.filesets = new ArrayList<FileSet>();
-    this.sensorProps = new SensorProperties(host, email, password);
-    this.sensorShell = new SensorShell(this.sensorProps, false, "test", false);
+    try {
+      this.sensorProps = SensorShellProperties.getTestInstance(host, email, password);
+      this.sensorShell = new SensorShell(this.sensorProps, false, "test");
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Error instantiating SensorShell", e);
+    }
     this.tstampSet = new TstampSet();
   }
 
@@ -148,7 +156,7 @@ public class FindBugsSensor extends Task {
         }
         else {
           System.out.println("Hackystat data on " + numberOfTests + " FindBugs tests sent to "
-              + this.sensorProps.getHackystatHost() + " (" + elapsedTime + " secs.)");
+              + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
         }
       }
       else if (numberOfTests == 0) {
@@ -178,26 +186,18 @@ public class FindBugsSensor extends Task {
         this.sensorShell = map.getUserShell(this.toolAccount);
       }
       catch (SensorShellMapException e) {
-        throw new BuildException(e.getMessage(), e);
+        throw new BuildException(errMsgPrefix + "Problem getting data from UserMap.", e);
       }
     }
     // sanity check to make sure the prop and shell haven't already been set by the
     // constructor that takes in the email, password, and host
     else if (this.sensorProps == null && this.sensorShell == null) {
-      // use the sensor.properties file
       try {
-        this.sensorProps = new SensorProperties();
+        this.sensorProps = new SensorShellProperties();
         this.sensorShell = new SensorShell(this.sensorProps, false, "FindBugs");
       }
-      catch (SensorPropertiesException e) {
-        System.out.println(e.getMessage());
-        System.out.println("Exiting...");
-        throw new BuildException(e.getMessage(), e);
-      }
-
-      if (!this.sensorProps.isFileAvailable()) {
-        System.out.println("Could not find sensor.properties file. ");
-        System.out.println("Expected in: " + this.sensorProps.getAbsolutePath());
+      catch (SensorShellException e) {
+        throw new BuildException(errMsgPrefix + "Problem instantiating SensorShell", e);
       }
     }
   }
@@ -215,7 +215,12 @@ public class FindBugsSensor extends Task {
    * @return Returns the number of SensorData instances sent to the server.
    */
   public int send() {
-    return this.sensorShell.send();
+    try {
+      return this.sensorShell.send();
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Problem sending sensor data.", e);
+    }
   }
 
   /**
@@ -327,7 +332,7 @@ public class FindBugsSensor extends Task {
     }
     catch (Exception e) {
       e.printStackTrace();
-      throw new BuildException("Failed to process " + fileNameString + "   " + e);
+      throw new BuildException(errMsgPrefix + "Failed to process " + fileNameString, e);
     }
   }
   

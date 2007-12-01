@@ -21,8 +21,8 @@ import org.hackystat.sensor.ant.clover.resource.jaxb.Package;
 import org.hackystat.sensor.ant.clover.resource.jaxb.Project;
 import org.hackystat.sensor.ant.util.JavaClass2FilePathMapper;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
-import org.hackystat.sensorshell.SensorProperties;
-import org.hackystat.sensorshell.SensorPropertiesException;
+import org.hackystat.sensorshell.SensorShellProperties;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
@@ -33,7 +33,6 @@ import org.hackystat.utilities.tstamp.TstampSet;
  * Ant Task and sends the Coverage data to a Hackystat server.
  *
  * @author Aaron A. Kagawa
- * @version $Id$
  */
 public class CloverSensor extends Task {
 
@@ -53,13 +52,16 @@ public class CloverSensor extends Task {
   /** Tool account in the UserMap to use. */
   private String toolAccount;
   /** Sensor properties to be used with the sensor. */
-  private SensorProperties sensorProps;
+  private SensorShellProperties sensorProps;
   /** The sensor shell instance used by this sensor. */
   private SensorShell sensorShell;
   /** The mapper used to map class names to file paths. */
   private JavaClass2FilePathMapper javaClass2FilePathMapper;
   /** The batch runtime. */
   private long runtime = 0;
+  
+  /** The string that prefixes all error messages from this sensor. */
+  private String errMsgPrefix = "Hackystat Clover Sensor Error: ";
   
   /** Initialize a new instance of a CloverSensor. */
   public CloverSensor() {
@@ -77,8 +79,13 @@ public class CloverSensor extends Task {
    */
   public CloverSensor(String host, String email, String password) {
     // set sensorshell right away!
-    this.sensorProps = new SensorProperties(host, email, password);
-    this.sensorShell = new SensorShell(this.sensorProps, false, "test", false);
+    try {
+      this.sensorProps = SensorShellProperties.getTestInstance(host, email, password);
+      this.sensorShell = new SensorShell(this.sensorProps, false, "test");
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Unable to create SensorShell", e);
+    }
     this.tstampSet = new TstampSet();
     this.runtime = new Date().getTime();
   }
@@ -144,7 +151,7 @@ public class CloverSensor extends Task {
         this.sensorShell = map.getUserShell(this.toolAccount);
       }
       catch (SensorShellMapException e) {
-        throw new BuildException(e.getMessage(), e);
+        throw new BuildException(errMsgPrefix + "Problem with UserMap account lookup", e);
       }
     }
     // sanity check to make sure the prop and shell haven't already been set by the
@@ -152,18 +159,11 @@ public class CloverSensor extends Task {
     else if (this.sensorProps == null && this.sensorShell == null) {
       // use the sensor.properties file
       try {
-        this.sensorProps = new SensorProperties();
+        this.sensorProps = new SensorShellProperties();
         this.sensorShell = new SensorShell(this.sensorProps, false, "Clover");
       }
-      catch (SensorPropertiesException e) {
-        System.out.println(e.getMessage());
-        System.out.println("Exiting...");
-        throw new BuildException(e.getMessage(), e);
-      }
-
-      if (!this.sensorProps.isFileAvailable()) {
-        System.out.println("Could not find sensor.properties file. ");
-        System.out.println("Expected in: " + this.sensorProps.getAbsolutePath());
+      catch (SensorShellException e) {
+        throw new BuildException(errMsgPrefix + "Problem instantiating SensorShell", e);
       }
     }
   }
@@ -181,7 +181,12 @@ public class CloverSensor extends Task {
    * @return Returns the number of SensorData instances sent to the server.
    */
   public int send() {
-    return this.sensorShell.send();
+    try {
+      return this.sensorShell.send();
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Problem sending data", e);
+    }
   }
 
   /**
@@ -189,6 +194,7 @@ public class CloverSensor extends Task {
    *   the hackystat server. This method is invoked automatically by Ant.
    * @throws BuildException If there is an error.
    */
+  @Override
   public void execute() throws BuildException {
     this.setupSensorShell();
 
@@ -208,7 +214,7 @@ public class CloverSensor extends Task {
       Date endTime = new Date();
       long elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
       System.out.println("Hackystat data on " + numberOfEntries + " coverage entries sent to " 
-          + this.sensorProps.getHackystatHost() + " (" + elapsedTime + " secs.)");
+          + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
     }
     else {
       System.out.println("Failed to send Hackystat Coverage data. See log for details.");
@@ -325,7 +331,7 @@ public class CloverSensor extends Task {
       return coverageEntriesCount;
     }
     catch (Exception e) {
-      throw new BuildException("Failed to process " + fileNameString + "   " + e);
+      throw new BuildException(errMsgPrefix + "Failed to process " + fileNameString, e);
     }
   }
 

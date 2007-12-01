@@ -26,8 +26,8 @@ import org.hackystat.sensor.ant.pmd.resource.jaxb.ObjectFactory;
 import org.hackystat.sensor.ant.pmd.resource.jaxb.Pmd;
 import org.hackystat.sensor.ant.pmd.resource.jaxb.Violation;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
-import org.hackystat.sensorshell.SensorProperties;
-import org.hackystat.sensorshell.SensorPropertiesException;
+import org.hackystat.sensorshell.SensorShellProperties;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
@@ -72,7 +72,11 @@ public class PmdSensor extends Task {
   private SensorShell sensorShell;
 
   /** Sensor properties to be used with the sensor. */
-  private SensorProperties sensorProps;
+  private SensorShellProperties sensorProps;
+  
+  /** The string that prefixes all error messages from this sensor. */
+  private String errMsgPrefix = "Hackystat PMD Sensor Error: ";
+
   
   /** Initialize a new instance of a PmdSensor. */
   public PmdSensor() {
@@ -92,8 +96,13 @@ public class PmdSensor extends Task {
    * @param password The Hackystat password to use.
    */
   public PmdSensor(String host, String email, String password) {
-    this.sensorProps = new SensorProperties(host, email, password);
-    this.sensorShell = new SensorShell(sensorProps, false, "test", false);
+    try {
+      this.sensorProps = SensorShellProperties.getTestInstance(host, email, password);
+      this.sensorShell = new SensorShell(sensorProps, false, "test");
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Problems creating SensorShell", e);
+    }
     this.filesets = new ArrayList<FileSet>();
     this.sourceFileSets = new ArrayList<FileSet>();
     this.tstampSet = new TstampSet();
@@ -172,6 +181,7 @@ public class PmdSensor extends Task {
    *   the hackystat server. This method is invoked automatically by Ant.
    * @throws BuildException If there is an error.
    */
+  @Override
   public void execute() throws BuildException {
     setupSensorShell();
 
@@ -203,7 +213,7 @@ public class PmdSensor extends Task {
         }
         else {
           System.out.println("Hackystat data on " + numberOfCodeIssues + " PMD issues sent to "
-              + this.sensorProps.getHackystatHost() + " (" + elapsedTime + " secs.)");
+              + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
         }
       }
       else if (numberOfCodeIssues == 0) {
@@ -214,7 +224,7 @@ public class PmdSensor extends Task {
       }
     }
     catch (Exception e) {
-      throw new BuildException("Errors occurred while processing the pmd report file " + e);
+      throw new BuildException("Errors occurred while processing the pmd report file ", e);
     }
     finally { // After send-out, close the sensor shell.
       this.sensorShell.quit();
@@ -226,7 +236,12 @@ public class PmdSensor extends Task {
    * @return Returns the number of entries sent.
    */
   public int send() {
-    return this.sensorShell.send();
+    try {
+      return this.sensorShell.send();
+    }
+    catch (SensorShellException e) {
+      throw new BuildException(errMsgPrefix + "Problem sending sensor data.", e);
+    }
   }
   
   /**
@@ -249,18 +264,11 @@ public class PmdSensor extends Task {
     else if (this.sensorProps == null && this.sensorShell == null) {
       // use the sensor.properties file
       try {
-        this.sensorProps = new SensorProperties();
+        this.sensorProps = new SensorShellProperties();
         this.sensorShell = new SensorShell(this.sensorProps, false, "PMD");
       }
-      catch (SensorPropertiesException e) {
-        System.out.println(e.getMessage());
-        System.out.println("Exiting...");
-        throw new BuildException(e.getMessage(), e);
-      }
-
-      if (!this.sensorProps.isFileAvailable()) {
-        System.out.println("Could not find sensor.properties file. ");
-        System.out.println("Expected in: " + this.sensorProps.getAbsolutePath());
+      catch (SensorShellException e) {
+        throw new BuildException(errMsgPrefix + "Problem instantiating SensorShell", e);
       }
     }
   }
@@ -358,7 +366,7 @@ public class PmdSensor extends Task {
       return codeIssueCount;
     }
     catch (Exception e) {
-      throw new BuildException("Failed to process " + fileNameString + "   " + e);
+      throw new BuildException("Failed to process " + fileNameString, e);
     }
   }
   
