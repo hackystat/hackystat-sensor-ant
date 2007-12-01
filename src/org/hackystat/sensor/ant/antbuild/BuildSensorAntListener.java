@@ -2,6 +2,7 @@ package org.hackystat.sensor.ant.antbuild;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
@@ -13,23 +14,30 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Task;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
-import org.hackystat.sensorshell.SensorShellProperties;
-import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
+import org.hackystat.sensorshell.SensorShellException;
+import org.hackystat.sensorshell.SensorShellProperties;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
 
 /**
- * Ant build sensor. It's implemented as an ant listener.
+ * Ant build sensor. It's implemented as an ant listener.  Note that we are unable to access the
+ * Ant properties directly. Because of this almost all the Ant methods have a check to see if
+ * properties have been retrieved by this sensor. The order of the methods depends on the build
+ * so almost all methods need to do this check.
  * 
  * @author (Cedric) Qin Zhang, Julie Ann Sakuda
  */
 public class BuildSensorAntListener implements BuildListener {
+  /** Flag indicating if the sensor properties have already been retrieved. */
+  private boolean propertiesSet = false;
 
   private boolean debug = false;
 
   private String tool;
   private String toolAccount;
+  
+  private String buildType;
 
   private SensorShell shell = null;
 
@@ -56,31 +64,7 @@ public class BuildSensorAntListener implements BuildListener {
    * parameters.
    */
   public BuildSensorAntListener() {
-    // Check for debug, tool, and tool account properties
-    String debugString = System.getProperty("hackystat.ant.debug");
-    this.debug = (debugString == null) ? false : Boolean.valueOf(debugString);
-    this.tool = System.getProperty("hackystat.ant.tool");
-    this.toolAccount = System.getProperty("hackystat.ant.toolAccount");
-
-    if (isUsingUserMap()) {
-      try {
-        // get shell from SensorShellMap/UserMap when user supplies tool and toolAccount.
-        SensorShellMap map = new SensorShellMap(this.tool);
-        this.shell = map.getUserShell(this.toolAccount);
-      }
-      catch (SensorShellMapException e) {
-        throw new BuildException(errMsgPrefix + "Could not create SensorShellMap", e);
-      }
-    }
-    // User did not supply tool/toolAccount, so do a normal default instantiation of SensorShell.
-    else {
-      try {
-        this.shell = new SensorShell(new SensorShellProperties(), false, "Ant");
-      }
-      catch (SensorShellException e) {
-        throw new BuildException(errMsgPrefix + "Unable to initialize sensor properties.", e);
-      }
-    }
+    // can't do anything here because we don't have the sensor properties yet
   }
 
   /**
@@ -95,7 +79,8 @@ public class BuildSensorAntListener implements BuildListener {
   }
 
   /**
-   * Callback function when ant starts the build. Not used in this class.
+   * Callback function when ant starts the build. Note that the Ant properties at this point do
+   * not have any properties specified with '-D'. Do not try to get the property values here.
    * 
    * @param buildEvent The build event object.
    */
@@ -110,6 +95,13 @@ public class BuildSensorAntListener implements BuildListener {
    * @param buildEvent The build event object.
    */
   public void buildFinished(BuildEvent buildEvent) {
+    if (!propertiesSet) {
+      this.setProperties(buildEvent);
+    }
+
+    // set up/initialize the sensor shell to use
+    this.setUpSensorShell();
+
     long endTimeMillis = System.currentTimeMillis();
     String workingDirectory = buildEvent.getProject().getBaseDir().getAbsolutePath();
 
@@ -132,6 +124,10 @@ public class BuildSensorAntListener implements BuildListener {
     // optional
     XMLGregorianCalendar endTime = LongTimeConverter.convertLongToGregorian(endTimeMillis);
     keyValMap.put("EndTime", endTime.toString());
+    
+    if (this.buildType != null) {
+      keyValMap.put("Type", this.buildType);
+    }
 
     System.out.print("Sending build result to Hackystat server... ");
     try {
@@ -146,6 +142,7 @@ public class BuildSensorAntListener implements BuildListener {
     catch (SensorShellException e) {
       throw new BuildException("errMsgPrefix + Error sensor data.", e);
     }
+    System.out.println();
   }
 
   /**
@@ -165,6 +162,10 @@ public class BuildSensorAntListener implements BuildListener {
    * @param buildEvent The build event object.
    */
   public void targetFinished(BuildEvent buildEvent) {
+    if (!propertiesSet) {
+      this.setProperties(buildEvent);
+    }
+    
     String targetName = buildEvent.getTarget().getName();
     this.logDebugMessage("TargetFinished - " + targetName);
 
@@ -187,7 +188,10 @@ public class BuildSensorAntListener implements BuildListener {
    * @param buildEvent The build event object.
    */
   public void taskStarted(BuildEvent buildEvent) {
-    // System.out.println("==>TaskStarted: " + buildEvent.getTask().getTaskName());
+    if (!propertiesSet) {
+      this.setProperties(buildEvent);
+    }
+    
     Task task = buildEvent.getTask();
     String taskName = task.getTaskName();
     this.logDebugMessage("TaskStarted - " + taskName);
@@ -201,6 +205,10 @@ public class BuildSensorAntListener implements BuildListener {
    * @param buildEvent The build event object.
    */
   public void taskFinished(BuildEvent buildEvent) {
+    if (!propertiesSet) {
+      this.setProperties(buildEvent);
+    }
+    
     String taskName = buildEvent.getTask().getTaskName();
     this.logDebugMessage("TaskFinished - " + taskName + ";  error = "
         + (buildEvent.getException() != null));
@@ -244,5 +252,60 @@ public class BuildSensorAntListener implements BuildListener {
    */
   private boolean isUsingUserMap() {
     return (this.tool != null && this.toolAccount != null);
+  }
+  
+  /** Sets up the sensorshell instance that should be used. */
+  private void setUpSensorShell() {
+    if (isUsingUserMap()) {
+      try {
+        // get shell from SensorShellMap/UserMap when user supplies tool and toolAccount.
+        SensorShellMap map = new SensorShellMap(this.tool);
+        this.shell = map.getUserShell(this.toolAccount);
+      }
+      catch (SensorShellMapException e) {
+        throw new BuildException(errMsgPrefix + "Could not create SensorShellMap", e);
+      }
+    }
+    // User did not supply tool/toolAccount, so do a normal default instantiation of SensorShell.
+    else {
+      try {
+        this.shell = new SensorShell(new SensorShellProperties(), false, "Ant");
+      }
+      catch (SensorShellException e) {
+        throw new BuildException(errMsgPrefix + "Unable to initialize sensor properties.", e);
+      }
+    }
+  }
+  
+  /**
+   * Sets the Hackystat properties using the properties map from Ant.
+   * 
+   * @param buildEvent Build event to use to retrieve sensor properties.
+   */
+  @SuppressWarnings("unchecked")
+  private void setProperties(BuildEvent buildEvent) {
+    Hashtable properties = buildEvent.getProject().getProperties();
+
+    Object debugObject = properties.get("hackystat.ant.debug");
+    if (debugObject != null) {
+      this.debug = Boolean.valueOf((String) debugObject);
+    }
+
+    Object toolObject = properties.get("hackystat.ant.tool");
+    if (toolObject != null) {
+      this.tool = (String) toolObject;
+    }
+
+    Object toolAccountObject = properties.get("hackystat.ant.toolAccount");
+    if (toolAccountObject != null) {
+      this.toolAccount = (String) toolAccountObject;
+    }
+    
+    Object typeObject = properties.get("hackystat.ant.build.type");
+    if (typeObject != null) {
+      this.buildType = (String) typeObject;
+    }
+
+    this.propertiesSet = true;
   }
 }
