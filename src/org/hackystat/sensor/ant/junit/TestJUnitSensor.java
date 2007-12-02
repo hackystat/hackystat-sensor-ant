@@ -18,7 +18,6 @@ import org.junit.Test;
  * Tests the Ant JUnitSensor.
  * 
  * @author Aaron A. Kagawa, Philip Johnson, Hongbing Kou, Joy Agustin, Julie Ann Sakuda
- * @version $Id: TestJUnitSensor.java,v 1.1.1.1 2005/10/20 23:56:58 johnson Exp $
  */
 public class TestJUnitSensor extends TestCase {
 

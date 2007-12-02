@@ -3,55 +3,48 @@
   Provides the JUnit tool and the Hackystat JUnit sensor.
   </description>
 
-  <import file="build.xml"/>
+  <import file="build.xml" />
   <property name="junit.dir" location="${build.dir}/junit" />
 
   <target name="junit" depends="junit.tool, junit.report" description="Runs JUnit, JunitReport">
-     <fail if="junit.failed">JUnit test case(s) failed.</fail>
-  </target>   
+    <fail if="junit.failed">JUnit test case(s) failed.</fail>
+  </target>
 
   <target name="junit.tool" depends="compile" description="Run JUnit tests.">
     <mkdir dir="${junit.dir}" />
     <!-- Run the tests, which are all classes whose name starts with 'Test'. -->
     <!-- Fork is on until I can figure out how to stop the sensorbase and unbind the port. -->
-    <!-- Note that emma is forking in its JUnit as well. --> 
+    <!-- Note that emma is forking in its JUnit as well. -->
     <junit printsummary="withOutAndErr" haltonfailure="${junit.haltonfailure}" fork="yes" failureproperty="junit.failed">
       <classpath>
         <pathelement location="${build.dir}/classes" />
-        <path refid="compile.classpath"/>
+        <path refid="compile.classpath" />
       </classpath>
-    	<sysproperty key="junittestfiles" value="${basedir}/testdata/junit"/>
-    	<sysproperty key="emmatestfiles" value="${basedir}/testdata/emma"/>
-    	<sysproperty key="findbugstestfiles" value="${basedir}/testdata/findbugs"/>
-    	<sysproperty key="checkstyletestfiles" value="${basedir}/testdata/checkstyle"/>
-    	<sysproperty key="pmdtestfiles" value="${basedir}/testdata/pmd"/>
-    	<sysproperty key="clovertestfiles" value="${basedir}/testdata/clover"/>
-      <formatter type="xml" /> 
+      <sysproperty key="junittestfiles" value="${basedir}/testdata/junit" />
+      <sysproperty key="emmatestfiles" value="${basedir}/testdata/emma" />
+      <sysproperty key="findbugstestfiles" value="${basedir}/testdata/findbugs" />
+      <sysproperty key="checkstyletestfiles" value="${basedir}/testdata/checkstyle" />
+      <sysproperty key="pmdtestfiles" value="${basedir}/testdata/pmd" />
+      <sysproperty key="clovertestfiles" value="${basedir}/testdata/clover" />
+      <formatter type="xml" />
       <batchtest todir="${junit.dir}">
-      	<!-- Must exclude the jaxb folders because jaxb created Testsuite class. -->
-        <fileset dir="${src.dir}" includes="**/Test*.java" excludes="**/jaxb/**"/>
+        <!-- Must exclude the jaxb folders because jaxb created Testsuite class. -->
+        <fileset dir="${src.dir}" includes="**/Test*.java" excludes="**/jaxb/**" />
       </batchtest>
     </junit>
-  </target>  
+  </target>
 
   <target name="junit.report" description="Generates an HTML report for JUnit.">
     <taskdef name="junitreport" classname="org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator" />
     <junitreport todir="${junit.dir}">
-      <fileset dir="${junit.dir}" includes="TEST-*.xml"/>
+      <fileset dir="${junit.dir}" includes="TEST-*.xml" />
       <report format="frames" todir="${junit.dir}" />
     </junitreport>
   </target>
-    
-  <target name="junit.sensor" description="Sends UnitTest data to Hackystat using the JUnit sensor.">
-    <!-- Define the junit sensor taskdef. -->
-  	<taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" 
-  		uri="org.hackystat.sensor.ant"/>
-  	
-    <!-- Send JUnit test data to hackystat using the JUnit sensor. -->
-    <hackystat:hacky-junit verbose="${hackystat.verbose.mode}" 
-                 sourcePath="${src.dir}">
-      <fileset dir="${junit.dir}" includes="TEST-*.xml"/>
-    </hackystat:hacky-junit>
+
+  <target name="junit.sensor" description="Send hackystat data about this JUnit invocation.">
+    <fileset id="junit.output.fileset" dir="${junit.dir}" includes="TEST-*.xml" />
+    <hackystat.junit src.dir="${src.dir}" junit.output.fileset="junit.output.fileset" verbose="${hackystat.verbose.mode}" />
   </target>
-	
+
 </project>

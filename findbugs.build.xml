@@ -47,14 +47,11 @@
           out="${findbugs.dir}/findbugs-default.html" />
   </target>
 
-  <target name="findbugs.sensor" description="Sends CodeIssue data to Hackystat using the Findbugs sensor.">
-    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" uri="org.hackystat.sensor.ant"/>
-  	<!-- Send the code issue information to the hackystat server. -->
-    <hackystat:hacky-findbugs verbose="${hackystat.verbose.mode}">
-      <fileset file="${findbugs.dir}/findbugs.xml"/>
-    </hackystat:hacky-findbugs>
-  </target>
-
+  <target name="findbugs.sensor" description="Send hackystat data about this FindBugs invocation.">
+      <fileset id="findbugs.output.fileset" dir="${findbugs.dir}" includes="findbugs.xml" />
+      <hackystat.findbugs findbugs.output.fileset="findbugs.output.fileset" verbose="${hackystat.verbose.mode}"/>
+    </target>
+  
 </project>
 
 

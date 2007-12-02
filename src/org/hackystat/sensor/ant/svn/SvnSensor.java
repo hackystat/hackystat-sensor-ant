@@ -213,8 +213,8 @@ public class SvnSensor extends Task {
   public void execute() throws BuildException {
     this.processProperties(); // sanity check.
     if (this.isVerbose) {
-      System.out.println("Processing commits between " + this.fromDate + "(exclusive) to "
-          + this.toDate + "(inclusive)");
+      System.out.println("[Hackystat SVN Sensor] Processing commits between " + 
+          this.fromDate + "(exclusive) to " + this.toDate + "(inclusive)");
     }
 
     try {

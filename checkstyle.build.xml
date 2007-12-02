@@ -29,16 +29,12 @@
       </classpath>   
     </checkstyle>
   </target>
+
+  <target name="checkstyle.sensor" description="Send hackystat data about this Checkstyle invocation.">
+     <fileset id="checkstyle.output.fileset" dir="${checkstyle.dir}" includes="checkstyle.xml" />
+     <hackystat.checkstyle checkstyle.output.fileset="checkstyle.output.fileset" verbose="${hackystat.verbose.mode}"/>
+    </target>
   
-  <target name="checkstyle.sensor" description="Sends CodeIssue data to Hackystat using the Checkstyle Sensor.">
-    <!-- Define the checkstyle sensor taskdef. -->
-    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" uri="org.hackystat.sensor.ant"/>
-    
-    <!-- Send Checkstyle data to hackystat using the Checkstyle sensor. -->
-    <hackystat:hacky-checkstyle verbose="${hackystat.verbose.mode}">
-    	<fileset file="${checkstyle.dir}/checkstyle.xml"/>
-    </hackystat:hacky-checkstyle>
-  </target>
 </project>
 
 

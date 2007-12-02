@@ -8,5 +8,5 @@
 	<classpathentry kind="var" path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar"/>
 	<classpathentry kind="lib" path="lib/vcs/JRCS.jar"/>
 	<classpathentry kind="lib" path="lib/svn/javasvn.jar"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

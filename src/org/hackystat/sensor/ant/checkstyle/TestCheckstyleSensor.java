@@ -59,7 +59,6 @@ public class TestCheckstyleSensor extends TestCase {
   public void testCheckstyleSensorOnTestDataSetFiles() throws Exception {
     CheckstyleSensor sensor = new CheckstyleSensor(host, user, user);
     sensor.setVerbose("on");
-    
     String testFileDirPath = System.getProperty("checkstyletestfiles");
     File directory = new File(testFileDirPath);
     

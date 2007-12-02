@@ -24,6 +24,38 @@ public class JavaClass2FilePathMapper {
    */
   private HashMap<String, String> packagePathMap = new HashMap<String, String>();
 
+//  /**
+//   * This constructor accepts a list of file names, and processes this list to
+//   * build two parallel arrays. The first array contains all of the .java file
+//   * names found in the passed list, and the second contains these same file
+//   * names with the path separator replaced by a canonical separator.
+//   * 
+//   * @param fullyQualifiedFileNames A collection of string representing fully
+//   * qualified file paths or directory path for java files.
+//   */
+//  public JavaClass2FilePathMapper(Collection<String> fullyQualifiedFileNames) {
+//    this.originalFileNames = new ArrayList<String>(fullyQualifiedFileNames.size());
+//    this.canonicalfileNames = new ArrayList<String>(fullyQualifiedFileNames.size());
+//    for (String fileName : fullyQualifiedFileNames) {
+//      File file = new File(fileName);
+//      // Allow either 'real' files or file names ending with .java that don't
+//      // currently exist.
+//      if (file.isFile() || fileName.endsWith(".java")) {
+//        addFile(fileName);
+//      }
+//      else if (file.isDirectory()) {
+//        traverseDirectory(file);
+//      }
+//      // splits the path string into the parent path without a backspace char at
+//      // the end
+//      // ex. C:\home\austen or /home/austen
+//      String[] originalPath = fileName.split(".\\w+\\.java");
+//      // adds the parent path to a hashmap
+//      String editedPath = originalPath[0].replace('\\', CANONICAL_SEPARATOR);
+//      this.packagePathMap.put(editedPath, originalPath[0]);
+//    }
+//  }
+  
   /**
    * This constructor accepts a list of file names, and processes this list to
    * build two parallel arrays. The first array contains all of the .java file
@@ -33,15 +65,14 @@ public class JavaClass2FilePathMapper {
    * @param fullyQualifiedFileNames A collection of string representing fully
    * qualified file paths or directory path for java files.
    */
-  public JavaClass2FilePathMapper(Collection<String> fullyQualifiedFileNames) {
+  public JavaClass2FilePathMapper(Collection<File> fullyQualifiedFileNames) {
     this.originalFileNames = new ArrayList<String>(fullyQualifiedFileNames.size());
     this.canonicalfileNames = new ArrayList<String>(fullyQualifiedFileNames.size());
-    for (String fileName : fullyQualifiedFileNames) {
-      File file = new File(fileName);
+    for (File file : fullyQualifiedFileNames) {
       // Allow either 'real' files or file names ending with .java that don't
       // currently exist.
-      if (file.isFile() || fileName.endsWith(".java")) {
-        addFile(fileName);
+      if (file.isFile() || file.getAbsolutePath().endsWith(".java")) {
+        addFile(file.getAbsolutePath());
       }
       else if (file.isDirectory()) {
         traverseDirectory(file);
@@ -49,7 +80,7 @@ public class JavaClass2FilePathMapper {
       // splits the path string into the parent path without a backspace char at
       // the end
       // ex. C:\home\austen or /home/austen
-      String[] originalPath = fileName.split(".\\w+\\.java");
+      String[] originalPath = file.getAbsolutePath().split(".\\w+\\.java");
       // adds the parent path to a hashmap
       String editedPath = originalPath[0].replace('\\', CANONICAL_SEPARATOR);
       this.packagePathMap.put(editedPath, originalPath[0]);
@@ -103,7 +134,7 @@ public class JavaClass2FilePathMapper {
    * @return The java file name, or null if there is no mapping information.
    */
   public String getFilePath(String fullyQualifiedClassName) {
-    // Note that this uses linear search. Since we don't have too many data, it
+    // Note that this uses linear search. Since we don't have too much data, it
     // should be ok.
     // If it turns out the performance is not good, then we need to use more
     // efficient search.

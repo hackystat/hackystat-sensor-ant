@@ -5,7 +5,8 @@
   
   <!-- Always make environment variables available with the "env." prefix. --> 
   <property environment="env"/> 
-      
+
+
   <!-- Make sure we're running a Java 5 or better. --> 
   <condition property="java.5.available">  
     <or>
@@ -45,7 +46,8 @@
   </tstamp>
   <property name="version" value="${majorVersionNumber}.${minorVersionNumber}.${DAYSTAMP}" />
 
-  <!-- Hackystat sensor configuration information. -->
+  <!-- Hackystat sensor definitions and configuration. -->
+  <import file="hackystat.build.xml"/>
   <property name="hackystat.verbose.mode" value="true" />
 
   <!-- Basic directory structure. --> 
@@ -55,10 +57,10 @@
 
   <!-- The compile/testing classpath  -->
   <path id="compile.classpath">
+    <fileset file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar"/>
   	<fileset file="${ant.home}/lib/ant.jar"/>
     <fileset file="${env.JUNIT_HOME}/junit-${junit.version}.jar"/>
     <fileset file="${env.FINDBUGS_HOME}/lib/annotations.jar"/> 
-    <fileset file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar"/>
   	<fileset file="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar"/>
   	<fileset dir="${lib.dir}" includes="**/*.jar" />
   </path> 
