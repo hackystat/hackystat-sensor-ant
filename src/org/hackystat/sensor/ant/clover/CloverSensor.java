@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -17,6 +18,7 @@ import org.hackystat.sensor.ant.clover.resource.jaxb.Project;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.JavaClass2FilePathMapper;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.utilities.stacktrace.StackTrace;
 
 /**
@@ -195,8 +197,11 @@ public class CloverSensor extends HackystatSensorTask {
       }
       return coverageEntriesCount;
     }
-    catch (Exception e) {
-      throw new BuildException(errMsgPrefix + "Failed to process " + fileNameString, e);
+    catch (JAXBException e) {
+      throw new BuildException(errMsgPrefix + "Failure in JAXB " + fileNameString, e);
+    }
+    catch (SensorShellException f) {
+      throw new BuildException(errMsgPrefix + "Failure in SensorShell " + fileNameString, f);
     }
   }
 

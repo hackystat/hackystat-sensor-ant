@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -20,6 +21,7 @@ import org.hackystat.sensor.ant.junit.resource.jaxb.Testcase;
 import org.hackystat.sensor.ant.junit.resource.jaxb.Testsuite;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
+import org.hackystat.sensorshell.SensorShellException;
 
 
 /**
@@ -207,8 +209,11 @@ public class JUnitSensor extends HackystatSensorTask {
       }
       return testcases.size();
     }
-    catch (Exception e) {
-      throw new BuildException("Failed to process " + fileNameString, e);
+    catch (JAXBException e) {
+      throw new BuildException(errMsgPrefix + "Failure in JAXB " + fileNameString, e);
+    }
+    catch (SensorShellException f) {
+      throw new BuildException(errMsgPrefix + "Failure in SensorShell " + fileNameString, f);
     }
   }
 

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -17,6 +18,7 @@ import org.hackystat.sensor.ant.checkstyle.resource.jaxb.Checkstyle;
 import org.hackystat.sensor.ant.checkstyle.resource.jaxb.Error;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
+import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.utilities.stacktrace.StackTrace;
 
 /**
@@ -163,8 +165,11 @@ public class CheckstyleSensor extends HackystatSensorTask {
       }
       return codeIssueCount;
     }
-    catch (Exception e) {
-      throw new BuildException(errMsgPrefix + "Failed to process " + fileNameString, e);
+    catch (JAXBException e) {
+      throw new BuildException(errMsgPrefix + "Failure in JAXB " + fileNameString, e);
+    }
+    catch (SensorShellException f) {
+      throw new BuildException(errMsgPrefix + "Failure in SensorShell " + fileNameString, f);
     }
   }
 }
