@@ -32,6 +32,7 @@
     <javancss srcdir="${basedir}/src"
       abortOnFail="${javancss.failOnError}"
       includes="**/*.java"
+    	excludes="**/jaxb/*.java"
       generateReport="true"
       outputfile="${javancss.dir}/javancss.xml"
       format="xml" ccnPerFuncMax="10">
