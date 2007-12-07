@@ -24,6 +24,6 @@
   <target name="sclc.sensor" description="Send hackystat data about this SCLC invocation." if="hackystat.enabled">
     <xslt in="${sclc.dir}/size.xml" out="${sclc.dir}/transform-size.xml" style="${lib.dir}/sclc/sclc.xsl" />
     <hackystat.sclc sclc.file="${sclc.dir}/transform-size.xml" />
-    </target>
+  </target>
 </project>
 
