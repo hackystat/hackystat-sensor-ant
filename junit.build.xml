@@ -6,7 +6,7 @@
   <import file="build.xml" />
   <property name="junit.dir" location="${build.dir}/junit" />
 
-  <target name="junit" depends="junit.tool, junit.report" description="Runs JUnit, JunitReport">
+  <target name="junit" depends="junit.tool, junit.report, junit.sensor" description="Runs JUnit, JunitReport">
     <fail if="junit.failed">JUnit test case(s) failed.</fail>
   </target>
 
@@ -42,7 +42,7 @@
     </junitreport>
   </target>
 
-  <target name="junit.sensor" description="Send hackystat data about this JUnit invocation.">
+  <target name="junit.sensor" description="Send hackystat data about this JUnit invocation." if="hackystat.enabled">
     <fileset id="junit.output.fileset" dir="${junit.dir}" includes="TEST-*.xml" />
     <hackystat.junit src.dir="${src.dir}" junit.output.fileset="junit.output.fileset" verbose="${hackystat.verbose.mode}" />
   </target>

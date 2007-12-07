@@ -8,7 +8,7 @@
   <property name="emma.dir" location="${build.dir}/emma" />
   <property name="junit.dir" location="${build.dir}/junit" />
 
-  <target name="emma" depends="emma.tool" unless="emma.disabled" description="Runs Emma." />
+  <target name="emma" depends="emma.tool, emma.sensor" unless="emma.disabled" description="Runs Emma." />
 
   <target name="emma.tool" depends="clean, compile" unless="emma.disabled" description="Cleans, compiles, instruments byte codes, runs unit tests, generates Emma report.">
     <!-- Verify that Emma is installed. -->
@@ -84,7 +84,7 @@
     </concat>
   </target>
 
-  <target name="emma.sensor" description="Send hackystat data about this Emma invocation.">
+  <target name="emma.sensor" description="Send hackystat data about this Emma invocation." if="hackystat.enabled">
     <fileset id="emma.fileset" dir="${src.dir}" includes="**/*.java" />
     <hackystat.emma emma.output.file="${emma.dir}/coverage.xml" emma.fileset="emma.fileset" verbose="${hackystat.verbose.mode}" />
   </target>

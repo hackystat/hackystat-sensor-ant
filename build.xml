@@ -48,7 +48,12 @@
 
   <!-- Hackystat sensor definitions and configuration. -->
   <import file="hackystat.build.xml"/>
-  <property name="hackystat.verbose.mode" value="true" />
+  <property name="hackystat.verbose.mode" value="false" />
+  <property name="hackystat.enable" value="true" />
+  <!-- define hackystat.enabled if hackystat.enable is true, so we can use it in an 'if' clause -->
+  <condition property="hackystat.enabled">
+    <istrue value="${hackystat.enable}"/>
+  </condition>
 
   <!-- Basic directory structure. --> 
   <property name="src.dir" location="${basedir}/src" />
@@ -82,11 +87,6 @@
     <delete dir="${build.dir}"/> 
   </target>
   
-  <!--
-  <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" uri="org.hackystat.sensor.ant" />
-  <hackystat:hacky-ant verbose="true" debug="true" />
-  --> 
-
   <target name="convertLineEndings" description="Makes line endings compatible with host platform.">
     <fixcrlf srcdir="${basedir}" includes="*.build.xml"/>
   </target>
