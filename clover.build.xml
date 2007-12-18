@@ -10,28 +10,27 @@
   <property name="junit.dir" location="${build.dir}/junit" />
   <property name="junit.haltonfailure" value="false" />
 
-  <target name="clean" depends="build.clean" >
-    <delete dir="${basedir}/.clover" /> 
+  <target name="clean" depends="build.clean">
+    <delete dir="${basedir}/.clover" />
   </target>
 
-  <taskdef resource="cloverlib.xml" classpath="${env.CLOVER_HOME}\lib\clover.jar"/>
-  <target name="pre-compile" >
-  	<mkdir dir="${clover.db.dir}"/>
+  <taskdef resource="cloverlib.xml" classpath="${env.CLOVER_HOME}\lib\clover.jar" />
+  <target name="pre-compile">
+    <mkdir dir="${clover.db.dir}" />
     <clover-setup initstring="${clover.db.dir}/clover.db" flushpolicy="threaded" flushinterval="2">
       <files excludes="org/hackystat/**/jaxb/*.java" />
     </clover-setup>
   </target>
 
-  <target name="clover" >
-  	<antcall target="clover.build"/>
-  	<antcall target="clover.tool"/>
-  	<antcall target="clover.report"/>
+  <target name="clover">
+    <antcall target="clover.build" />
+    <antcall target="clover.tool" />
+    <antcall target="clover.report" />
   </target>
 
   <target name="clover.build" depends="pre-compile, compile" description="Runs Clover and the Clover sensor." />
 
-  <target name="clover.tool" depends="pre-compile, compile" 
-      description="Cleans, compiles, instruments byte codes, runs unit tests, generates clover report.">
+  <target name="clover.tool" depends="pre-compile, compile" description="Cleans, compiles, instruments byte codes, runs unit tests, generates clover report.">
     <mkdir dir="${clover.dir}" />
     <mkdir dir="${junit.dir}" />
     <junit printsummary="withOutAndErr" haltonfailure="${junit.haltonfailure}">
@@ -41,12 +40,12 @@
         <pathelement location="${java.class.path}" />
         <path refid="compile.classpath" />
       </classpath>
-    	<sysproperty key="junittestfiles" value="${basedir}/testdata/junit"/>
-    	<sysproperty key="emmatestfiles" value="${basedir}/testdata/emma"/>
-    	<sysproperty key="findbugstestfiles" value="${basedir}/testdata/findbugs"/>
-    	<sysproperty key="checkstyletestfiles" value="${basedir}/testdata/checkstyle"/>
-    	<sysproperty key="pmdtestfiles" value="${basedir}/testdata/pmd"/>
-    	<sysproperty key="clovertestfiles" value="${basedir}/testdata/clover"/>
+      <sysproperty key="junittestfiles" value="${basedir}/testdata/junit" />
+      <sysproperty key="emmatestfiles" value="${basedir}/testdata/emma" />
+      <sysproperty key="findbugstestfiles" value="${basedir}/testdata/findbugs" />
+      <sysproperty key="checkstyletestfiles" value="${basedir}/testdata/checkstyle" />
+      <sysproperty key="pmdtestfiles" value="${basedir}/testdata/pmd" />
+      <sysproperty key="clovertestfiles" value="${basedir}/testdata/clover" />
       <formatter type="xml" />
       <batchtest todir="${junit.dir}">
         <fileset dir="${src.dir}" includes="**/Test*.java" excludes="**/jaxb/*.java" />
@@ -54,26 +53,23 @@
     </junit>
   </target>
 
-  <target name="clover.report" >
+  <target name="clover.report">
     <clover-report initstring="${clover.db.dir}/clover.db">
       <current outfile="${clover.dir}/coverage.xml">
-        <format type="xml"/>
+        <format type="xml" />
       </current>
     </clover-report>
-  	<clover-html-report initstring="${clover.db.dir}/clover.db" 
-  		outdir="${clover.dir}"
-  	  title="Clover Coverage"/>
+    <clover-html-report initstring="${clover.db.dir}/clover.db" outdir="${clover.dir}" title="Clover Coverage" />
   </target>
 
   <target name="clover.sensor" unless="clover.disabled" description="Sends Clover coverage data to Hackystat using the Clover sensor.">
-  	<taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" 
-  		uri="org.hackystat.sensor.ant"/>
-    
-    <!-- Send Coverage data to Hackystat using the Emma sensor. --> 
+    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" uri="org.hackystat.sensor.ant" />
+
+    <!-- Send Coverage data to Hackystat using the Emma sensor. -->
     <hackystat:hacky-clover verbose="${hackystat.verbose.mode}" cloverReportXmlFile="${clover.dir}/coverage.xml">
       <fileset dir="${src.dir}" includes="**/*.java" />
     </hackystat:hacky-clover>
   </target>
-  
+
 </project>
 
