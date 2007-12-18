@@ -5,6 +5,8 @@
 
   <!-- import file="build.xml"/ -->
   <property environment="env" />
+  <!-- If the JAXB_TARGET env var is not defined, provide a default definition. -->
+  <property name="env.JAXB_TARGET" value="2.0"/>
 
   <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
     <classpath>
@@ -13,27 +15,28 @@
   </taskdef>
 
   <target name="jaxb" description="Runs the XJC compiler.">
-    <xjc target="2.0" schema="${basedir}/xml/schema/junit.xsd" destdir="src" package="org.hackystat.sensor.ant.junit.resource.jaxb">
+    <echo message="Compiling using ${env.JAXB_HOME} for target version ${env.JAXB_TARGET}."/>
+    <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/junit.xsd" destdir="src" package="org.hackystat.sensor.ant.junit.resource.jaxb">
       <produces dir="${basedir}/src/org/hackystat/sensor/ant/junit/resource/jaxb" includes="*" />
     </xjc>
 
-    <xjc target="2.0" schema="${basedir}/xml/schema/emma.xsd" destdir="src" package="org.hackystat.sensor.ant.emma.resource.jaxb">
+    <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/emma.xsd" destdir="src" package="org.hackystat.sensor.ant.emma.resource.jaxb">
       <produces dir="${basedir}/src/org/hackystat/sensor/ant/emma/resource/jaxb" includes="*" />
     </xjc>
 
-    <xjc target="2.0" schema="${basedir}/xml/schema/findbugs.xsd" destdir="src" package="org.hackystat.sensor.ant.findbugs.resource.jaxb">
+    <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/findbugs.xsd" destdir="src" package="org.hackystat.sensor.ant.findbugs.resource.jaxb">
       <produces dir="${basedir}/src/org/hackystat/sensor/ant/findbugs/resource/jaxb" includes="*" />
     </xjc>
 
-    <xjc target="2.0" schema="${basedir}/xml/schema/checkstyle.xsd" destdir="src" package="org.hackystat.sensor.ant.checkstyle.resource.jaxb">
+    <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/checkstyle.xsd" destdir="src" package="org.hackystat.sensor.ant.checkstyle.resource.jaxb">
       <produces dir="${basedir}/src/org/hackystat/sensor/ant/checkstyle/resource/jaxb" includes="*" />
     </xjc>
 
-    <xjc target="2.0" schema="${basedir}/xml/schema/pmd.xsd" destdir="src" package="org.hackystat.sensor.ant.pmd.resource.jaxb">
+    <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/pmd.xsd" destdir="src" package="org.hackystat.sensor.ant.pmd.resource.jaxb">
       <produces dir="${basedir}/src/org/hackystat/sensor/ant/pmd/resource/jaxb" includes="*" />
     </xjc>
 
-    <xjc target="2.0" schema="${basedir}/xml/schema/clover.xsd" destdir="src" package="org.hackystat.sensor.ant.clover.resource.jaxb">
+    <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/clover.xsd" destdir="src" package="org.hackystat.sensor.ant.clover.resource.jaxb">
       <produces dir="${basedir}/src/org/hackystat/sensor/ant/clover/resource/jaxb" includes="*" />
     </xjc>
   </target>
