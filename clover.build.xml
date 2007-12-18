@@ -6,6 +6,7 @@
 
   <import file="build.xml" />
   <property name="clover.dir" location="${build.dir}/clover" />
+  <property name="clover.db.dir" location="${build.dir}/cloverdb" />
   <property name="junit.dir" location="${build.dir}/junit" />
   <property name="junit.haltonfailure" value="false" />
 
@@ -15,12 +16,19 @@
 
   <taskdef resource="cloverlib.xml" classpath="${env.CLOVER_HOME}\lib\clover.jar"/>
   <target name="pre-compile" >
-    <clover-setup>
+  	<mkdir dir="${clover.db.dir}"/>
+    <clover-setup initstring="${clover.db.dir}/clover.db" flushpolicy="threaded" flushinterval="2">
       <files excludes="org/hackystat/**/jaxb/*.java" />
     </clover-setup>
   </target>
 
-  <target name="clover" depends="pre-compile, compile, clover.tool" description="Runs Clover and the Clover sensor." />
+  <target name="clover" >
+  	<antcall target="clover.build"/>
+  	<antcall target="clover.tool"/>
+  	<antcall target="clover.report"/>
+  </target>
+
+  <target name="clover.build" depends="pre-compile, compile" description="Runs Clover and the Clover sensor." />
 
   <target name="clover.tool" depends="pre-compile, compile" 
       description="Cleans, compiles, instruments byte codes, runs unit tests, generates clover report.">
@@ -44,11 +52,17 @@
         <fileset dir="${src.dir}" includes="**/Test*.java" excludes="**/jaxb/*.java" />
       </batchtest>
     </junit>
-    <clover-report>
+  </target>
+
+  <target name="clover.report" >
+    <clover-report initstring="${clover.db.dir}/clover.db">
       <current outfile="${clover.dir}/coverage.xml">
         <format type="xml"/>
       </current>
     </clover-report>
+  	<clover-html-report initstring="${clover.db.dir}/clover.db" 
+  		outdir="${clover.dir}"
+  	  title="Clover Coverage"/>
   </target>
 
   <target name="clover.sensor" unless="clover.disabled" description="Sends Clover coverage data to Hackystat using the Clover sensor.">
