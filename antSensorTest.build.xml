@@ -29,6 +29,14 @@
       <fileset dir="${basedir}/src" includes="**/*.java" />
     </hacky-emma>
   </target>
+
+  <target name="test.clover.sensor" description="Sends Clover coverage data to Hackystat using the Clover sensor.">
+  <!-- Send Coverage data to Hackystat using the Clover sensor. -->
+    <hacky-clover verbose="${hackystat.verbose.mode}" cloverReportXmlFile="${clover.dir}/coverage.xml">
+      <fileset dir="${src.dir}" includes="**/*.java" />
+    </hacky-clover>
+  </target>
+
 	
 	<target name="test.checkstyle.sensor" description="Sends Checkstyle CodeIssue data to Hackystat using the Checkstyle sensor.">
 		<!-- Send Checkstyle data to Hackystat. -->
@@ -52,8 +60,9 @@
 
 	<target name="test.findbugs.sensor" description="Sends FindBugs CodeIssue data to Hackystat using the FindBugs sensor.">
 	  <!-- Send FindBugs data to Hackystat. -->
-          <hacky-findbugs verbose="${hackystat.verbose.mode}">
-            <fileset file="${testdata.dir}/findbugs/findbugs.xml"/>
-          </hacky-findbugs>
+    <hacky-findbugs verbose="${hackystat.verbose.mode}">
+      <fileset file="${testdata.dir}/findbugs/findbugs.xml"/>
+    </hacky-findbugs>
+		
 	</target>
 </project>

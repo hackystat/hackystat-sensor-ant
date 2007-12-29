@@ -46,6 +46,19 @@
     </sequential>
   </macrodef>
 
+  <!-- Send Clover coverage data to hackystat using the Clover sensor. -->
+  <macrodef name="hackystat.clover">
+    <attribute name="clover.fileset" />
+    <attribute name="clover.output.file" />
+    <attribute name="verbose" default="true" />
+    <sequential>
+      <check.antsensors />
+      <hacky-clover verbose="@{verbose}" cloverReportXmlFile="@{clover.output.file}" >
+      	<fileset refid="@{clover.fileset}" />
+      </hacky-clover>
+    </sequential>
+  </macrodef>
+
   <!-- Send PMD coverage data to hackystat using the PMD sensor. -->
   <macrodef name="hackystat.pmd">
   	<attribute name="pmd.output.fileset" />
