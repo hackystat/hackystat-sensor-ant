@@ -6,10 +6,17 @@
   <xs:attribute name="value" type="xs:string" />
  
   
+  <xs:element name="class">
+    <xs:complexType>
+      <xs:attribute ref="name" />
+    </xs:complexType>
+  </xs:element>
+  
   <xs:element name="file">
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="metrics" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="class" minOccurs="1" maxOccurs="1" />
       </xs:sequence>
       <xs:attribute ref="name" />
     </xs:complexType>

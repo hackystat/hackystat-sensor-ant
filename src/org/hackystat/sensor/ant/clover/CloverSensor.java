@@ -141,14 +141,19 @@ public class CloverSensor extends HackystatSensorTask {
         for (File file : packageReport.getFile()) {
           String fileName = file.getName();
           Metrics metrics = file.getMetrics();
-          String className = fileName.substring(0, fileName.indexOf(".java"));
+          String className = file.getClazz().getName();
           String javaClassName = packageName + '.' + className;
-          String javaSourceFilePath = 
-            this.getJavaClass2FilePathMapper().getFilePath(javaClassName);
-          if (javaSourceFilePath == null) {
-            verboseInfo("Warning: Unable to find java source file path for class '" 
-                + javaClassName + "'. Use empty string for file path.");
-            javaSourceFilePath = "";
+          String javaSourceFilePath = fileName;
+          // for some reason sometimes file names can be fully qualified. 
+          // not sure how to configure clover to do that. if its not fully 
+          // qualified then we try to use the mapping. 
+          if (javaSourceFilePath.length() <= (className + ".java").length()) {
+            javaSourceFilePath = this.getJavaClass2FilePathMapper().getFilePath(javaClassName);
+            if (javaSourceFilePath == null) {
+              verboseInfo("Warning: Unable to find java source file path for class '" 
+                  + javaClassName + "'. Use empty string for file path.");
+              javaSourceFilePath = "";
+            }
           }
           
           // Alter startTime to guarantee uniqueness.

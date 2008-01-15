@@ -71,7 +71,6 @@ public class TestCloverSensor extends TestCase {
     }
     
     File[] files = directory.listFiles();
-
     // create a file filter that only accepts xml files
     FileFilter filter = new FileFilter() {
       public boolean accept(File pathname) {

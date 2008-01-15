@@ -11,7 +11,6 @@ package org.hackystat.sensor.ant.clover.resource.jaxb;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,10 +24,6 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element ref="{}metrics"/>
- *         &lt;element ref="{}class"/>
- *       &lt;/sequence>
  *       &lt;attribute ref="{}name"/>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,67 +33,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "metrics",
-    "clazz"
-})
-@XmlRootElement(name = "file")
-public class File {
+@XmlType(name = "")
+@XmlRootElement(name = "class")
+public class Class {
 
-    @XmlElement(required = true)
-    protected Metrics metrics;
-    @XmlElement(name = "class", required = true)
-    protected Class clazz;
     @XmlAttribute
     protected String name;
-
-    /**
-     * Gets the value of the metrics property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Metrics }
-     *     
-     */
-    public Metrics getMetrics() {
-        return metrics;
-    }
-
-    /**
-     * Sets the value of the metrics property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Metrics }
-     *     
-     */
-    public void setMetrics(Metrics value) {
-        this.metrics = value;
-    }
-
-    /**
-     * Gets the value of the clazz property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Class }
-     *     
-     */
-    public Class getClazz() {
-        return clazz;
-    }
-
-    /**
-     * Sets the value of the clazz property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Class }
-     *     
-     */
-    public void setClazz(Class value) {
-        this.clazz = value;
-    }
 
     /**
      * Gets the value of the name property.
