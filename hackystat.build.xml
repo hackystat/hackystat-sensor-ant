@@ -10,7 +10,7 @@
 
   <!-- Send Checkstyle data to hackystat using the Checkstyle sensor. -->
   <macrodef name="hackystat.checkstyle">
-  	<attribute name="checkstyle.output.fileset" />
+    <attribute name="checkstyle.output.fileset" />
     <attribute name="verbose" default="true" />
     <sequential>
       <check.antsensors />
@@ -23,12 +23,12 @@
   <!-- Send JUnit test data to hackystat using the JUnit sensor. -->
   <macrodef name="hackystat.junit">
     <attribute name="src.dir" />
-  	<attribute name="junit.output.fileset" />
+    <attribute name="junit.output.fileset" />
     <attribute name="verbose" default="true" />
     <sequential>
       <check.antsensors />
       <hacky-junit verbose="@{verbose}" sourcePath="@{src.dir}">
-      	<fileset refid="@{junit.output.fileset}" />
+        <fileset refid="@{junit.output.fileset}" />
       </hacky-junit>
     </sequential>
   </macrodef>
@@ -40,8 +40,8 @@
     <attribute name="verbose" default="true" />
     <sequential>
       <check.antsensors />
-      <hacky-emma verbose="@{verbose}" emmaReportXmlFile="@{emma.output.file}" >
-      	<fileset refid="@{emma.fileset}" />
+      <hacky-emma verbose="@{verbose}" emmaReportXmlFile="@{emma.output.file}">
+        <fileset refid="@{emma.fileset}" />
       </hacky-emma>
     </sequential>
   </macrodef>
@@ -53,16 +53,29 @@
     <attribute name="verbose" default="true" />
     <sequential>
       <check.antsensors />
-      <hacky-clover verbose="@{verbose}" cloverReportXmlFile="@{clover.output.file}" >
-      	<fileset refid="@{clover.fileset}" />
+      <hacky-clover verbose="@{verbose}" cloverReportXmlFile="@{clover.output.file}">
+        <fileset refid="@{clover.fileset}" />
       </hacky-clover>
     </sequential>
   </macrodef>
+  
+  <!-- Send JavaNCSS data to hackystat using the JavaNCSS sensor. -->
+   <macrodef name="hackystat.javancss">
+     <attribute name="javancss.fileset" />
+     <attribute name="javancss.output.file" />
+     <attribute name="verbose" default="true" />
+     <sequential>
+       <check.antsensors />
+       <hacky-javancss verbose="@{verbose}" javancssReportXmlFile="@{javancss.output.file}">
+         <fileset refid="@{javancss.fileset}" />
+       </hacky-javancss>
+     </sequential>
+   </macrodef>
 
   <!-- Send PMD coverage data to hackystat using the PMD sensor. -->
   <macrodef name="hackystat.pmd">
-  	<attribute name="pmd.output.fileset" />
-  	<attribute name="pmd.src.fileset" />
+    <attribute name="pmd.output.fileset" />
+    <attribute name="pmd.src.fileset" />
     <attribute name="verbose" default="true" />
     <sequential>
       <check.antsensors />
@@ -77,7 +90,7 @@
 
   <!-- Send findbugs coverage data to hackystat using the findbugs sensor. -->
   <macrodef name="hackystat.findbugs">
-  	<attribute name="findbugs.output.fileset" />
+    <attribute name="findbugs.output.fileset" />
     <attribute name="verbose" default="true" />
     <sequential>
       <check.antsensors />

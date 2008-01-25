@@ -1,0 +1,17 @@
+<project name="validateXml" default="validateXml">
+  <description>
+  Validates the example and default XML files against their respective schema.
+  Use 'ant -Dxml.dir=myNewXmlDir -f validateXml.build.xml' to override the default xml dir location. 
+  </description>
+
+  <property name="xml.dir" location="${basedir}/xml" />
+  <property name="schema.dir" location="${xml.dir}/schema" />
+  <property name="testdata.dir" location="${basedir}/testdata" />
+  <property name="defaults.dir" location="${xml.dir}/defaults" />
+
+  <target name="validateXml" description="Validates XML files against their schemas.">
+    <schemavalidate noNamespaceFile="${schema.dir}/javancss.xsd" file="${testdata.dir}/javancss.xml"/>
+  </target>
+</project>
+
+

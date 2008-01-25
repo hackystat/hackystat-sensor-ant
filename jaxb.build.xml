@@ -42,5 +42,9 @@
     <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/clover.xsd" destdir="src" package="org.hackystat.sensor.ant.clover.resource.jaxb">
       <produces dir="${basedir}/src/org/hackystat/sensor/ant/clover/resource/jaxb" includes="*" />
     </xjc>
+    
+    <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/javancss.xsd" destdir="src" package="org.hackystat.sensor.ant.javancss.resource.jaxb">
+        <produces dir="${basedir}/src/org/hackystat/sensor/ant/javancss/resource/jaxb" includes="*" />
+    </xjc>
   </target>
 </project>

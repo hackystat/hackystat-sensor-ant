@@ -60,14 +60,6 @@
   <target name="clover.sensor" unless="clover.disabled" description="Sends Clover coverage data to Hackystat using the Clover sensor.">
     <fileset id="clover.fileset" dir="${src.dir}" includes="**/*.java" />
     <hackystat.clover clover.output.file="${clover.dir}/coverage.xml" clover.fileset="clover.fileset" verbose="${hackystat.verbose.mode}" />
-
-    <!-- Send Coverage data to Hackystat using the Clover sensor. -->
-  	<!--
-    <taskdef resource="antlib.xml" classpath="${basedir}/antsensors.jar" uri="org.hackystat.sensor.ant" />
-    <hackystat:hacky-clover verbose="${hackystat.verbose.mode}" cloverReportXmlFile="${clover.dir}/coverage.xml">
-      <fileset dir="${src.dir}" includes="**/*.java" />
-    </hackystat:hacky-clover>
-    -->
   </target>
 
 </project>

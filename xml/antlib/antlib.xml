@@ -8,4 +8,5 @@
     <taskdef name="hacky-findbugs" classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" />
     <taskdef name="hacky-findbugs" classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" />
     <taskdef name="hacky-svn" classname="org.hackystat.sensor.ant.svn.SvnSensor" />
+    <taskdef name="hacky-javancss" classname="org.hackystat.sensor.ant.javancss.JavaNcssSensor" />
 </antlib>

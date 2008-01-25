@@ -77,7 +77,7 @@ public class JavaClass2FilePathMapper {
       else if (file.isDirectory()) {
         traverseDirectory(file);
       }
-      // splits the path string into the parent path without a backspace char at
+      // splits the path string into the parent path without a slash char at
       // the end
       // ex. C:\home\austen or /home/austen
       String[] originalPath = file.getAbsolutePath().split(".\\w+\\.java");
