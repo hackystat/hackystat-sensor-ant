@@ -95,10 +95,7 @@ public abstract class HackystatSensorTask extends Task {
   /**
    * Instantiates the internal sensorshell using either the data in the UserMap or the data
    * in sensorshell.properties. Does not instantiate the sensorshell if it already has been done
-   * in the testing constructor.
-   * 
-   * This method specifies that multishell processing is enabled by default unless the user 
-   * overrides that in their sensorshell.properties file.  
+   * in the testing constructor. 
    *   
    * DO NOT call this method in the constructor. The toolAccount property which controls where
    * the SensorShell data is obtained is not set until after the 
