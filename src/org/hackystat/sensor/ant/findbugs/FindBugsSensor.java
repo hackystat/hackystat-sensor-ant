@@ -127,7 +127,15 @@ public class FindBugsSensor extends HackystatSensorTask {
       HashMap<String, List<BugInstance>> fileToBugs = new HashMap<String, List<BugInstance>>();
       for (BugInstance bugInstance : bugInstanceCollection) {
         String abstractSourcePath = bugInstance.getSourceLine().getSourcepath();
+        // Discard this bugInstance if we can't figure out the source path.
+        if (abstractSourcePath == null) {
+          continue;
+        }
         String fullSourcePath = this.findSrcFile(allSrcFiles, abstractSourcePath);
+        // Discard this bugInstance if we can't figure out the full source path.
+        if (fullSourcePath == null) {
+          continue;
+        }
         
         if (fileToBugs.containsKey(fullSourcePath)) {
           List<BugInstance> bugs = fileToBugs.get(fullSourcePath);
