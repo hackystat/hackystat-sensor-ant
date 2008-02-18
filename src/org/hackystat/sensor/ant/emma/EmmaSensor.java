@@ -84,7 +84,9 @@ public class EmmaSensor extends HackystatSensorTask {
       numberOfEntries += this.processCoverageXmlFile(this.emmaReportXmlFile);
     }
     catch (Exception e) {
-      info("Errors occurred while processing the coverage xml file: " + StackTrace.toString(e));
+      String msg = "Failure processing: " + this.emmaReportXmlFile;
+      info(msg + " " + StackTrace.toString(e));
+      throw new BuildException(msg, e);
     }
 
     if (this.send() > 0) {

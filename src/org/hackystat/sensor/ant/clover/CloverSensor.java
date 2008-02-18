@@ -78,8 +78,9 @@ public class CloverSensor extends HackystatSensorTask {
       numberOfEntries += this.processCoverageXmlFile(this.cloverReportXmlFile);
     }
     catch (Exception e) {
-      verboseInfo("Errors occurred processing a coverage xml file: " +  StackTrace.toString(e));
-      verboseInfo("Continuing...");
+      String msg = "Failure processing: " + this.cloverReportXmlFile;
+      info(msg + " " + StackTrace.toString(e));
+      throw new BuildException(msg, e);
     }
 
     if (this.send() > 0) {

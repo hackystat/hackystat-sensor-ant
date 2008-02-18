@@ -12,6 +12,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.tools.ant.BuildException;
 import org.hackystat.sensor.ant.javancss.resource.jaxb.Javancss;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
+import org.hackystat.utilities.stacktrace.StackTrace;
 import org.hackystat.utilities.tstamp.Tstamp;
 
 /**
@@ -68,8 +69,8 @@ public class JavaNcssSensor extends HackystatSensorTask {
       numberOfEntries += this.processJavaNcssXmlFile(this.javancssReportXmlFile);
     }
     catch (Exception e) {
-      String msg = errMsgPrefix + "Failure processing JavaNCSS xml file: " + e.getMessage();
-      info(msg);
+      String msg = "Failure processing: " + javancssReportXmlFile;
+      info(msg + " " + StackTrace.toString(e));
       throw new BuildException(msg, e);
     }
     if (this.send() > 0) {

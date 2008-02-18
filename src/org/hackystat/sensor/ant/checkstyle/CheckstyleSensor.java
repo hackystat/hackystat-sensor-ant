@@ -73,9 +73,9 @@ public class CheckstyleSensor extends HackystatSensorTask {
         numberOfCodeIssues += this.processIssueXmlFile(checkstyleXmlFile);
       }
       catch (Exception e) {
-        // don't stop processing. just report back to the user that there was a problem.
-        info("Errors occurred while processing the issue xml file " + StackTrace.toString(e));
-        info("Continuing....");
+        String msg = "Failure processing: " + checkstyleXmlFile;
+        info(msg + " " + StackTrace.toString(e));
+        throw new BuildException(msg, e);
       }
     }
     if (this.send() > 0) {
