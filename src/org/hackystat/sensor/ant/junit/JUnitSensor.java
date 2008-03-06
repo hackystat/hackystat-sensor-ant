@@ -132,7 +132,12 @@ public class JUnitSensor extends HackystatSensorTask {
         info("Failed to send Hackystat JUnit test data.");
       }
     }
-    this.sensorShell.quit();
+    try {
+      this.sensorShell.quit();
+    }
+    catch (SensorShellException e) {
+      throw new BuildException("Problem detected with autoshell: ", e);
+    }
   }
 
   /**

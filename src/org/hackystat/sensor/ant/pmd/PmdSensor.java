@@ -141,7 +141,12 @@ public class PmdSensor extends HackystatSensorTask {
         info("Failed to send Hackystat PMD issue data.");
       }
     }
-    this.sensorShell.quit();
+    try {
+      this.sensorShell.quit();
+    }
+    catch (SensorShellException e) {
+      throw new BuildException("Problem detected with autoshell: ", e);
+    }
   }
 
   /**
