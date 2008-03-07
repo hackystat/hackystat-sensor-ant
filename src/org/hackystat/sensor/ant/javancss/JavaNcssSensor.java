@@ -26,9 +26,6 @@ public class JavaNcssSensor extends HackystatSensorTask {
   /** The name of this tool. */
   private static String tool = "JavaNCSS";
 
-  /** A string containing the path to the JavaNCSS XML report file. */
-  private String javancssReportXmlFile;
-
   /** Initialize a new instance of a JavaNcssSensor. */
   public JavaNcssSensor() {
     super(tool);
@@ -46,15 +43,6 @@ public class JavaNcssSensor extends HackystatSensorTask {
   }
 
   /**
-   * Sets the file path to the JavaNCSS report xml file.
-   * 
-   * @param filePath The JavaNCSS report file path.
-   */
-  public void setJavaNcssReportXmlFile(String filePath) {
-    this.javancssReportXmlFile = filePath;
-  }
-
-  /**
    * Parses the JavaNCSS XML file and sends the resulting FileMetric data to the SensorBase server.
    * 
    * @throws BuildException If there is an error.
@@ -64,37 +52,32 @@ public class JavaNcssSensor extends HackystatSensorTask {
     this.setupSensorShell();
     int numberOfEntries = 0;
     Date startTime = new Date();
-    verboseInfo("Processing JavaNCSS report file: " + this.javancssReportXmlFile);
-    try {
-      numberOfEntries += this.processJavaNcssXmlFile(this.javancssReportXmlFile);
+    for (File file : getDataFiles()) {
+      try {
+        verboseInfo("Processing JavaNCSS report file: " + file);
+        numberOfEntries += this.processJavaNcssXmlFile(file);
+      }
+      catch (Exception e) {
+        String msg = "Failure processing: " + file;
+        info(msg + " " + StackTrace.toString(e));
+        throw new BuildException(msg, e);
+      }
     }
-    catch (Exception e) {
-      String msg = "Failure processing: " + javancssReportXmlFile;
-      info(msg + " " + StackTrace.toString(e));
-      throw new BuildException(msg, e);
-    }
-    if (this.send() > 0) {
-      Date endTime = new Date();
-      long elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-      info(numberOfEntries + " FileMetric entries sent to " + this.sensorProps.getSensorBaseHost()
-          + " (" + elapsedTime + " secs.)");
-    }
-    else {
-      info("Failed to send JavaNCSS data. See ~/.hackystat/sensorshell/logs for details.");
-    }
+    // We've collected the data, now send it. 
+    this.send();
+    summaryInfo(startTime, "FileMetric", numberOfEntries);
   }
 
   /**
    * Processes the JavaNCSS XML data file, generating sensor data.
    * 
-   * @param fileNameString The file name.
+   * @param xmlFile The file containing the JavaNCSS data.
    * @return The number of FileMetrics instances generated.
    * @throws BuildException If problems occur.
    */
-  private int processJavaNcssXmlFile(String fileNameString) throws BuildException {
+  private int processJavaNcssXmlFile(File xmlFile) throws BuildException {
     // The start time for all entries will be approximated by the XML file's last mod time.
     // Use the TstampSet to make it unique.
-    java.io.File xmlFile = new java.io.File(fileNameString);
     long startTime = xmlFile.lastModified();
     int count = 0;
     try {
@@ -105,7 +88,7 @@ public class JavaNcssSensor extends HackystatSensorTask {
       // JavaNCSS report.
       Javancss javancss = (Javancss) unmarshaller.unmarshal(xmlFile);
       // Construct the mapping from Java file paths to their CCN data.
-      CcnData ccnData = new CcnData(this.getFiles(), javancss.getFunctions());
+      CcnData ccnData = new CcnData(getSourceFiles(), javancss.getFunctions());
 
       for (File resource : ccnData.getFiles()) {
         long tstamp = this.tstampSet.getUniqueTstamp(startTime);
