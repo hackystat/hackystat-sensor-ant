@@ -82,16 +82,8 @@ public class CloverSensor extends HackystatSensorTask {
       info(msg + " " + StackTrace.toString(e));
       throw new BuildException(msg, e);
     }
-
-    if (this.send() > 0) {
-      Date endTime = new Date();
-      long elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-      info(numberOfEntries + " coverage entries sent to " 
-          + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
-    }
-    else {
-      info("Failed to send Hackystat Coverage data. See log for details.");
-    }
+    this.sendAndQuit();
+    summaryInfo(startTime, "Coverage", numberOfEntries);
   }
 
   /**

@@ -78,18 +78,8 @@ public class CheckstyleSensor extends HackystatSensorTask {
         throw new BuildException(msg, e);
       }
     }
-    if (this.send() > 0) {
-      Date endTime = new Date();
-      long elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-      info(numberOfCodeIssues + " Checkstyle issues sent to "
-          + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
-    }
-    else if (numberOfCodeIssues == 0) {
-      info("No data to send.");
-    }
-    else {
-      info("Failed to send Checkstyle data.");
-    }
+    this.sendAndQuit();
+    summaryInfo(startTime, "Checkstyle", numberOfCodeIssues);
   }
 
   /**

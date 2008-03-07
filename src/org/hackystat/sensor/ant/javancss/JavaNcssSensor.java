@@ -64,7 +64,7 @@ public class JavaNcssSensor extends HackystatSensorTask {
       }
     }
     // We've collected the data, now send it. 
-    this.send();
+    this.sendAndQuit();
     summaryInfo(startTime, "FileMetric", numberOfEntries);
   }
 

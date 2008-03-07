@@ -81,25 +81,9 @@ public class FindBugsSensor extends HackystatSensorTask {
         info(msg + " " + StackTrace.toString(e));
         throw new BuildException(msg, e);
       }
-      if (send() > 0) {
-        Date endTime = new Date();
-        long elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-        info("Hackystat data on " + numberOfTests + " FindBugs tests sent to "
-            + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
-      }
-      else if (numberOfTests == 0) {
-        info("No data to send.");
-      }
-      else {
-        info("Failed to send Hackystat FindBugs test data.");
-      }
     }
-    try {
-      this.sensorShell.quit();
-    }
-    catch (SensorShellException e) {
-      throw new BuildException("Problem detected with autoshell: ", e);
-    }
+    this.sendAndQuit();
+    summaryInfo(startTime, "CodeIssues", numberOfTests);
   }
 
   /**

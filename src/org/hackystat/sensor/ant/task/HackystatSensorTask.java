@@ -314,13 +314,11 @@ public abstract class HackystatSensorTask extends Task {
   }
   
   /**
-   * Sends any accumulated data in the SensorShell to the server.
-   * 
-   * @return Returns the number of entries sent.
+   * Sends any accumulated data in the SensorShell to the server and quits the shell.
    */
-  protected int send() {
+  protected void sendAndQuit() {
     try {
-      return this.sensorShell.send();
+      this.sensorShell.quit();
     }
     catch (SensorShellException e) {
       throw new BuildException(errMsgPrefix + "Problem sending data: " + e.getMessage(), e);

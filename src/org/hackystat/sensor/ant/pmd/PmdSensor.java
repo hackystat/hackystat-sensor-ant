@@ -107,9 +107,7 @@ public class PmdSensor extends HackystatSensorTask {
   @Override
   public void execute() throws BuildException {
     setupSensorShell();
-
     int numberOfCodeIssues = 0;
-
     Date startTime = new Date();
     // Get the file names from the FileSet directives.
     ArrayList<File> files = getFiles();
@@ -127,26 +125,9 @@ public class PmdSensor extends HackystatSensorTask {
         info(msg + " " + StackTrace.toString(e));
         throw new BuildException(msg, e);
       }
-
-      if (send() > 0) {
-        Date endTime = new Date();
-        long elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-        info("Hackystat data on " + numberOfCodeIssues + " PMD issues sent to "
-            + this.sensorProps.getSensorBaseHost() + " (" + elapsedTime + " secs.)");
-      }
-      else if (numberOfCodeIssues == 0) {
-        info("No data to send.");
-      }
-      else {
-        info("Failed to send Hackystat PMD issue data.");
-      }
     }
-    try {
-      this.sensorShell.quit();
-    }
-    catch (SensorShellException e) {
-      throw new BuildException("Problem detected with autoshell: ", e);
-    }
+    this.sendAndQuit();
+    summaryInfo(startTime, "Coverage", numberOfCodeIssues);
   }
 
   /**
