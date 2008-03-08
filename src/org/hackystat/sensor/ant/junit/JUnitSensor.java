@@ -65,7 +65,7 @@ public class JUnitSensor extends HackystatSensorTask {
    * @throws BuildException If there is an error.
    */
   @Override
-  public void execute() throws BuildException {
+  public void executeInternal() throws BuildException {
     setupSensorShell();
     int numberOfTests = 0;
     Date startTime = new Date();

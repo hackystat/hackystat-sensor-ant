@@ -57,7 +57,7 @@ public class CloverSensor extends HackystatSensorTask {
    * @throws BuildException If there is an error.
    */
   @Override
-  public void execute() throws BuildException {
+  public void executeInternal() throws BuildException {
     this.setupSensorShell();
     int numberOfEntries = 0;
     Date startTime = new Date();

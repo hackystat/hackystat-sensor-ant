@@ -68,6 +68,12 @@ public abstract class HackystatSensorTask extends Task {
   @SuppressWarnings("unused")
   private HackystatSensorTask() { }
   
+  /** The number of times you can retry this sensor before failing. */
+  private int retryAttempts = 0;
+  
+  /** The amount of time to wait between retries. */
+  private int retryWaitInterval = 1;
+  
   /**
    * The standard constructor, which will instantiate a SensorShell using the configuration data
    * in sensorshell.properties. 
@@ -155,6 +161,79 @@ public abstract class HackystatSensorTask extends Task {
     this.verbose = Project.toBoolean(mode);
     verboseInfo("verbose is set to: " + this.verbose);
   }
+  
+  /**
+   * Set the retryWaitIntervalSeconds value to an integer, or set to default if the supplied value 
+   * was not an integer. 
+   * 
+   * @param mode The new retryWaitIntervalSeconds value, an integer, as a string. 
+   */
+  public void setRetryWaitInterval(String retryString) {
+    int retry = 0;
+    try {
+      retry = Integer.parseInt(retryString);
+    }
+    catch (Exception e) {
+     info("Failed to parse attribute retryAttempts. Setting to default."); 
+    }
+    this.retryWaitInterval = retry;
+    verboseInfo("retryWaitInterval is set to: " + this.retryWaitInterval);
+  }
+  
+  /**
+   * Set the retryAttempts value to an integer, or set to default if the supplied value was
+   * not an integer. 
+   * 
+   * @param mode The new retryAttempts value, an integer, as a string. 
+   */
+  public void setRetryAttempts(String retryString) {
+    int retry = 0;
+    try {
+      retry = Integer.parseInt(retryString);
+    }
+    catch (Exception e) {
+     info("Failed to parse attribute retryAttempts. Setting to default."); 
+    }
+    this.retryAttempts = retry;
+    verboseInfo("retryAttempts is set to: " + this.retryAttempts);
+  }
+  
+  /**
+   * The execute() method invoked by Ant. This method invokes the subclass executeInternal() method,
+   * and if that method throws an exception, it will retry according to the values of 
+   * retryAttempts and retryWaitInterval.
+   * 
+   * @throws BuildException If there is an error after all the retries are done. 
+   */
+  @Override
+  public void execute() throws BuildException {
+    for (int i = retryAttempts; i >= 0; i--) {
+      try {
+        executeInternal();
+        return;
+      }
+      catch (Exception e) {
+        // If we're all out of retries (or never had any), then just rethrow this exception.
+        if (i == 0) {
+          throw new BuildException(e);
+        }
+        // Else, we indicate what happened, sleep, and go through the loop again. 
+        info("Sensor failed: " + e.getMessage());
+        info("Retrying (" + i + " retries remaining.)");
+        info("Pausing for: " + this.retryWaitInterval + " seconds.");
+        try {
+          Thread.sleep(this.retryWaitInterval * 1000);
+        }
+        catch (Exception f) {
+          info("Problem trying to sleep. We ignore.");
+        }
+      }
+    }
+  }
+  
+  public abstract void executeInternal();
+  
+  
   
   /**
    * Set the failOnError attribute to "on", "true", or "yes" to throw a BuildException if problems
