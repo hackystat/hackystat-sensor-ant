@@ -85,10 +85,10 @@ public class TestCloverSensor extends TestCase {
     // Process all files
     for (int j = 0; j < files.length; j++) {
       if (filter.accept(files[j])) {
-        String fileName = files[j].getName();
         // Process the file.
-        coverageEntries += sensor.processCoverageXmlFile(directory.getCanonicalPath() + 
-            File.separator + fileName);
+        String fileName = directory.getCanonicalPath() + File.separator + files[j].getName();
+        coverageEntries += sensor.processCoverageXmlFile(new File(fileName));
+            
       }
     }
     assertSame("Should have 14 entries; 4 granularities per entry", 14, coverageEntries);

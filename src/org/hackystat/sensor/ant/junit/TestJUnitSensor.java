@@ -66,9 +66,6 @@ public class TestJUnitSensor extends TestCase {
    */
   @Test public void testJUnitSensorOnTestDataSetFiles() throws Exception {
     JUnitSensor sensor = new JUnitSensor(host, user, user);
-    sensor.setVerbose("on");
-    sensor.setSourcePath("C:/svn/hackystat/hackySdt_Cli/src"); // just a dummy value
-
     String testFileDirPath = System.getProperty("junittestfiles");
     File directory = new File(testFileDirPath);
     // look for an existing XML JUnit report.
@@ -77,7 +74,6 @@ public class TestJUnitSensor extends TestCase {
     }
 
     File[] files = directory.listFiles();
-
     // create a file filter that only accepts xml files
     FileFilter filter = new FileFilter() {
       public boolean accept(File pathname) {
@@ -92,10 +88,7 @@ public class TestJUnitSensor extends TestCase {
     // Process all files
     for (int j = 0; j < files.length; j++) {
       if (filter.accept(files[j])) {
-        String fileName = files[j].getName();
-        // Process the file.
-        testcases += sensor.processJunitXmlFile(directory.getCanonicalPath() + File.separator
-            + fileName);
+        testcases += sensor.processJunitXmlFile(files[j]);
       }
     }
     assertSame("Should have 4 entries.", 4, testcases);

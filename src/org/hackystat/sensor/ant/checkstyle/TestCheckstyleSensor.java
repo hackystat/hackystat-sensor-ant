@@ -58,7 +58,7 @@ public class TestCheckstyleSensor extends TestCase {
    */
   public void testCheckstyleSensorOnTestDataSetFiles() throws Exception {
     CheckstyleSensor sensor = new CheckstyleSensor(host, user, user);
-    sensor.setVerbose("on");
+    sensor.setVerbose("false");
     String testFileDirPath = System.getProperty("checkstyletestfiles");
     File directory = new File(testFileDirPath);
     
@@ -83,10 +83,7 @@ public class TestCheckstyleSensor extends TestCase {
     // Process all files
     for (int j = 0; j < files.length; j++) {
       if (filter.accept(files[j])) {
-        String fileName = files[j].getName();
-        // Process the file.
-        codeIssues += sensor.processIssueXmlFile(directory.getCanonicalPath() + 
-            File.separator + fileName);
+        codeIssues += sensor.processIssueXmlFile(files[j]);
       }
     }
     assertEquals("Should have 7 issues.", 7, codeIssues);

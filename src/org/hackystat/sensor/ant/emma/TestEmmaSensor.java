@@ -60,8 +60,6 @@ public class TestEmmaSensor extends TestCase {
   public void testEmmaSensorOnTestDataSetFiles() throws Exception {
     EmmaSensor sensor = new EmmaSensor(host, user, user);
     sensor.setVerbose("false");
-    //FileSet javaSourceFiles = new FileSet();
-    //sensor.addFileSet(javaSourceFiles);
     
     String testFileDirPath = System.getProperty("emmatestfiles");
     File directory = new File(testFileDirPath);
@@ -71,7 +69,6 @@ public class TestEmmaSensor extends TestCase {
     }
     
     File[] files = directory.listFiles();
-
     // create a file filter that only accepts xml files
     FileFilter filter = new FileFilter() {
       public boolean accept(File pathname) {
@@ -88,8 +85,8 @@ public class TestEmmaSensor extends TestCase {
       if (filter.accept(files[j])) {
         String fileName = files[j].getName();
         // Process the file.
-        coverageEntries += sensor.processCoverageXmlFile(directory.getCanonicalPath() + 
-            File.separator + fileName);
+        File file = new File(directory.getCanonicalPath() + File.separator + fileName);
+        coverageEntries += sensor.processCoverageXmlFile(file);
       }
     }
     assertSame("Should have 5 entries; 4 granularities per entry", 5, coverageEntries);

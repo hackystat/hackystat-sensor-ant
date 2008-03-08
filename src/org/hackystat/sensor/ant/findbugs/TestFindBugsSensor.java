@@ -59,9 +59,6 @@ public class TestFindBugsSensor extends TestCase {
    */
   public void testFindBugsSensorOnTestDataSetFiles() throws Exception {
     FindBugsSensor sensor = new FindBugsSensor(host, user, user);
-    sensor.setVerbose("false");
-    //FileSet javaSourceFiles = new FileSet();
-    //sensor.addFileSet(javaSourceFiles);
     
     String testFileDirPath = System.getProperty("findbugstestfiles");
     File directory = new File(testFileDirPath);
@@ -71,7 +68,6 @@ public class TestFindBugsSensor extends TestCase {
     }
     
     File[] files = directory.listFiles();
-
     // create a file filter that only accepts xml files
     FileFilter filter = new FileFilter() {
       public boolean accept(File pathname) {
@@ -86,10 +82,7 @@ public class TestFindBugsSensor extends TestCase {
     // Process all files
     for (int j = 0; j < files.length; j++) {
       if (filter.accept(files[j])) {
-        String fileName = files[j].getName();
-        // Process the file.
-        coverageEntries += sensor.processFindBugsXmlFile(directory.getCanonicalPath() + 
-            File.separator + fileName);
+        coverageEntries += sensor.processFindBugsXmlFile(files[j]);
       }
     }
     assertSame("Should have 9 entries.", 9, coverageEntries);

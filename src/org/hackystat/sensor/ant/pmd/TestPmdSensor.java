@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.FileFilter;
 
 import junit.framework.TestCase;
-
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.FileSet;
-import org.apache.tools.ant.types.Path;
 import org.hackystat.sensorbase.client.SensorBaseClient;
 import org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataIndex;
 import org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataRef;
@@ -61,25 +57,12 @@ public class TestPmdSensor extends TestCase {
    */
   public void testPmdSensorOnTestDataSetFiles() throws Exception {
     String testFileDirPath = System.getProperty("pmdtestfiles");
-
     PmdSensor sensor = new PmdSensor(host, user, user);
-    sensor.setVerbose("on");
-    
-    sensor.setProject(new Project());
-    Path path = sensor.createSourcePath();
-    FileSet fileSet = new FileSet();
-    fileSet.setDir(new File(testFileDirPath + "/src"));
-    fileSet.setExcludes("**/jaxb/**");
-    fileSet.setIncludes("**/*.java");
-    fileSet.setProject(path.getProject());
-    path.addFileset(fileSet);
-    sensor.setSourcePath(path);
     
     File directory = new File(testFileDirPath);
     if (!directory.isDirectory()) {
       fail("cannot find pmd test files");
     }
-
     File[] files = directory.listFiles();
     // create a file filter that only accepts pmd.xml
     FileFilter filter = new FileFilter() {
@@ -92,14 +75,12 @@ public class TestPmdSensor extends TestCase {
     };
     
     // Process all files
+    int count = 0;
     for (int j = 0; j < files.length; j++) {
       if (filter.accept(files[j])) {
-        String fileName = (files[j]).getName();
-        // Process the file and send it.
-        int count = sensor.processIssueXmlFile(directory.getCanonicalPath() 
-            + File.separator + fileName);
-        assertEquals("Checking number of CodeIssue entries", 5, count);
+        count = sensor.processIssueXmlFile(files[j]);
       }
     }
+    assertEquals("Checking number of CodeIssue entries", 3, count);
   }  
 }
