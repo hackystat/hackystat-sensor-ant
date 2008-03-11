@@ -1,4 +1,4 @@
-<project name="pmd" default="pmd" xmlns:hackystat="org.hackystat.sensor.ant">
+<project name="pmd" default="pmd">
   <description>
   Provides the PMD tool and the Hackystat PMD sensor.
 
@@ -38,9 +38,9 @@
   </target>
 
   <target name="pmd.sensor" description="Send hackystat data about this PMD invocation." if="hackystat.enabled">
-    <fileset id="pmd.output.fileset" dir="${pmd.dir}" includes="pmd.xml" />
-    <fileset id="pmd.src.fileset" dir="${src.dir}" includes="**/*.java" excludes="**/jaxb/**" />
-    <hackystat.pmd pmd.output.fileset="pmd.output.fileset" pmd.src.fileset="pmd.src.fileset" verbose="${hackystat.verbose.mode}"/>
+    <fileset id="pmd.datafiles" dir="${pmd.dir}" includes="pmd.xml" />
+    <fileset id="pmd.sourcefiles" dir="${src.dir}" includes="**/*.java" excludes="**/jaxb/**" />
+    <hackystat.pmd pmd.datafiles.fileset="pmd.datafiles" pmd.sourcefiles.fileset="pmd.sourcefiles" verbose="${hackystat.verbose.mode}" />
   </target>
 
 </project>

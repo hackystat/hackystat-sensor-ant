@@ -1,4 +1,4 @@
-<project name="junit" default="junit" xmlns:hackystat="org.hackystat.sensor.ant">
+<project name="junit" default="junit">
   <description>
   Provides the JUnit tool and the Hackystat JUnit sensor.
   </description>
@@ -19,6 +19,7 @@
       <classpath>
         <pathelement location="${build.dir}/classes" />
         <path refid="compile.classpath" />
+        <fileset file="${env.JAVAMAIL_HOME}/mail.jar"/> 
       </classpath>
       <sysproperty key="junittestfiles" value="${basedir}/testdata/junit" />
       <sysproperty key="emmatestfiles" value="${basedir}/testdata/emma" />
@@ -43,8 +44,13 @@
   </target>
 
   <target name="junit.sensor" description="Send hackystat data about this JUnit invocation." if="hackystat.enabled">
-    <fileset id="junit.output.fileset" dir="${junit.dir}" includes="TEST-*.xml" />
-    <hackystat.junit src.dir="${src.dir}" junit.output.fileset="junit.output.fileset" verbose="${hackystat.verbose.mode}" />
+    <fileset id="junit.datafiles" dir="${junit.dir}" includes="TEST-*.xml" />
+    <fileset id="junit.sourcefiles" dir="${src.dir}" includes="**/Test*.java" />
+    <hackystat.junit junit.sourcefiles.fileset="junit.sourcefiles" junit.datafiles.fileset="junit.datafiles" verbose="${hackystat.verbose.mode}" />
   </target>
 
+
 </project>
+
+
+

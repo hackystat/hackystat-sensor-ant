@@ -1,4 +1,4 @@
-<project name="findbugs" default="findbugs" xmlns:hackystat="org.hackystat.sensor.ant">
+<project name="findbugs" default="findbugs">
   <description>
   Provides the FindBugs tool and the Hackystat FindBugs sensor.
   </description>
@@ -20,28 +20,26 @@
     <findbugs home="${env.FINDBUGS_HOME}" failOnError="${findbugs.failOnError}" warningsProperty="findbugs.warningsfound" output="xml:withMessages" outputFile="${findbugs.dir}/findbugs.xml" excludeFilter="${basedir}/lib/findbugs/hackystat.findbugs.exclude.xml">
       <auxClasspath>
         <path refid="compile.classpath" />
-        <!-- Findbugs refuses to run on this project without this jar. -->
         <path location="${ant.home}/lib/ant-launcher.jar" />
       </auxClasspath>
       <sourcePath>
         <fileset dir="${src.dir}">
           <include name="**/*.java" />
-          <exclude name="**/jaxb/**" />
         </fileset>
       </sourcePath>
       <class location="${build.dir}/classes" />
     </findbugs>
   </target>
 
-  <target name="findbugs.report" description="Generate an HTML report on FindBugs.">
+  <target name="findbugs.report" depends="findbugs.tool" description="Generate an HTML report on FindBugs.">
     <xslt in="${findbugs.dir}/findbugs.xml" style="${env.FINDBUGS_HOME}/src/xsl/default.xsl" out="${findbugs.dir}/findbugs-default.html" />
   </target>
 
   <target name="findbugs.sensor" description="Send hackystat data about this FindBugs invocation." if="hackystat.enabled">
-    <fileset id="findbugs.output.fileset" dir="${findbugs.dir}" includes="findbugs.xml" />
-    <hackystat.findbugs findbugs.output.fileset="findbugs.output.fileset" verbose="${hackystat.verbose.mode}" />
+    <fileset id="findbugs.datafiles" dir="${findbugs.dir}" includes="findbugs.xml" />
+    <fileset id="findbugs.sourcefiles" dir="${src.dir}" includes="**/*.java" />
+    <hackystat.findbugs findbugs.sourcefiles.fileset="findbugs.sourcefiles" findbugs.datafiles.fileset="findbugs.datafiles" verbose="${hackystat.verbose.mode}" />
   </target>
-
 </project>
 
 
