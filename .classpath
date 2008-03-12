@@ -4,9 +4,9 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="ANT_HOME/lib/ant.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="var" path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar"/>
 	<classpathentry kind="lib" path="lib/vcs/JRCS.jar"/>
 	<classpathentry kind="lib" path="lib/svn/javasvn.jar"/>
 	<classpathentry kind="var" path="HACKYSTAT_SENSORSHELL_HOME/sensorshell.jar"/>
+	<classpathentry kind="var" path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar" sourcepath="/HACKYSTAT_UTILITIES_HOME/src"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
