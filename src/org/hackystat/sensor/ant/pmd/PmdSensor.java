@@ -101,6 +101,7 @@ public class PmdSensor extends HackystatSensorTask {
       List<org.hackystat.sensor.ant.pmd.resource.jaxb.File> files = pmdResults.getFile();
 
       int codeIssueCount = 0;
+      verboseInfo("Processing information about files that had PMD issues.");
       for (org.hackystat.sensor.ant.pmd.resource.jaxb.File file : files) {
         // Base unique timestamp off of the runtime (which is when it started running)
         long uniqueTstamp = this.tstampSet.getUniqueTstamp(this.runtime);
@@ -150,6 +151,7 @@ public class PmdSensor extends HackystatSensorTask {
       }
 
       // process the zero issues
+      verboseInfo("Generating data for files that did not have PMD issues.");
       for (File srcFile : getSourceFiles()) {
         // Skip this entry if we've already processed it above. 
         if (filesWithViolations.contains(srcFile.getAbsolutePath())) {

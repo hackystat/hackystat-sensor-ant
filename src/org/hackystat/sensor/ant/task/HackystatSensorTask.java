@@ -153,6 +153,8 @@ public abstract class HackystatSensorTask extends Task {
       }
     }
     verboseInfo(this.sensorShell.getProperties().toString());
+    verboseInfo("Maximum Java heap size is: " + Runtime.getRuntime().maxMemory());
+    
   }
 
   /**
@@ -348,7 +350,6 @@ public abstract class HackystatSensorTask extends Task {
         fileList.add(file);
       }
     }
-    verboseInfo("Found the following files in the fileset: " + fileList);
     return fileList;
   }
 
