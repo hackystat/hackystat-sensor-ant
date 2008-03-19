@@ -1,0 +1,1017 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>JDepend Analysis</title>
+<style type="text/css">
+      body {
+        font:normal 68% verdana,arial,helvetica;
+        color:#000000;
+      }
+      table tr td, tr th {
+          font-size: 68%;
+      }
+      table.details tr th{
+        font-weight: bold;
+        text-align:left;
+        background:#a6caf0;
+      }
+      table.details tr td{
+        background:#eeeee0;
+      }
+      
+      p {
+        line-height:1.5em;
+        margin-top:0.5em; margin-bottom:1.0em;
+        margin-left:2em;
+        margin-right:2em;
+      }
+      h1 {
+        margin: 0px 0px 5px; font: 165% verdana,arial,helvetica
+      }
+      h2 {
+        margin-top: 1em; margin-bottom: 0.5em; font: bold 125% verdana,arial,helvetica
+      }
+      h3 {
+        margin-bottom: 0.5em; font: bold 115% verdana,arial,helvetica
+      }
+      h4 {
+        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
+      }
+      h5 {
+        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
+      }
+      h6 {
+        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
+      }
+      .Error {
+        font-weight:bold; color:red;
+      }
+      .Failure {
+        font-weight:bold; color:purple;
+      }
+      .Properties {
+        text-align:right;
+      }
+      </style>
+</head>
+<body>
+<h1>
+<a name="top">JDepend Analysis</a>
+</h1>
+<p align="right">Designed for use with <a href="http://www.clarkware.com/software/JDepend.html">JDepend</a> and <a href="http://jakarta.apache.org">Ant</a>.</p>
+<hr size="2">
+<table width="100%">
+<tr>
+<td><a name="NVsummary">
+<h2>Summary</h2>
+</a></td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+    [<a href="#NVpackages">packages</a>]
+    [<a href="#NVcycles">cycles</a>]
+    [<a href="#NVexplanations">explanations</a>]
+    </td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Package</th><th>Total Classes</th><th><a href="#EXnumber">Abstract Classes</a></th><th><a href="#EXnumber">Concrete Classes</a></th><th><a href="#EXafferent">Afferent Couplings</a></th><th><a href="#EXefferent">Efferent Couplings</a></th><th><a href="#EXabstractness">Abstractness</a></th><th><a href="#EXinstability">Instability</a></th><th><a href="#EXdistance">Distance</a></th>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.antbuild">org.hackystat.sensor.ant.antbuild</a></td><td align="right">1</td><td align="right">0</td><td align="right">1</td><td align="right">0</td><td align="right">4</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.checkstyle">org.hackystat.sensor.ant.checkstyle</a></td><td align="right">3</td><td align="right">0</td><td align="right">3</td><td align="right">1</td><td align="right">10</td><td align="right">0</td><td align="right">0.91</td><td align="right">0.09</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.checkstyle.resource.jaxb">org.hackystat.sensor.ant.checkstyle.resource.jaxb</a></td><td align="right">4</td><td align="right">0</td><td align="right">4</td><td align="right">1</td><td align="right">0</td><td align="right">0</td><td align="right">0</td><td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.clover">org.hackystat.sensor.ant.clover</a></td><td align="right">3</td><td align="right">0</td><td align="right">3</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.clover.resource.jaxb">org.hackystat.sensor.ant.clover.resource.jaxb</a></td><td align="right">8</td><td align="right">0</td><td align="right">8</td><td align="right">1</td><td align="right">0</td><td align="right">0</td><td align="right">0</td><td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.emma">org.hackystat.sensor.ant.emma</a></td><td align="right">3</td><td align="right">0</td><td align="right">3</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.emma.resource.jaxb">org.hackystat.sensor.ant.emma.resource.jaxb</a></td><td align="right">15</td><td align="right">0</td><td align="right">15</td><td align="right">1</td><td align="right">0</td><td align="right">0</td><td align="right">0</td><td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.findbugs">org.hackystat.sensor.ant.findbugs</a></td><td align="right">3</td><td align="right">0</td><td align="right">3</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.findbugs.resource.jaxb">org.hackystat.sensor.ant.findbugs.resource.jaxb</a></td><td align="right">6</td><td align="right">0</td><td align="right">6</td><td align="right">1</td><td align="right">0</td><td align="right">0</td><td align="right">0</td><td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.javancss">org.hackystat.sensor.ant.javancss</a></td><td align="right">3</td><td align="right">0</td><td align="right">3</td><td align="right">0</td><td align="right">6</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.javancss.resource.jaxb">org.hackystat.sensor.ant.javancss.resource.jaxb</a></td><td align="right">12</td><td align="right">0</td><td align="right">12</td><td align="right">1</td><td align="right">0</td><td align="right">0</td><td align="right">0</td><td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.junit">org.hackystat.sensor.ant.junit</a></td><td align="right">3</td><td align="right">0</td><td align="right">3</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.junit.resource.jaxb">org.hackystat.sensor.ant.junit.resource.jaxb</a></td><td align="right">7</td><td align="right">0</td><td align="right">7</td><td align="right">1</td><td align="right">0</td><td align="right">0</td><td align="right">0</td><td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.pmd">org.hackystat.sensor.ant.pmd</a></td><td align="right">3</td><td align="right">0</td><td align="right">3</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.pmd.resource.jaxb">org.hackystat.sensor.ant.pmd.resource.jaxb</a></td><td align="right">4</td><td align="right">0</td><td align="right">4</td><td align="right">1</td><td align="right">0</td><td align="right">0</td><td align="right">0</td><td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.svn">org.hackystat.sensor.ant.svn</a></td><td align="right">5</td><td align="right">0</td><td align="right">5</td><td align="right">0</td><td align="right">12</td><td align="right">0</td><td align="right">1</td><td align="right">0</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a></td><td align="right">3</td><td align="right">1</td><td align="right">2</td><td align="right">7</td><td align="right">7</td><td align="right">0.33</td><td align="right">0.5</td><td align="right">0.17</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a></td><td align="right">2</td><td align="right">0</td><td align="right">2</td><td align="right">7</td><td align="right">1</td><td align="right">0</td><td align="right">0.12</td><td align="right">0.88</td>
+</tr>
+<tr>
+<td align="left"><a href="#PKorg.hackystat.sensor.ant.vcs">org.hackystat.sensor.ant.vcs</a></td><td align="right">3</td><td align="right">0</td><td align="right">3</td><td align="right">1</td><td align="right">2</td><td align="right">0</td><td align="right">0.67</td><td align="right">0.33</td>
+</tr>
+<tr>
+<td align="left">junit.framework</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.apache.commons.jrcs.diff</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.apache.tools.ant</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.apache.tools.ant.types</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.hackystat.sensorbase.client</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.hackystat.sensorbase.resource.sensordata.jaxb</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.hackystat.sensorbase.server</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.hackystat.sensorshell</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.hackystat.sensorshell.usermap</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.hackystat.utilities.stacktrace</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.hackystat.utilities.time.period</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.hackystat.utilities.tstamp</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.junit</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.tmatesoft.svn.core</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.tmatesoft.svn.core.internal.io.dav</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.tmatesoft.svn.core.internal.io.svn</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.tmatesoft.svn.core.io</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+<tr>
+<td align="left">org.tmatesoft.svn.core.wc</td><td align="left" colspan="8">No stats available: package referenced, but not analyzed.</td>
+</tr>
+</table>
+<table width="100%">
+<tr>
+<td><a name="NVpackages">
+<h2>Packages</h2>
+</a></td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+    [<a href="#NVpackages">packages</a>]
+    [<a href="#NVcycles">cycles</a>]
+    [<a href="#NVexplanations">explanations</a>]
+    </td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.antbuild">org.hackystat.sensor.ant.antbuild</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 4</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.antbuild.BuildSensorAntListener
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell.usermap">org.hackystat.sensorshell.usermap</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.checkstyle">org.hackystat.sensor.ant.checkstyle</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 10</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0.91</td><td><a href="#EXdistance">Distance</a>: 0.09</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.checkstyle.CheckstyleSensor
+                <br>
+                    org.hackystat.sensor.ant.checkstyle.TestCheckstyleSensor
+                <br>
+                    org.hackystat.sensor.ant.checkstyle.TestCheckstyleSensor$1
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKjunit.framework">junit.framework</a>
+<br>
+<a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.checkstyle.resource.jaxb">org.hackystat.sensor.ant.checkstyle.resource.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.client">org.hackystat.sensorbase.client</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.resource.sensordata.jaxb">org.hackystat.sensorbase.resource.sensordata.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.server">org.hackystat.sensorbase.server</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.checkstyle.resource.jaxb">org.hackystat.sensor.ant.checkstyle.resource.jaxb</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 0</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0</td><td><a href="#EXdistance">Distance</a>: 1</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.checkstyle.resource.jaxb.Checkstyle
+                <br>
+                    org.hackystat.sensor.ant.checkstyle.resource.jaxb.Error
+                <br>
+                    org.hackystat.sensor.ant.checkstyle.resource.jaxb.File
+                <br>
+                    org.hackystat.sensor.ant.checkstyle.resource.jaxb.ObjectFactory
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.checkstyle">org.hackystat.sensor.ant.checkstyle</a>
+<br>
+</td><td valign="top" width="25%"><i>None</i></td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.clover">org.hackystat.sensor.ant.clover</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 10</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.clover.CloverSensor
+                <br>
+                    org.hackystat.sensor.ant.clover.TestCloverSensor
+                <br>
+                    org.hackystat.sensor.ant.clover.TestCloverSensor$1
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKjunit.framework">junit.framework</a>
+<br>
+<a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.clover.resource.jaxb">org.hackystat.sensor.ant.clover.resource.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.client">org.hackystat.sensorbase.client</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.resource.sensordata.jaxb">org.hackystat.sensorbase.resource.sensordata.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.server">org.hackystat.sensorbase.server</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.clover.resource.jaxb">org.hackystat.sensor.ant.clover.resource.jaxb</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 0</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0</td><td><a href="#EXdistance">Distance</a>: 1</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Class
+                <br>
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Coverage
+                <br>
+                    org.hackystat.sensor.ant.clover.resource.jaxb.File
+                <br>
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Metrics
+                <br>
+                    org.hackystat.sensor.ant.clover.resource.jaxb.ObjectFactory
+                <br>
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Package
+                <br>
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Project
+                <br>
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Testproject
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.clover">org.hackystat.sensor.ant.clover</a>
+<br>
+</td><td valign="top" width="25%"><i>None</i></td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.emma">org.hackystat.sensor.ant.emma</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 10</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.emma.EmmaSensor
+                <br>
+                    org.hackystat.sensor.ant.emma.TestEmmaSensor
+                <br>
+                    org.hackystat.sensor.ant.emma.TestEmmaSensor$1
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKjunit.framework">junit.framework</a>
+<br>
+<a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.emma.resource.jaxb">org.hackystat.sensor.ant.emma.resource.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.client">org.hackystat.sensorbase.client</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.resource.sensordata.jaxb">org.hackystat.sensorbase.resource.sensordata.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.server">org.hackystat.sensorbase.server</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.emma.resource.jaxb">org.hackystat.sensor.ant.emma.resource.jaxb</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 0</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0</td><td><a href="#EXdistance">Distance</a>: 1</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.All
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Class
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Classes
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Coverage
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Data
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Method
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Methods
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.ObjectFactory
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Package
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Packages
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Report
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Srcfile
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Srcfiles
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Srclines
+                <br>
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Stats
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.emma">org.hackystat.sensor.ant.emma</a>
+<br>
+</td><td valign="top" width="25%"><i>None</i></td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.findbugs">org.hackystat.sensor.ant.findbugs</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 10</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.findbugs.FindBugsSensor
+                <br>
+                    org.hackystat.sensor.ant.findbugs.TestFindBugsSensor
+                <br>
+                    org.hackystat.sensor.ant.findbugs.TestFindBugsSensor$1
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKjunit.framework">junit.framework</a>
+<br>
+<a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.findbugs.resource.jaxb">org.hackystat.sensor.ant.findbugs.resource.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.client">org.hackystat.sensorbase.client</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.resource.sensordata.jaxb">org.hackystat.sensorbase.resource.sensordata.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.server">org.hackystat.sensorbase.server</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.findbugs.resource.jaxb">org.hackystat.sensor.ant.findbugs.resource.jaxb</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 0</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0</td><td><a href="#EXdistance">Distance</a>: 1</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.BugCollection
+                <br>
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.BugInstance
+                <br>
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.Class
+                <br>
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.ObjectFactory
+                <br>
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.Project
+                <br>
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.SourceLine
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.findbugs">org.hackystat.sensor.ant.findbugs</a>
+<br>
+</td><td valign="top" width="25%"><i>None</i></td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.javancss">org.hackystat.sensor.ant.javancss</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 6</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.javancss.CcnData
+                <br>
+                    org.hackystat.sensor.ant.javancss.JavaNcssSensor
+                <br>
+                    org.hackystat.sensor.ant.javancss.TestCcnData
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.javancss.resource.jaxb">org.hackystat.sensor.ant.javancss.resource.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+<a href="#PKorg.junit">org.junit</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.javancss.resource.jaxb">org.hackystat.sensor.ant.javancss.resource.jaxb</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 0</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0</td><td><a href="#EXdistance">Distance</a>: 1</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Averages
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Function
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.FunctionAverages
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Functions
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Javancss
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Object
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.ObjectFactory
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Objects
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Package
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Packages
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Table
+                <br>
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Total
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.javancss">org.hackystat.sensor.ant.javancss</a>
+<br>
+</td><td valign="top" width="25%"><i>None</i></td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.junit">org.hackystat.sensor.ant.junit</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 10</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.junit.JUnitSensor
+                <br>
+                    org.hackystat.sensor.ant.junit.TestJUnitSensor
+                <br>
+                    org.hackystat.sensor.ant.junit.TestJUnitSensor$1
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKjunit.framework">junit.framework</a>
+<br>
+<a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.junit.resource.jaxb">org.hackystat.sensor.ant.junit.resource.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.client">org.hackystat.sensorbase.client</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.resource.sensordata.jaxb">org.hackystat.sensorbase.resource.sensordata.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.server">org.hackystat.sensorbase.server</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.junit.resource.jaxb">org.hackystat.sensor.ant.junit.resource.jaxb</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 0</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0</td><td><a href="#EXdistance">Distance</a>: 1</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Error
+                <br>
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Failure
+                <br>
+                    org.hackystat.sensor.ant.junit.resource.jaxb.ObjectFactory
+                <br>
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Properties
+                <br>
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Property
+                <br>
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Testcase
+                <br>
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Testsuite
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.junit">org.hackystat.sensor.ant.junit</a>
+<br>
+</td><td valign="top" width="25%"><i>None</i></td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.pmd">org.hackystat.sensor.ant.pmd</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 10</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.pmd.PmdSensor
+                <br>
+                    org.hackystat.sensor.ant.pmd.TestPmdSensor
+                <br>
+                    org.hackystat.sensor.ant.pmd.TestPmdSensor$1
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKjunit.framework">junit.framework</a>
+<br>
+<a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.pmd.resource.jaxb">org.hackystat.sensor.ant.pmd.resource.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.client">org.hackystat.sensorbase.client</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.resource.sensordata.jaxb">org.hackystat.sensorbase.resource.sensordata.jaxb</a>
+<br>
+<a href="#PKorg.hackystat.sensorbase.server">org.hackystat.sensorbase.server</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.pmd.resource.jaxb">org.hackystat.sensor.ant.pmd.resource.jaxb</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 0</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0</td><td><a href="#EXdistance">Distance</a>: 1</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.pmd.resource.jaxb.File
+                <br>
+                    org.hackystat.sensor.ant.pmd.resource.jaxb.ObjectFactory
+                <br>
+                    org.hackystat.sensor.ant.pmd.resource.jaxb.Pmd
+                <br>
+                    org.hackystat.sensor.ant.pmd.resource.jaxb.Violation
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.pmd">org.hackystat.sensor.ant.pmd</a>
+<br>
+</td><td valign="top" width="25%"><i>None</i></td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.svn">org.hackystat.sensor.ant.svn</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 0</td><td><a href="#EXefferent">Efferent Couplings</a>: 12</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 1</td><td><a href="#EXdistance">Distance</a>: 0</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.svn.CommitRecord
+                <br>
+                    org.hackystat.sensor.ant.svn.CommitRecordEntry
+                <br>
+                    org.hackystat.sensor.ant.svn.SVNCommitProcessor
+                <br>
+                    org.hackystat.sensor.ant.svn.SvnSensor
+                <br>
+                    org.hackystat.sensor.ant.svn.TestAll
+                <br>
+</td><td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%"><a href="#PKjunit.framework">junit.framework</a>
+<br>
+<a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.vcs">org.hackystat.sensor.ant.vcs</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell.usermap">org.hackystat.sensorshell.usermap</a>
+<br>
+<a href="#PKorg.hackystat.utilities.time.period">org.hackystat.utilities.time.period</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+<a href="#PKorg.tmatesoft.svn.core">org.tmatesoft.svn.core</a>
+<br>
+<a href="#PKorg.tmatesoft.svn.core.internal.io.dav">org.tmatesoft.svn.core.internal.io.dav</a>
+<br>
+<a href="#PKorg.tmatesoft.svn.core.internal.io.svn">org.tmatesoft.svn.core.internal.io.svn</a>
+<br>
+<a href="#PKorg.tmatesoft.svn.core.io">org.tmatesoft.svn.core.io</a>
+<br>
+<a href="#PKorg.tmatesoft.svn.core.wc">org.tmatesoft.svn.core.wc</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.task">org.hackystat.sensor.ant.task</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 7</td><td><a href="#EXefferent">Efferent Couplings</a>: 7</td><td><a href="#EXabstractness">Abstractness</a>: 0.33</td><td><a href="#EXinstability">Instability</a>: 0.5</td><td><a href="#EXdistance">Distance</a>: 0.17</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%">
+                    org.hackystat.sensor.ant.task.HackystatSensorTask
+                <br>
+</td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.task.DataFiles
+                <br>
+                    org.hackystat.sensor.ant.task.SourceFiles
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.checkstyle">org.hackystat.sensor.ant.checkstyle</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.clover">org.hackystat.sensor.ant.clover</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.emma">org.hackystat.sensor.ant.emma</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.findbugs">org.hackystat.sensor.ant.findbugs</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.javancss">org.hackystat.sensor.ant.javancss</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.junit">org.hackystat.sensor.ant.junit</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.pmd">org.hackystat.sensor.ant.pmd</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+<a href="#PKorg.apache.tools.ant.types">org.apache.tools.ant.types</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.checkstyle">org.hackystat.sensor.ant.checkstyle</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell">org.hackystat.sensorshell</a>
+<br>
+<a href="#PKorg.hackystat.sensorshell.usermap">org.hackystat.sensorshell.usermap</a>
+<br>
+<a href="#PKorg.hackystat.utilities.stacktrace">org.hackystat.utilities.stacktrace</a>
+<br>
+<a href="#PKorg.hackystat.utilities.tstamp">org.hackystat.utilities.tstamp</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.util">org.hackystat.sensor.ant.util</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 7</td><td><a href="#EXefferent">Efferent Couplings</a>: 1</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0.12</td><td><a href="#EXdistance">Distance</a>: 0.88</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.util.JavaClass2FilePathMapper
+                <br>
+                    org.hackystat.sensor.ant.util.LongTimeConverter
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.antbuild">org.hackystat.sensor.ant.antbuild</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.checkstyle">org.hackystat.sensor.ant.checkstyle</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.clover">org.hackystat.sensor.ant.clover</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.emma">org.hackystat.sensor.ant.emma</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.findbugs">org.hackystat.sensor.ant.findbugs</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.junit">org.hackystat.sensor.ant.junit</a>
+<br>
+<a href="#PKorg.hackystat.sensor.ant.pmd">org.hackystat.sensor.ant.pmd</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKorg.apache.tools.ant">org.apache.tools.ant</a>
+<br>
+</td>
+</tr>
+</table>
+<h3>
+<a name="PKorg.hackystat.sensor.ant.vcs">org.hackystat.sensor.ant.vcs</a>
+</h3>
+<table width="100%">
+<tr>
+<td><a href="#EXafferent">Afferent Couplings</a>: 1</td><td><a href="#EXefferent">Efferent Couplings</a>: 2</td><td><a href="#EXabstractness">Abstractness</a>: 0</td><td><a href="#EXinstability">Instability</a>: 0.67</td><td><a href="#EXdistance">Distance</a>: 0.33</td>
+</tr>
+</table>
+<table width="100%" class="details">
+<tr>
+<th>Abstract Classes</th><th>Concrete Classes</th><th>Used by Packages</th><th>Uses Packages</th>
+</tr>
+<tr>
+<td valign="top" width="25%"><i>None</i></td><td valign="top" width="25%">
+                    org.hackystat.sensor.ant.vcs.GenericDiffCounter
+                <br>
+                    org.hackystat.sensor.ant.vcs.GenericSizeCounter
+                <br>
+                    org.hackystat.sensor.ant.vcs.TestGenericSizeCounter
+                <br>
+</td><td valign="top" width="25%"><a href="#PKorg.hackystat.sensor.ant.svn">org.hackystat.sensor.ant.svn</a>
+<br>
+</td><td valign="top" width="25%"><a href="#PKjunit.framework">junit.framework</a>
+<br>
+<a href="#PKorg.apache.commons.jrcs.diff">org.apache.commons.jrcs.diff</a>
+<br>
+</td>
+</tr>
+</table>
+<table width="100%">
+<tr>
+<td><a name="NVcycles">
+<h2>Cycles</h2>
+</a></td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+    [<a href="#NVpackages">packages</a>]
+    [<a href="#NVcycles">cycles</a>]
+    [<a href="#NVexplanations">explanations</a>]
+    </td>
+</tr>
+</table>
+<h3>org.hackystat.sensor.ant.checkstyle</h3>
+<p>org.hackystat.sensor.ant.task<br>org.hackystat.sensor.ant.checkstyle<br>
+</p>
+<h3>org.hackystat.sensor.ant.clover</h3>
+<p>org.hackystat.sensor.ant.task<br>org.hackystat.sensor.ant.checkstyle<br>org.hackystat.sensor.ant.task<br>
+</p>
+<h3>org.hackystat.sensor.ant.emma</h3>
+<p>org.hackystat.sensor.ant.task<br>org.hackystat.sensor.ant.checkstyle<br>org.hackystat.sensor.ant.task<br>
+</p>
+<h3>org.hackystat.sensor.ant.findbugs</h3>
+<p>org.hackystat.sensor.ant.task<br>org.hackystat.sensor.ant.checkstyle<br>org.hackystat.sensor.ant.task<br>
+</p>
+<h3>org.hackystat.sensor.ant.javancss</h3>
+<p>org.hackystat.sensor.ant.task<br>org.hackystat.sensor.ant.checkstyle<br>org.hackystat.sensor.ant.task<br>
+</p>
+<h3>org.hackystat.sensor.ant.junit</h3>
+<p>org.hackystat.sensor.ant.task<br>org.hackystat.sensor.ant.checkstyle<br>org.hackystat.sensor.ant.task<br>
+</p>
+<h3>org.hackystat.sensor.ant.pmd</h3>
+<p>org.hackystat.sensor.ant.task<br>org.hackystat.sensor.ant.checkstyle<br>org.hackystat.sensor.ant.task<br>
+</p>
+<h3>org.hackystat.sensor.ant.task</h3>
+<p>org.hackystat.sensor.ant.checkstyle<br>org.hackystat.sensor.ant.task<br>
+</p>
+<table width="100%">
+<tr>
+<td><a name="NVexplanations">
+<h2>Explanations</h2>
+</a></td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+    [<a href="#NVpackages">packages</a>]
+    [<a href="#NVcycles">cycles</a>]
+    [<a href="#NVexplanations">explanations</a>]
+    </td>
+</tr>
+</table>
+<p>The following explanations are for quick reference and are lifted directly from the original <a href="http://www.clarkware.com/software/JDepend.html">JDepend documentation</a>.</p>
+<h3>
+<a name="EXnumber">Number of Classes</a>
+</h3>
+<p>The number of concrete and abstract classes (and interfaces) in the package is an indicator of the extensibility of the package.</p>
+<h3>
+<a name="EXafferent">Afferent Couplings</a>
+</h3>
+<p>The number of other packages that depend upon classes within the package is an indicator of the package's responsibility. </p>
+<h3>
+<a name="EXefferent">Efferent Couplings</a>
+</h3>
+<p>The number of other packages that the classes in the package depend upon is an indicator of the package's independence. </p>
+<h3>
+<a name="EXabstractness">Abstractness</a>
+</h3>
+<p>The ratio of the number of abstract classes (and interfaces) in the analyzed package to the total number of classes in the analyzed package. </p>
+<p>The range for this metric is 0 to 1, with A=0 indicating a completely concrete package and A=1 indicating a completely abstract package. </p>
+<h3>
+<a name="EXinstability">Instability</a>
+</h3>
+<p>The ratio of efferent coupling (Ce) to total coupling (Ce / (Ce + Ca)). This metric is an indicator of the package's resilience to change. </p>
+<p>The range for this metric is 0 to 1, with I=0 indicating a completely stable package and I=1 indicating a completely instable package. </p>
+<h3>
+<a name="EXdistance">Distance</a>
+</h3>
+<p>The perpendicular distance of a package from the idealized line A + I = 1. This metric is an indicator of the package's balance between abstractness and stability. </p>
+<p>A package squarely on the main sequence is optimally balanced with respect to its abstractness and stability. Ideal packages are either completely abstract and stable (x=0, y=1) or completely concrete and instable (x=1, y=0). </p>
+<p>The range for this metric is 0 to 1, with D=0 indicating a package that is coincident with the main sequence and D=1 indicating a package that is as far from the main sequence as possible. </p>
+</body>
+</html>

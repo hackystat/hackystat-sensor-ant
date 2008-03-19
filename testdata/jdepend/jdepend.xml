@@ -1,0 +1,1008 @@
+<?xml version="1.0"?>
+<JDepend>
+    <Packages>
+
+        <Package name="junit.framework">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.apache.commons.jrcs.diff">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.apache.tools.ant">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.apache.tools.ant.types">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.antbuild">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>4</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="BuildSensorAntListener.java">
+                    org.hackystat.sensor.ant.antbuild.BuildSensorAntListener
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.util</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.sensorshell.usermap</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.checkstyle">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>10</Ce>
+                <A>0</A>
+                <I>0.91</I>
+                <D>0.09</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CheckstyleSensor.java">
+                    org.hackystat.sensor.ant.checkstyle.CheckstyleSensor
+                </Class>
+                <Class sourceFile="TestCheckstyleSensor.java">
+                    org.hackystat.sensor.ant.checkstyle.TestCheckstyleSensor
+                </Class>
+                <Class sourceFile="TestCheckstyleSensor.java">
+                    org.hackystat.sensor.ant.checkstyle.TestCheckstyleSensor$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>junit.framework</Package>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.checkstyle.resource.jaxb</Package>
+                <Package>org.hackystat.sensor.ant.task</Package>
+                <Package>org.hackystat.sensor.ant.util</Package>
+                <Package>org.hackystat.sensorbase.client</Package>
+                <Package>org.hackystat.sensorbase.resource.sensordata.jaxb</Package>
+                <Package>org.hackystat.sensorbase.server</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.task</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.checkstyle.resource.jaxb">
+            <Stats>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Checkstyle.java">
+                    org.hackystat.sensor.ant.checkstyle.resource.jaxb.Checkstyle
+                </Class>
+                <Class sourceFile="Error.java">
+                    org.hackystat.sensor.ant.checkstyle.resource.jaxb.Error
+                </Class>
+                <Class sourceFile="File.java">
+                    org.hackystat.sensor.ant.checkstyle.resource.jaxb.File
+                </Class>
+                <Class sourceFile="ObjectFactory.java">
+                    org.hackystat.sensor.ant.checkstyle.resource.jaxb.ObjectFactory
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.checkstyle</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.clover">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>10</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CloverSensor.java">
+                    org.hackystat.sensor.ant.clover.CloverSensor
+                </Class>
+                <Class sourceFile="TestCloverSensor.java">
+                    org.hackystat.sensor.ant.clover.TestCloverSensor
+                </Class>
+                <Class sourceFile="TestCloverSensor.java">
+                    org.hackystat.sensor.ant.clover.TestCloverSensor$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>junit.framework</Package>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.clover.resource.jaxb</Package>
+                <Package>org.hackystat.sensor.ant.task</Package>
+                <Package>org.hackystat.sensor.ant.util</Package>
+                <Package>org.hackystat.sensorbase.client</Package>
+                <Package>org.hackystat.sensorbase.resource.sensordata.jaxb</Package>
+                <Package>org.hackystat.sensorbase.server</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.clover.resource.jaxb">
+            <Stats>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Class.java">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Class
+                </Class>
+                <Class sourceFile="Coverage.java">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Coverage
+                </Class>
+                <Class sourceFile="File.java">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.File
+                </Class>
+                <Class sourceFile="Metrics.java">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Metrics
+                </Class>
+                <Class sourceFile="ObjectFactory.java">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.ObjectFactory
+                </Class>
+                <Class sourceFile="Package.java">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Package
+                </Class>
+                <Class sourceFile="Project.java">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Project
+                </Class>
+                <Class sourceFile="Testproject.java">
+                    org.hackystat.sensor.ant.clover.resource.jaxb.Testproject
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.clover</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.emma">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>10</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="EmmaSensor.java">
+                    org.hackystat.sensor.ant.emma.EmmaSensor
+                </Class>
+                <Class sourceFile="TestEmmaSensor.java">
+                    org.hackystat.sensor.ant.emma.TestEmmaSensor
+                </Class>
+                <Class sourceFile="TestEmmaSensor.java">
+                    org.hackystat.sensor.ant.emma.TestEmmaSensor$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>junit.framework</Package>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.emma.resource.jaxb</Package>
+                <Package>org.hackystat.sensor.ant.task</Package>
+                <Package>org.hackystat.sensor.ant.util</Package>
+                <Package>org.hackystat.sensorbase.client</Package>
+                <Package>org.hackystat.sensorbase.resource.sensordata.jaxb</Package>
+                <Package>org.hackystat.sensorbase.server</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.emma.resource.jaxb">
+            <Stats>
+                <TotalClasses>15</TotalClasses>
+                <ConcreteClasses>15</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="All.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.All
+                </Class>
+                <Class sourceFile="Class.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Class
+                </Class>
+                <Class sourceFile="Classes.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Classes
+                </Class>
+                <Class sourceFile="Coverage.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Coverage
+                </Class>
+                <Class sourceFile="Data.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Data
+                </Class>
+                <Class sourceFile="Method.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Method
+                </Class>
+                <Class sourceFile="Methods.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Methods
+                </Class>
+                <Class sourceFile="ObjectFactory.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.ObjectFactory
+                </Class>
+                <Class sourceFile="Package.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Package
+                </Class>
+                <Class sourceFile="Packages.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Packages
+                </Class>
+                <Class sourceFile="Report.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Report
+                </Class>
+                <Class sourceFile="Srcfile.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Srcfile
+                </Class>
+                <Class sourceFile="Srcfiles.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Srcfiles
+                </Class>
+                <Class sourceFile="Srclines.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Srclines
+                </Class>
+                <Class sourceFile="Stats.java">
+                    org.hackystat.sensor.ant.emma.resource.jaxb.Stats
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.emma</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.findbugs">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>10</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="FindBugsSensor.java">
+                    org.hackystat.sensor.ant.findbugs.FindBugsSensor
+                </Class>
+                <Class sourceFile="TestFindBugsSensor.java">
+                    org.hackystat.sensor.ant.findbugs.TestFindBugsSensor
+                </Class>
+                <Class sourceFile="TestFindBugsSensor.java">
+                    org.hackystat.sensor.ant.findbugs.TestFindBugsSensor$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>junit.framework</Package>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.findbugs.resource.jaxb</Package>
+                <Package>org.hackystat.sensor.ant.task</Package>
+                <Package>org.hackystat.sensor.ant.util</Package>
+                <Package>org.hackystat.sensorbase.client</Package>
+                <Package>org.hackystat.sensorbase.resource.sensordata.jaxb</Package>
+                <Package>org.hackystat.sensorbase.server</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.findbugs.resource.jaxb">
+            <Stats>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="BugCollection.java">
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.BugCollection
+                </Class>
+                <Class sourceFile="BugInstance.java">
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.BugInstance
+                </Class>
+                <Class sourceFile="Class.java">
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.Class
+                </Class>
+                <Class sourceFile="ObjectFactory.java">
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.ObjectFactory
+                </Class>
+                <Class sourceFile="Project.java">
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.Project
+                </Class>
+                <Class sourceFile="SourceLine.java">
+                    org.hackystat.sensor.ant.findbugs.resource.jaxb.SourceLine
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.findbugs</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.javancss">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>6</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CcnData.java">
+                    org.hackystat.sensor.ant.javancss.CcnData
+                </Class>
+                <Class sourceFile="JavaNcssSensor.java">
+                    org.hackystat.sensor.ant.javancss.JavaNcssSensor
+                </Class>
+                <Class sourceFile="TestCcnData.java">
+                    org.hackystat.sensor.ant.javancss.TestCcnData
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.javancss.resource.jaxb</Package>
+                <Package>org.hackystat.sensor.ant.task</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+                <Package>org.junit</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.javancss.resource.jaxb">
+            <Stats>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Averages.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Averages
+                </Class>
+                <Class sourceFile="Function.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Function
+                </Class>
+                <Class sourceFile="FunctionAverages.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.FunctionAverages
+                </Class>
+                <Class sourceFile="Functions.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Functions
+                </Class>
+                <Class sourceFile="Javancss.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Javancss
+                </Class>
+                <Class sourceFile="Object.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Object
+                </Class>
+                <Class sourceFile="ObjectFactory.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.ObjectFactory
+                </Class>
+                <Class sourceFile="Objects.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Objects
+                </Class>
+                <Class sourceFile="Package.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Package
+                </Class>
+                <Class sourceFile="Packages.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Packages
+                </Class>
+                <Class sourceFile="Table.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Table
+                </Class>
+                <Class sourceFile="Total.java">
+                    org.hackystat.sensor.ant.javancss.resource.jaxb.Total
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.javancss</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.junit">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>10</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="JUnitSensor.java">
+                    org.hackystat.sensor.ant.junit.JUnitSensor
+                </Class>
+                <Class sourceFile="TestJUnitSensor.java">
+                    org.hackystat.sensor.ant.junit.TestJUnitSensor
+                </Class>
+                <Class sourceFile="TestJUnitSensor.java">
+                    org.hackystat.sensor.ant.junit.TestJUnitSensor$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>junit.framework</Package>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.junit.resource.jaxb</Package>
+                <Package>org.hackystat.sensor.ant.task</Package>
+                <Package>org.hackystat.sensor.ant.util</Package>
+                <Package>org.hackystat.sensorbase.client</Package>
+                <Package>org.hackystat.sensorbase.resource.sensordata.jaxb</Package>
+                <Package>org.hackystat.sensorbase.server</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.junit.resource.jaxb">
+            <Stats>
+                <TotalClasses>7</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Error.java">
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Error
+                </Class>
+                <Class sourceFile="Failure.java">
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Failure
+                </Class>
+                <Class sourceFile="ObjectFactory.java">
+                    org.hackystat.sensor.ant.junit.resource.jaxb.ObjectFactory
+                </Class>
+                <Class sourceFile="Properties.java">
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Properties
+                </Class>
+                <Class sourceFile="Property.java">
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Property
+                </Class>
+                <Class sourceFile="Testcase.java">
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Testcase
+                </Class>
+                <Class sourceFile="Testsuite.java">
+                    org.hackystat.sensor.ant.junit.resource.jaxb.Testsuite
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.junit</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.pmd">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>10</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="PmdSensor.java">
+                    org.hackystat.sensor.ant.pmd.PmdSensor
+                </Class>
+                <Class sourceFile="TestPmdSensor.java">
+                    org.hackystat.sensor.ant.pmd.TestPmdSensor
+                </Class>
+                <Class sourceFile="TestPmdSensor.java">
+                    org.hackystat.sensor.ant.pmd.TestPmdSensor$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>junit.framework</Package>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.pmd.resource.jaxb</Package>
+                <Package>org.hackystat.sensor.ant.task</Package>
+                <Package>org.hackystat.sensor.ant.util</Package>
+                <Package>org.hackystat.sensorbase.client</Package>
+                <Package>org.hackystat.sensorbase.resource.sensordata.jaxb</Package>
+                <Package>org.hackystat.sensorbase.server</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.pmd.resource.jaxb">
+            <Stats>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="File.java">
+                    org.hackystat.sensor.ant.pmd.resource.jaxb.File
+                </Class>
+                <Class sourceFile="ObjectFactory.java">
+                    org.hackystat.sensor.ant.pmd.resource.jaxb.ObjectFactory
+                </Class>
+                <Class sourceFile="Pmd.java">
+                    org.hackystat.sensor.ant.pmd.resource.jaxb.Pmd
+                </Class>
+                <Class sourceFile="Violation.java">
+                    org.hackystat.sensor.ant.pmd.resource.jaxb.Violation
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.pmd</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.svn">
+            <Stats>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>12</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CommitRecord.java">
+                    org.hackystat.sensor.ant.svn.CommitRecord
+                </Class>
+                <Class sourceFile="CommitRecordEntry.java">
+                    org.hackystat.sensor.ant.svn.CommitRecordEntry
+                </Class>
+                <Class sourceFile="SVNCommitProcessor.java">
+                    org.hackystat.sensor.ant.svn.SVNCommitProcessor
+                </Class>
+                <Class sourceFile="SvnSensor.java">
+                    org.hackystat.sensor.ant.svn.SvnSensor
+                </Class>
+                <Class sourceFile="TestAll.java">
+                    org.hackystat.sensor.ant.svn.TestAll
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>junit.framework</Package>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.hackystat.sensor.ant.vcs</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.sensorshell.usermap</Package>
+                <Package>org.hackystat.utilities.time.period</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+                <Package>org.tmatesoft.svn.core</Package>
+                <Package>org.tmatesoft.svn.core.internal.io.dav</Package>
+                <Package>org.tmatesoft.svn.core.internal.io.svn</Package>
+                <Package>org.tmatesoft.svn.core.io</Package>
+                <Package>org.tmatesoft.svn.core.wc</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.task">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>7</Ca>
+                <Ce>7</Ce>
+                <A>0.33</A>
+                <I>0.5</I>
+                <D>0.17</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="HackystatSensorTask.java">
+                    org.hackystat.sensor.ant.task.HackystatSensorTask
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DataFiles.java">
+                    org.hackystat.sensor.ant.task.DataFiles
+                </Class>
+                <Class sourceFile="SourceFiles.java">
+                    org.hackystat.sensor.ant.task.SourceFiles
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>org.apache.tools.ant</Package>
+                <Package>org.apache.tools.ant.types</Package>
+                <Package>org.hackystat.sensor.ant.checkstyle</Package>
+                <Package>org.hackystat.sensorshell</Package>
+                <Package>org.hackystat.sensorshell.usermap</Package>
+                <Package>org.hackystat.utilities.stacktrace</Package>
+                <Package>org.hackystat.utilities.tstamp</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.checkstyle</Package>
+                <Package>org.hackystat.sensor.ant.clover</Package>
+                <Package>org.hackystat.sensor.ant.emma</Package>
+                <Package>org.hackystat.sensor.ant.findbugs</Package>
+                <Package>org.hackystat.sensor.ant.javancss</Package>
+                <Package>org.hackystat.sensor.ant.junit</Package>
+                <Package>org.hackystat.sensor.ant.pmd</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.util">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>7</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>0.12</I>
+                <D>0.88</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="JavaClass2FilePathMapper.java">
+                    org.hackystat.sensor.ant.util.JavaClass2FilePathMapper
+                </Class>
+                <Class sourceFile="LongTimeConverter.java">
+                    org.hackystat.sensor.ant.util.LongTimeConverter
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>org.apache.tools.ant</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.antbuild</Package>
+                <Package>org.hackystat.sensor.ant.checkstyle</Package>
+                <Package>org.hackystat.sensor.ant.clover</Package>
+                <Package>org.hackystat.sensor.ant.emma</Package>
+                <Package>org.hackystat.sensor.ant.findbugs</Package>
+                <Package>org.hackystat.sensor.ant.junit</Package>
+                <Package>org.hackystat.sensor.ant.pmd</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensor.ant.vcs">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>0.67</I>
+                <D>0.33</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="GenericDiffCounter.java">
+                    org.hackystat.sensor.ant.vcs.GenericDiffCounter
+                </Class>
+                <Class sourceFile="GenericSizeCounter.java">
+                    org.hackystat.sensor.ant.vcs.GenericSizeCounter
+                </Class>
+                <Class sourceFile="TestGenericSizeCounter.java">
+                    org.hackystat.sensor.ant.vcs.TestGenericSizeCounter
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>junit.framework</Package>
+                <Package>org.apache.commons.jrcs.diff</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.hackystat.sensor.ant.svn</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.hackystat.sensorbase.client">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.hackystat.sensorbase.resource.sensordata.jaxb">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.hackystat.sensorbase.server">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.hackystat.sensorshell">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.hackystat.sensorshell.usermap">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.hackystat.utilities.stacktrace">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.hackystat.utilities.time.period">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.hackystat.utilities.tstamp">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.junit">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.tmatesoft.svn.core">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.tmatesoft.svn.core.internal.io.dav">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.tmatesoft.svn.core.internal.io.svn">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.tmatesoft.svn.core.io">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.tmatesoft.svn.core.wc">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+    </Packages>
+
+    <Cycles>
+        <Package Name="org.hackystat.sensor.ant.checkstyle">
+            <Package>org.hackystat.sensor.ant.task</Package>
+            <Package>org.hackystat.sensor.ant.checkstyle</Package>
+        </Package>
+
+        <Package Name="org.hackystat.sensor.ant.clover">
+            <Package>org.hackystat.sensor.ant.task</Package>
+            <Package>org.hackystat.sensor.ant.checkstyle</Package>
+            <Package>org.hackystat.sensor.ant.task</Package>
+        </Package>
+
+        <Package Name="org.hackystat.sensor.ant.emma">
+            <Package>org.hackystat.sensor.ant.task</Package>
+            <Package>org.hackystat.sensor.ant.checkstyle</Package>
+            <Package>org.hackystat.sensor.ant.task</Package>
+        </Package>
+
+        <Package Name="org.hackystat.sensor.ant.findbugs">
+            <Package>org.hackystat.sensor.ant.task</Package>
+            <Package>org.hackystat.sensor.ant.checkstyle</Package>
+            <Package>org.hackystat.sensor.ant.task</Package>
+        </Package>
+
+        <Package Name="org.hackystat.sensor.ant.javancss">
+            <Package>org.hackystat.sensor.ant.task</Package>
+            <Package>org.hackystat.sensor.ant.checkstyle</Package>
+            <Package>org.hackystat.sensor.ant.task</Package>
+        </Package>
+
+        <Package Name="org.hackystat.sensor.ant.junit">
+            <Package>org.hackystat.sensor.ant.task</Package>
+            <Package>org.hackystat.sensor.ant.checkstyle</Package>
+            <Package>org.hackystat.sensor.ant.task</Package>
+        </Package>
+
+        <Package Name="org.hackystat.sensor.ant.pmd">
+            <Package>org.hackystat.sensor.ant.task</Package>
+            <Package>org.hackystat.sensor.ant.checkstyle</Package>
+            <Package>org.hackystat.sensor.ant.task</Package>
+        </Package>
+
+        <Package Name="org.hackystat.sensor.ant.task">
+            <Package>org.hackystat.sensor.ant.checkstyle</Package>
+            <Package>org.hackystat.sensor.ant.task</Package>
+        </Package>
+
+    </Cycles>
+</JDepend>
