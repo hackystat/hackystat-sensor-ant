@@ -1,0 +1,37 @@
+<project name="jdepend" default="jdepend">
+  <description>Runs jdepend.   Invocation: ant -f jdepend.build.xml</description>
+
+  <property environment="env" />
+  <import file="build.xml" />
+  <property name="jdepend.dir" location="${build.dir}/jdepend" />
+  <property name="jdepend.failOnError" value="false" />
+
+  <target name="jdepend" depends="jdepend.tool,jdepend.report" description="Runs the jdepend tool" />
+
+  <target name="jdepend.report" description="Converts xml output to html">
+    <xslt basedir="${jdepend.dir}" destdir="${jdepend.dir}"
+             includes="jdepend.xml" 
+             style="${ant.home}/etc/jdepend.xsl" />
+  </target>
+  
+  <target name="jdepend.tool" description="Runs jdepend over the source code to check for problems.">
+    <mkdir dir="${jdepend.dir}" />
+    <available classname="jdepend.xmlui.JDepend" property="jdepend.available" />
+    <fail unless="jdepend.available" message="Error: JDepend is not installed correctly. Make sure jdepend-2.9.jar is in ant/lib or supplied on the command line using -lib." />
+    <jdepend outputfile="${jdepend.dir}/jdepend.xml" format="xml" fork="no" haltonerror="${jdepend.failOnError}">
+      <exclude name="java.*"/>
+      <exclude name="javax.*"/>
+      <classespath>
+        <pathelement location="${build.dir}/classes"/>
+      </classespath>
+    </jdepend>
+  </target>
+  
+  <target name="jdepend.sensor" if="hackystat.enabled" unless="jdepend.disabled" description="Sends JavaNCSS FileMetric data to Hackystat.">
+    <fileset id="jdepend.sourcefiles" dir="${src.dir}" includes="**/*.java" />
+    <fileset id="jdepend.datafiles" file="${jdepend.dir}/jdepend.xml" />
+    <hackystat.jdepend jdepend.datafiles.fileset="jdepend.datafiles" jdepend.sourcefiles.fileset="jdepend.sourcefiles" verbose="${hackystat.verbose.mode}" />
+  </target>
+
+</project>
+
