@@ -5,8 +5,8 @@
   <xs:element name="JDepend">
     <xs:complexType>
     <xs:sequence>
-      <xs:element ref="Packages" minOccurs="0" maxOccurs="1"/>
-      <xs:element ref="Cycles" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="Packages" minOccurs="1" maxOccurs="1"/>
+      <xs:element ref="Cycles" minOccurs="1" maxOccurs="1"/>
     </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -22,14 +22,14 @@
    <xs:element name="Package">
     <xs:complexType>
     <xs:sequence>
-      <xs:element name="error" type="xs:integer" minOccurs="0" maxOccurs="1"/>
-      <xs:element ref="Stats"  minOccurs="1" maxOccurs="1"/>
-      <xs:element ref="AbstractClasses"  minOccurs="1" maxOccurs="1"/>
-      <xs:element ref="ConcreteClasses"  minOccurs="1" maxOccurs="1"/>
-      <xs:element ref="DependsUpon" minOccurs="1" maxOccurs="1"/>
-      <xs:element ref="UsedBy" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="error" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="Stats"  minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="AbstractClasses"  minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="ConcreteClasses"  minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="DependsUpon" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="UsedBy" minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
-    <xs:attribute ref="name"/>
+    <xs:attribute name="name" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   
@@ -37,84 +37,71 @@
     <xs:complexType>
     <xs:sequence>
       <xs:element name="TotalClasses" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="functions" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ncss" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="javadocs" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="javadoc_lines" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="single_comment_lines" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="multi_comment_lines" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="ConcreteClasses" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="AbstractClasses" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="Ca" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="Ce" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="A" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="I" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="D" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="V" type="xs:double" minOccurs="1" maxOccurs="1"/>
     </xs:sequence>
     </xs:complexType>
   </xs:element>
   
-  <xs:element name="table">
+  <xs:element name="AbstractClasses">
     <xs:complexType>
     <xs:sequence>
-      <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="Class" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ConcreteClasses">
+    <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="Class" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     </xs:complexType>
   </xs:element>
   
-  <xs:element name="objects">
+  <xs:element name="Class">
+    <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="sourceFile" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DependsUpon">
     <xs:complexType>
     <xs:sequence>
-      <xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element ref="averages" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="ncss" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="Package" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="UsedBy">
+    <xs:complexType>
+    <xs:sequence>
+      <xs:element name="Package" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     </xs:complexType>
   </xs:element>
   
-   <xs:element name="object">
+  <xs:element name="Cycles">
     <xs:complexType>
     <xs:sequence>
-      <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ncss" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="functions" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="classes" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="javadocs" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-    </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  
-   <xs:element name="averages">
-    <xs:complexType>
-    <xs:sequence>
-      <xs:element name="ncss" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="functions" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="classes" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="javadocs" type="xs:string" minOccurs="1" maxOccurs="1"/>
-    </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  
-  <xs:element name="functions">
-    <xs:complexType>
-    <xs:sequence>
-      <xs:element ref="function" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element ref="function_averages" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="ncss" type="xs:string" minOccurs="1" maxOccurs="1"/>
-    </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  
-  <xs:element name="function">
-    <xs:complexType>
-    <xs:sequence>
-      <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ncss" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ccn" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="javadocs" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-    </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  
-  <xs:element name="function_averages">
-    <xs:complexType>
-    <xs:sequence>
-      <xs:element name="ncss" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ccn" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="javadocs" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="Package" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+        <xs:sequence>
+          <xs:element name="Package" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="Name" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
     </xs:complexType>
   </xs:element>

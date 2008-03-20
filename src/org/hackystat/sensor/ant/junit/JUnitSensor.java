@@ -13,10 +13,10 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.tools.ant.BuildException;
-import org.hackystat.sensor.ant.junit.resource.jaxb.Error;
-import org.hackystat.sensor.ant.junit.resource.jaxb.Failure;
-import org.hackystat.sensor.ant.junit.resource.jaxb.Testcase;
-import org.hackystat.sensor.ant.junit.resource.jaxb.Testsuite;
+import org.hackystat.sensor.ant.junit.jaxb.Error;
+import org.hackystat.sensor.ant.junit.jaxb.Failure;
+import org.hackystat.sensor.ant.junit.jaxb.Testcase;
+import org.hackystat.sensor.ant.junit.jaxb.Testsuite;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.JavaClass2FilePathMapper;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
@@ -94,7 +94,7 @@ public class JUnitSensor extends HackystatSensorTask {
     XMLGregorianCalendar runtimeGregorian = LongTimeConverter.convertLongToGregorian(this.runtime);
     try {
       JAXBContext context = JAXBContext
-          .newInstance(org.hackystat.sensor.ant.junit.resource.jaxb.ObjectFactory.class);
+          .newInstance(org.hackystat.sensor.ant.junit.jaxb.ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
 
       // One JUnit test suite per file

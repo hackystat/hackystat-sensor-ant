@@ -11,13 +11,13 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.tools.ant.BuildException;
-import org.hackystat.sensor.ant.emma.resource.jaxb.All;
-import org.hackystat.sensor.ant.emma.resource.jaxb.Class;
-import org.hackystat.sensor.ant.emma.resource.jaxb.Coverage;
-import org.hackystat.sensor.ant.emma.resource.jaxb.Data;
-import org.hackystat.sensor.ant.emma.resource.jaxb.Package;
-import org.hackystat.sensor.ant.emma.resource.jaxb.Report;
-import org.hackystat.sensor.ant.emma.resource.jaxb.Srcfile;
+import org.hackystat.sensor.ant.emma.jaxb.All;
+import org.hackystat.sensor.ant.emma.jaxb.Class;
+import org.hackystat.sensor.ant.emma.jaxb.Coverage;
+import org.hackystat.sensor.ant.emma.jaxb.Data;
+import org.hackystat.sensor.ant.emma.jaxb.Package;
+import org.hackystat.sensor.ant.emma.jaxb.Report;
+import org.hackystat.sensor.ant.emma.jaxb.Srcfile;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.JavaClass2FilePathMapper;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
@@ -104,7 +104,7 @@ public class EmmaSensor extends HackystatSensorTask {
     long startTime = xmlFile.lastModified();
     try {
       JAXBContext context = 
-        JAXBContext.newInstance(org.hackystat.sensor.ant.emma.resource.jaxb.ObjectFactory.class);
+        JAXBContext.newInstance(org.hackystat.sensor.ant.emma.jaxb.ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
       
       // emma report

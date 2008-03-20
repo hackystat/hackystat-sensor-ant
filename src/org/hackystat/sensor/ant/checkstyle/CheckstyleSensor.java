@@ -13,8 +13,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.tools.ant.BuildException;
-import org.hackystat.sensor.ant.checkstyle.resource.jaxb.Checkstyle;
-import org.hackystat.sensor.ant.checkstyle.resource.jaxb.Error;
+import org.hackystat.sensor.ant.checkstyle.jaxb.Checkstyle;
+import org.hackystat.sensor.ant.checkstyle.jaxb.Error;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
 import org.hackystat.sensorshell.SensorShellException;
@@ -86,16 +86,16 @@ public class CheckstyleSensor extends HackystatSensorTask {
     XMLGregorianCalendar runtimeGregorian = LongTimeConverter.convertLongToGregorian(this.runtime);
     try {
       JAXBContext context = JAXBContext
-          .newInstance(org.hackystat.sensor.ant.checkstyle.resource.jaxb.ObjectFactory.class);
+          .newInstance(org.hackystat.sensor.ant.checkstyle.jaxb.ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
 
       Checkstyle checkstyle = (Checkstyle) unmarshaller.unmarshal(xmlFile);
       // list of file elements in the checkstyle result file
-      List<org.hackystat.sensor.ant.checkstyle.resource.jaxb.File> checkedFiles = checkstyle
+      List<org.hackystat.sensor.ant.checkstyle.jaxb.File> checkedFiles = checkstyle
           .getFile();
       
       int codeIssueCount = 0;
-      for (org.hackystat.sensor.ant.checkstyle.resource.jaxb.File file : checkedFiles) {
+      for (org.hackystat.sensor.ant.checkstyle.jaxb.File file : checkedFiles) {
         // Fully qualified name of the file checked
         String fileName = file.getName();
 

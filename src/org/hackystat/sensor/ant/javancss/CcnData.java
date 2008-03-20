@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.hackystat.sensor.ant.javancss.resource.jaxb.Functions;
-import org.hackystat.sensor.ant.javancss.resource.jaxb.Function;
+import org.hackystat.sensor.ant.javancss.jaxb.Function;
+import org.hackystat.sensor.ant.javancss.jaxb.Functions;
 
 /**
  * A data structure that takes as input the list of Java files that were processed by JavaNCSS

@@ -16,8 +16,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.tools.ant.BuildException;
-import org.hackystat.sensor.ant.findbugs.resource.jaxb.BugCollection;
-import org.hackystat.sensor.ant.findbugs.resource.jaxb.BugInstance;
+import org.hackystat.sensor.ant.findbugs.jaxb.BugCollection;
+import org.hackystat.sensor.ant.findbugs.jaxb.BugInstance;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
 import org.hackystat.sensorshell.SensorShellException;
@@ -91,7 +91,7 @@ public class FindBugsSensor extends HackystatSensorTask {
     long startTime = xmlFile.lastModified();
     try {
       JAXBContext context = JAXBContext
-          .newInstance(org.hackystat.sensor.ant.findbugs.resource.jaxb.ObjectFactory.class);
+          .newInstance(org.hackystat.sensor.ant.findbugs.jaxb.ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
 
       BugCollection bugCollection = (BugCollection) unmarshaller.unmarshal(xmlFile);

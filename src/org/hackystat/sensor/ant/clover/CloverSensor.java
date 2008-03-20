@@ -10,11 +10,11 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.tools.ant.BuildException;
-import org.hackystat.sensor.ant.clover.resource.jaxb.Coverage;
-import org.hackystat.sensor.ant.clover.resource.jaxb.File;
-import org.hackystat.sensor.ant.clover.resource.jaxb.Metrics;
-import org.hackystat.sensor.ant.clover.resource.jaxb.Package;
-import org.hackystat.sensor.ant.clover.resource.jaxb.Project;
+import org.hackystat.sensor.ant.clover.jaxb.Coverage;
+import org.hackystat.sensor.ant.clover.jaxb.File;
+import org.hackystat.sensor.ant.clover.jaxb.Metrics;
+import org.hackystat.sensor.ant.clover.jaxb.Package;
+import org.hackystat.sensor.ant.clover.jaxb.Project;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.JavaClass2FilePathMapper;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
@@ -108,7 +108,7 @@ public class CloverSensor extends HackystatSensorTask {
 
     try {
       JAXBContext context = 
-        JAXBContext.newInstance(org.hackystat.sensor.ant.clover.resource.jaxb.ObjectFactory.class);
+        JAXBContext.newInstance(org.hackystat.sensor.ant.clover.jaxb.ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
       
       // clover report

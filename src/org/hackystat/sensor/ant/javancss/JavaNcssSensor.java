@@ -10,7 +10,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.tools.ant.BuildException;
-import org.hackystat.sensor.ant.javancss.resource.jaxb.Javancss;
+import org.hackystat.sensor.ant.javancss.jaxb.Javancss;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.utilities.tstamp.Tstamp;
 
@@ -79,7 +79,7 @@ public class JavaNcssSensor extends HackystatSensorTask {
     int count = 0;
     try {
       JAXBContext context = JAXBContext
-          .newInstance(org.hackystat.sensor.ant.javancss.resource.jaxb.ObjectFactory.class);
+          .newInstance(org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
 
       // JavaNCSS report.

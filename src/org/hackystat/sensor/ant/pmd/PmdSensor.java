@@ -16,9 +16,9 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.tools.ant.BuildException;
-import org.hackystat.sensor.ant.pmd.resource.jaxb.ObjectFactory;
-import org.hackystat.sensor.ant.pmd.resource.jaxb.Pmd;
-import org.hackystat.sensor.ant.pmd.resource.jaxb.Violation;
+import org.hackystat.sensor.ant.pmd.jaxb.ObjectFactory;
+import org.hackystat.sensor.ant.pmd.jaxb.Pmd;
+import org.hackystat.sensor.ant.pmd.jaxb.Violation;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
 import org.hackystat.sensorshell.SensorShellException;
@@ -98,11 +98,11 @@ public class PmdSensor extends HackystatSensorTask {
       Set<String> filesWithViolations = new HashSet<String>();
 
       Pmd pmdResults = (Pmd) unmarshaller.unmarshal(xmlFile);
-      List<org.hackystat.sensor.ant.pmd.resource.jaxb.File> files = pmdResults.getFile();
+      List<org.hackystat.sensor.ant.pmd.jaxb.File> files = pmdResults.getFile();
 
       int codeIssueCount = 0;
       verboseInfo("Processing information about files that had PMD issues.");
-      for (org.hackystat.sensor.ant.pmd.resource.jaxb.File file : files) {
+      for (org.hackystat.sensor.ant.pmd.jaxb.File file : files) {
         // Base unique timestamp off of the runtime (which is when it started running)
         long uniqueTstamp = this.tstampSet.getUniqueTstamp(this.runtime);
         // Get altered time as XMLGregorianCalendar

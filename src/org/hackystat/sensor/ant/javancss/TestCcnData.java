@@ -7,8 +7,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.io.File;
 
-import org.hackystat.sensor.ant.javancss.resource.jaxb.Function;
-import org.hackystat.sensor.ant.javancss.resource.jaxb.Functions;
+import org.hackystat.sensor.ant.javancss.jaxb.Function;
+import org.hackystat.sensor.ant.javancss.jaxb.Functions;
 import org.junit.Test;
 
 /**
