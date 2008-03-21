@@ -12,12 +12,12 @@ import org.junit.Test;
  * @author Philip Johnson
  */
 public class TestPackage2Path {
-  
-  private String path1 = "c:\\foo\\bar\\Baz.java";
-  private String path2 = "c:\\foo\\bar\\baz\\Baz.java";
-  private String path3 = "c:\\foo\\bar\\Qux.java";
-  
-  /**
+  private String sep = System.getProperty("file.separator");
+  private String path1 = "c:" + sep + "foo" + sep + "bar" + sep + "Baz.java";
+  private String path2 = "c:" + sep + "foo" + sep + "bar" + sep + "baz" + sep + "Baz.java";
+  private String path3 = "c:" + sep + "foo" + sep + "bar" + sep + "Qux.java";
+
+    /**
    * Tests Package2Path by setting up some sample data and running some queries on it.
    * @throws Exception If a program error occurs.
    */
@@ -29,8 +29,9 @@ public class TestPackage2Path {
     fileList.add(new File(path3));
     
     Package2Path package2path = new Package2Path(fileList);
-    assertEquals("test1", "c:\\foo\\bar", package2path.getPath("foo.bar"));
-    assertEquals("test2", "c:\\foo\\bar\\baz", package2path.getPath("foo.bar.baz"));
+    assertEquals("test1", "c:" + sep + "foo" + sep + "bar", package2path.getPath("foo.bar"));
+    assertEquals("test2", "c:" + sep + "foo" + sep + "bar" + sep + "baz", 
+        package2path.getPath("foo.bar.baz"));
     assertEquals("test3", null, package2path.getPath("foo.bar.baz.qux"));
   }
 
