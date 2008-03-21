@@ -70,7 +70,7 @@ public class PmdSensor extends HackystatSensorTask {
     for (File dataFile : getDataFiles()) {
       verboseInfo("Processing file: " + dataFile);
       try {
-        numberOfCodeIssues += processIssueXmlFile(dataFile);
+        numberOfCodeIssues += processPmdXmlFile(dataFile);
       }
       catch (Exception e) {
         signalError("Failure processing: " + dataFile, e);
@@ -87,7 +87,7 @@ public class PmdSensor extends HackystatSensorTask {
    * @return The number of issues that have been processed in this XML file.
    * @exception BuildException if any error.
    */
-  public int processIssueXmlFile(File xmlFile) throws BuildException {
+  public int processPmdXmlFile(File xmlFile) throws BuildException {
     XMLGregorianCalendar runtimeGregorian = LongTimeConverter.convertLongToGregorian(this.runtime);
 
     try {

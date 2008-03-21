@@ -73,7 +73,7 @@ public class JUnitSensor extends HackystatSensorTask {
     for (File dataFile : getDataFiles()) {
       verboseInfo("Processing JUnit file: " + dataFile);
       try {
-        numberOfTests += processJunitXmlFile(dataFile);
+        numberOfTests += processJUnitXmlFile(dataFile);
       }
       catch (Exception e) {
         signalError("Failure processing: " + dataFile, e);
@@ -90,7 +90,7 @@ public class JUnitSensor extends HackystatSensorTask {
    * @exception BuildException if any error.
    * @return The number of test cases in this XML file.
    */
-  public int processJunitXmlFile(File xmlFile) throws BuildException {
+  public int processJUnitXmlFile(File xmlFile) throws BuildException {
     XMLGregorianCalendar runtimeGregorian = LongTimeConverter.convertLongToGregorian(this.runtime);
     try {
       JAXBContext context = JAXBContext

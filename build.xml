@@ -29,9 +29,9 @@
   <available file="${junit.jar}" type="file" property="junit.available"/>
   <fail message="This package requires JUNIT_HOME to be defined and ${junit.jar} available" unless="junit.available"/>
 
-  <!-- Make sure that the SensorShell is available. Use Java6 version without JAXB --> 
+  <!-- Make sure that the SensorShell is available.  --> 
   <available file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" type="file" property="hackystat.sensorshell.available"/>
-  <fail message="This package requires the Hackystat SensorShell to be installed and HACKYSTAT_SENSORSHELL_HOME defined" unless="hackystat.sensorshell.available"/>   
+  <fail message="This package requires ${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" unless="hackystat.sensorshell.available"/>   
  
   <!-- Make sure that the JAXB library is available (by default in Java 6, through manual installation in Java 5. --> 
   <available classname="javax.xml.bind.JAXBContext" property="jaxb.available"/>

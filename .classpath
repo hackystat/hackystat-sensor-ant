@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="lib/svn/javasvn.jar"/>
 	<classpathentry kind="var" path="HACKYSTAT_SENSORSHELL_HOME/sensorshell.jar"/>
 	<classpathentry kind="var" path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar" sourcepath="/HACKYSTAT_UTILITIES_HOME/src"/>
+	<classpathentry kind="var" path="HACKYSTAT_SENSORBASE_HOME/sensorbase.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

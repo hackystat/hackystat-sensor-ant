@@ -132,7 +132,7 @@ public class CloverSensor extends HackystatSensorTask {
             javaSourceFilePath = this.getJavaClass2FilePathMapper().getFilePath(javaClassName);
             if (javaSourceFilePath == null) {
               verboseInfo("Warning: Unable to find java source file path for class '" 
-                  + javaClassName + "'. Use empty string for file path.");
+                  + javaClassName + "'. Using empty string as the resource.");
               javaSourceFilePath = "";
             }
           }

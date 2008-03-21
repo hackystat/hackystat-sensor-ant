@@ -72,7 +72,7 @@ public class JavaNcssSensor extends HackystatSensorTask {
    * @return The number of FileMetrics instances generated.
    * @throws BuildException If problems occur.
    */
-  private int processJavaNcssXmlFile(File xmlFile) throws BuildException {
+  int processJavaNcssXmlFile(File xmlFile) throws BuildException {
     // The start time for all entries will be approximated by the XML file's last mod time.
     // Use the TstampSet to make it unique.
     long startTime = xmlFile.lastModified();
