@@ -32,7 +32,7 @@ public class AntSensorTestHelper {
    */
   @BeforeClass
   public static void setupServer() throws Exception {
-    server = Server.newInstance();
+    server = Server.newTestInstance();
     host = server.getHostName();
     SensorBaseClient.registerUser(host, user);
   }
