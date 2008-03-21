@@ -12,12 +12,17 @@ import org.hackystat.sensorbase.server.Server;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
+/**
+ * Provides a helper method for Ant sensor test case development. 
+ * @author Philip Johnson
+ *
+ */
 public class AntSensorTestHelper {
   
   /** The test user. */
-  protected static String user = "TestAntSensors@hackystat.org";
+  protected static final String user = "TestAntSensors@hackystat.org";
   /** The test host. */
-  protected static String host = "http://localhost";
+  protected static String host;
   /** The test sensorbase server. */
   protected static Server server;
 
@@ -25,7 +30,7 @@ public class AntSensorTestHelper {
    * Starts the server going for these tests, and makes sure our test user is registered. 
    * @throws Exception If problems occur setting up the server. 
    */
-  @BeforeClass 
+  @BeforeClass
   public static void setupServer() throws Exception {
     server = Server.newInstance();
     host = server.getHostName();

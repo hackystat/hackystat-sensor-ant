@@ -7,7 +7,7 @@ import org.hackystat.sensor.ant.test.AntSensorTestHelper;
 import org.junit.Test;
 
 /**
- * Tests the Ant JavaNcss sensor
+ * Tests the Ant JavaNcss sensor.
  *
  * @author Philip Johnson, Aaron A. Kagawa
  */

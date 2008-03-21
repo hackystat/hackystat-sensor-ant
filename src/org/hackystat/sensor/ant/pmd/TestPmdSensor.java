@@ -7,7 +7,7 @@ import org.hackystat.sensor.ant.test.AntSensorTestHelper;
 import org.junit.Test;
 
 /**
- * Tests the Ant Pmd sensor
+ * Tests the Ant Pmd sensor.
  *
  * @author Philip Johnson, Aaron A. Kagawa
  */
