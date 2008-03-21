@@ -13,9 +13,11 @@ import org.junit.Test;
  */
 public class TestPackage2Path {
   private String sep = System.getProperty("file.separator");
-  private String path1 = "c:" + sep + "foo" + sep + "bar" + sep + "Baz.java";
-  private String path2 = "c:" + sep + "foo" + sep + "bar" + sep + "baz" + sep + "Baz.java";
-  private String path3 = "c:" + sep + "foo" + sep + "bar" + sep + "Qux.java";
+  private String foo = "foo";
+  private String bar = "bar";
+  private String path1 = "c:" + sep + foo + sep + bar + sep + "Baz.java";
+  private String path2 = "c:" + sep + foo + sep + bar + sep + "baz" + sep + "Baz.java";
+  private String path3 = "c:" + sep + foo + sep + bar + sep + "Qux.java";
 
     /**
    * Tests Package2Path by setting up some sample data and running some queries on it.
@@ -29,8 +31,8 @@ public class TestPackage2Path {
     fileList.add(new File(path3));
     
     Package2Path package2path = new Package2Path(fileList);
-    assertEquals("test1", "c:" + sep + "foo" + sep + "bar", package2path.getPath("foo.bar"));
-    assertEquals("test2", "c:" + sep + "foo" + sep + "bar" + sep + "baz", 
+    assertEquals("test1", "c:" + sep + foo + sep + bar, package2path.getPath("foo.bar"));
+    assertEquals("test2", "c:" + sep + foo + sep + bar + sep + "baz", 
         package2path.getPath("foo.bar.baz"));
     assertEquals("test3", null, package2path.getPath("foo.bar.baz.qux"));
   }
