@@ -27,7 +27,7 @@
     </jdepend>
   </target>
   
-  <target name="jdepend.sensor" if="hackystat.enabled" unless="jdepend.disabled" description="Sends JavaNCSS FileMetric data to Hackystat.">
+  <target name="jdepend.sensor" if="hackystat.enabled" unless="jdepend.disabled" description="Sends JDepend coupling data to Hackystat.">
     <fileset id="jdepend.sourcefiles" dir="${src.dir}" includes="**/*.java" />
     <fileset id="jdepend.datafiles" file="${jdepend.dir}/jdepend.xml" />
     <hackystat.jdepend jdepend.datafiles.fileset="jdepend.datafiles" jdepend.sourcefiles.fileset="jdepend.sourcefiles" verbose="${hackystat.verbose.mode}" />

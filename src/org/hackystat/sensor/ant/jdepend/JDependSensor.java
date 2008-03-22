@@ -75,7 +75,7 @@ public class JDependSensor extends HackystatSensorTask {
    * @return The number of FileMetrics instances generated.
    * @throws BuildException If problems occur.
    */
-  private int processJDependXmlFile(File xmlFile) throws BuildException {
+  int processJDependXmlFile(File xmlFile) throws BuildException {
     // The start time for all entries will be approximated by the XML file's last mod time.
     // Use the TstampSet to make it unique.
     long startTime = xmlFile.lastModified();
@@ -96,7 +96,8 @@ public class JDependSensor extends HackystatSensorTask {
       }
 
       for (Package packageElement : packageElements) {
-        if (packageElement.getStats() != null) {
+        String resource = package2path.getPath(packageElement.getName());
+        if ((packageElement.getStats() != null) &&  (resource != null)) {
           long tstamp = this.tstampSet.getUniqueTstamp(startTime);
           XMLGregorianCalendar tstampXml = Tstamp.makeTimestamp(tstamp);
           XMLGregorianCalendar runtimeXml = Tstamp.makeTimestamp(this.runtime);
@@ -107,7 +108,7 @@ public class JDependSensor extends HackystatSensorTask {
           keyValMap.put("SensorDataType", "Coupling");
           keyValMap.put("Runtime", runtimeXml.toString());
           keyValMap.put("Timestamp", tstampXml.toString());
-          keyValMap.put("Resource", package2path.getPath(packageElement.getName()));
+          keyValMap.put("Resource", resource);
           // Expected for "Coupling" sensor data. 
           keyValMap.put("Type", "Package");
           keyValMap.put("Afferent", String.valueOf(packageElement.getStats().getCa().intValue())); 

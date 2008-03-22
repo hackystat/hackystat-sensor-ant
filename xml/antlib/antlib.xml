@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <antlib>
-    <taskdef name="hacky-junit" classname="org.hackystat.sensor.ant.junit.JUnitSensor" />
-    <taskdef name="hacky-emma" classname="org.hackystat.sensor.ant.emma.EmmaSensor" />
-    <taskdef name="hacky-clover" classname="org.hackystat.sensor.ant.clover.CloverSensor" />
     <taskdef name="hacky-checkstyle" classname="org.hackystat.sensor.ant.checkstyle.CheckstyleSensor" />
-    <taskdef name="hacky-pmd" classname="org.hackystat.sensor.ant.pmd.PmdSensor" />
+    <taskdef name="hacky-clover" classname="org.hackystat.sensor.ant.clover.CloverSensor" />
+    <taskdef name="hacky-emma" classname="org.hackystat.sensor.ant.emma.EmmaSensor" />
     <taskdef name="hacky-findbugs" classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" />
-    <taskdef name="hacky-findbugs" classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" />
-    <taskdef name="hacky-svn" classname="org.hackystat.sensor.ant.svn.SvnSensor" />
     <taskdef name="hacky-javancss" classname="org.hackystat.sensor.ant.javancss.JavaNcssSensor" />
+    <taskdef name="hacky-jdepend" classname="org.hackystat.sensor.ant.jdepend.JDependSensor" />
+    <taskdef name="hacky-junit" classname="org.hackystat.sensor.ant.junit.JUnitSensor" />
+    <taskdef name="hacky-pmd" classname="org.hackystat.sensor.ant.pmd.PmdSensor" />
+    <taskdef name="hacky-svn" classname="org.hackystat.sensor.ant.svn.SvnSensor" />
 </antlib>

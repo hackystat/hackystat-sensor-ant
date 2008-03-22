@@ -78,6 +78,21 @@
       </hacky-pmd>
     </sequential>
   </macrodef>
+  
+  
+  <!-- Send JDepend coverage data to hackystat using the JDepend sensor. -->
+   <macrodef name="hackystat.jdepend">
+     <attribute name="jdepend.datafiles.fileset" />
+     <attribute name="jdepend.sourcefiles.fileset" />
+     <attribute name="verbose" default="false" />
+     <sequential>
+       <check.antsensors />
+       <hacky-jdepend verbose="@{verbose}">
+         <datafiles><fileset refid="@{jdepend.datafiles.fileset}" /></datafiles>
+         <sourcefiles><fileset refid="@{jdepend.sourcefiles.fileset}" /></sourcefiles>
+       </hacky-jdepend>
+     </sequential>
+   </macrodef>
 
   <!-- Send findbugs coverage data to hackystat using the findbugs sensor. -->
   <macrodef name="hackystat.findbugs">
