@@ -30,6 +30,7 @@
       <sysproperty key="clovertestfiles" value="${basedir}/testdata/clover" />
       <sysproperty key="javancsstestfiles" value="${basedir}/testdata/javancss" />
       <sysproperty key="jdependtestfiles" value="${basedir}/testdata/jdepend" />
+      <sysproperty key="dependencyfindertestfiles" value="${basedir}/testdata/dependencyfinder" />
       <formatter type="xml" />
       <batchtest todir="${junit.dir}">
         <!-- Must exclude the jaxb folders because jaxb created Testsuite class. -->

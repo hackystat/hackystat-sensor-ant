@@ -2,6 +2,7 @@
 <antlib>
     <taskdef name="hacky-checkstyle" classname="org.hackystat.sensor.ant.checkstyle.CheckstyleSensor" />
     <taskdef name="hacky-clover" classname="org.hackystat.sensor.ant.clover.CloverSensor" />
+    <taskdef name="hacky-dependencyfinder" classname="org.hackystat.sensor.ant.dependencyfinder.DependencyFinderSensor" />
     <taskdef name="hacky-emma" classname="org.hackystat.sensor.ant.emma.EmmaSensor" />
     <taskdef name="hacky-findbugs" classname="org.hackystat.sensor.ant.findbugs.FindBugsSensor" />
     <taskdef name="hacky-javancss" classname="org.hackystat.sensor.ant.javancss.JavaNcssSensor" />

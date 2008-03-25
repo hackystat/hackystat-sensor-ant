@@ -6,7 +6,7 @@
 //
 
 
-package org.hackystat.sensor.ant.jdepend.jaxb;
+package org.hackystat.sensor.ant.dependencyfinder.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}Class" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{}package" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "clazz"
+    "_package"
 })
-@XmlRootElement(name = "ConcreteClasses")
-public class ConcreteClasses {
+@XmlRootElement(name = "dependencies")
+public class Dependencies {
 
-    @XmlElement(name = "Class")
-    protected List<Class> clazz;
+    @XmlElement(name = "package")
+    protected List<Package> _package;
 
     /**
-     * Gets the value of the clazz property.
+     * Gets the value of the package property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the clazz property.
+     * This is why there is not a <CODE>set</CODE> method for the package property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getClazz().add(newItem);
+     *    getPackage().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Class }
+     * {@link Package }
      * 
      * 
      */
-    public List<Class> getClazz() {
-        if (clazz == null) {
-            clazz = new ArrayList<Class>();
+    public List<Package> getPackage() {
+        if (_package == null) {
+            _package = new ArrayList<Package>();
         }
-        return this.clazz;
+        return this._package;
     }
 
 }

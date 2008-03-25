@@ -85,7 +85,7 @@ public class JDependSensor extends HackystatSensorTask {
           .newInstance(org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
 
-      // JavaNCSS report.
+      // JDepend report.
       JDepend jdepend = (JDepend) unmarshaller.unmarshal(xmlFile);
       // Construct the mapping from Java file paths to their CCN data.
       Package2Path package2path = new Package2Path(getSourceFiles());
@@ -110,7 +110,7 @@ public class JDependSensor extends HackystatSensorTask {
           keyValMap.put("Timestamp", tstampXml.toString());
           keyValMap.put("Resource", resource);
           // Expected for "Coupling" sensor data. 
-          keyValMap.put("Type", "Package");
+          keyValMap.put("Type", "package");
           keyValMap.put("Afferent", String.valueOf(packageElement.getStats().getCa().intValue())); 
           keyValMap.put("Efferent", String.valueOf(packageElement.getStats().getCe().intValue())); 
           // add data to sensorshell

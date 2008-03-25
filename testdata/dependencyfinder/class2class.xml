@@ -1,0 +1,1134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<dependencies>
+    <package confirmed="no">
+        <name>junit.framework</name>
+        <class confirmed="no">
+            <name>junit.framework.TestCase</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.TestAll</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.TestGenericSizeCounter</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.apache.commons.jrcs.diff</name>
+        <class confirmed="no">
+            <name>org.apache.commons.jrcs.diff.Chunk</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.GenericDiffCounter</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.commons.jrcs.diff.Delta</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.GenericDiffCounter</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.commons.jrcs.diff.Diff</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.GenericDiffCounter</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.commons.jrcs.diff.Revision</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.GenericDiffCounter</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.apache.tools.ant</name>
+        <class confirmed="no">
+            <name>org.apache.tools.ant.BuildEvent</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.tools.ant.BuildException</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.LongTimeConverter</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.tools.ant.BuildListener</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.tools.ant.DirectoryScanner</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.tools.ant.Project</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.tools.ant.Target</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.apache.tools.ant.Task</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.apache.tools.ant.types</name>
+        <class confirmed="no">
+            <name>org.apache.tools.ant.types.FileSet</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.DataFiles</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.SourceFiles</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.antbuild</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildEvent</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildListener</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.Project</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.Target</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.Task</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.LongTimeConverter</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellProperties</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.usermap.SensorShellMap</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.usermap.SensorShellMapException</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.checkstyle</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.Checkstyle</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.Error</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.File</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.ObjectFactory</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.LongTimeConverter</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.TestCheckstyleSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.checkstyle.TestCheckstyleSensor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.checkstyle.jaxb</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.checkstyle.jaxb.Checkstyle</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.checkstyle.jaxb.Error</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.checkstyle.jaxb.File</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.checkstyle.jaxb.ObjectFactory</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.Checkstyle</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.Error</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.jaxb.File</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.clover</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.CloverSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Class</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Coverage</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.File</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Metrics</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Package</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Project</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.JavaClass2FilePathMapper</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.LongTimeConverter</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.TestCloverSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.TestCloverSensor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.clover.jaxb</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.jaxb.Class</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.File</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.jaxb.Coverage</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Project</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Testproject</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.jaxb.File</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Class</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Metrics</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.jaxb.Metrics</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.File</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Package</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Project</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Testproject</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Class</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Coverage</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.File</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Metrics</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Package</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Project</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Testproject</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.jaxb.Package</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Metrics</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.jaxb.Project</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Metrics</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Coverage</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.clover.jaxb.Testproject</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Metrics</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.Coverage</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.jaxb.ObjectFactory</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.emma</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.EmmaSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.All</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Class</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Coverage</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Data</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Package</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Report</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Srcfile</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.JavaClass2FilePathMapper</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.LongTimeConverter</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.TestEmmaSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.TestEmmaSensor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.emma.jaxb</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.All</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Data</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Class</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Classes</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Stats</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Coverage</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Data</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.All</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Report</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Method</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Methods</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Stats</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.All</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Class</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Classes</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Coverage</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Data</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Method</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Methods</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Package</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Packages</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Report</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Srcfile</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Srcfiles</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Srclines</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Stats</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Package</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Packages</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Stats</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Report</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Data</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Stats</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Srcfile</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Srcfiles</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Stats</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Srclines</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Stats</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.emma.jaxb.Stats</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Classes</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Methods</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Packages</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Srcfiles</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Srclines</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.jaxb.Report</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.findbugs</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.findbugs.FindBugsSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.BugCollection</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.BugInstance</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.ObjectFactory</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.Project</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.SourceLine</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.LongTimeConverter</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.TestFindBugsSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.findbugs.TestFindBugsSensor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.findbugs.jaxb</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.findbugs.jaxb.BugCollection</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.Project</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.findbugs.jaxb.BugInstance</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.Class</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.SourceLine</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.findbugs.jaxb.Class</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.BugInstance</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.findbugs.jaxb.ObjectFactory</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.BugCollection</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.BugInstance</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.Class</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.Project</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.SourceLine</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.findbugs.jaxb.Project</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.BugCollection</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.findbugs.jaxb.SourceLine</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.BugInstance</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.jaxb.ObjectFactory</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.javancss</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.CcnData</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Function</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Functions</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.TestCcnData</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.JavaNcssSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.CcnData</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Functions</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Javancss</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.Tstamp</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.TestJavaNcssSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.TestCcnData</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.CcnData</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Function</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Functions</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.TestJavaNcssSensor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.javancss.jaxb</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Averages</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Function</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.CcnData</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.TestCcnData</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.FunctionAverages</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Functions</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.CcnData</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.TestCcnData</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Javancss</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Javancss</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Functions</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Objects</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Packages</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Object</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Averages</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Function</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.FunctionAverages</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Functions</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Javancss</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Object</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Objects</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Package</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Packages</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Table</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Total</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Objects</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Javancss</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Package</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Packages</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.Javancss</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Table</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.javancss.jaxb.Total</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.jaxb.ObjectFactory</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.jdepend</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.JDependSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.Package2Path</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.JDepend</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Package</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Packages</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Stats</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.Tstamp</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.TestJDependSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.Package2Path</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.TestPackage2Path</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.TestJDependSensor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.TestPackage2Path</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.Package2Path</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.jdepend.jaxb</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.AbstractClasses</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Package</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.Class</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.ConcreteClasses</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Package</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.Cycles</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.JDepend</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.Cycles$Package</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.DependsUpon</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Package</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.JDepend</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Cycles</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Packages</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.AbstractClasses</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Class</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ConcreteClasses</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Cycles</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Cycles$Package</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.DependsUpon</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.JDepend</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Package</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Packages</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Stats</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.UsedBy</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.Package</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.AbstractClasses</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ConcreteClasses</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.DependsUpon</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Stats</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.UsedBy</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.Packages</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.JDepend</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.Stats</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Package</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.jdepend.jaxb.UsedBy</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.jaxb.Package</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.junit</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.JUnitSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Error</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Failure</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.ObjectFactory</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Testcase</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Testsuite</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.JavaClass2FilePathMapper</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.LongTimeConverter</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.TestJUnitSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.TestJUnitSensor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.junit.jaxb</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.jaxb.Error</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Testcase</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.jaxb.Failure</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Testcase</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.jaxb.ObjectFactory</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Error</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Failure</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Properties</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Property</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Testcase</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Testsuite</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.jaxb.Properties</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.ObjectFactory</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Testsuite</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.jaxb.Property</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.jaxb.Testcase</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Error</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Failure</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.junit.jaxb.Testsuite</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.Properties</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.jaxb.ObjectFactory</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.pmd</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.pmd.PmdSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.File</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.ObjectFactory</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.Pmd</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.Violation</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.util.LongTimeConverter</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.TestPmdSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.pmd.TestPmdSensor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <outbound type="class" confirmed="no">org.junit.Assert</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.pmd.jaxb</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.pmd.jaxb.File</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.pmd.jaxb.ObjectFactory</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.File</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.Pmd</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.Violation</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.pmd.jaxb.Pmd</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.ObjectFactory</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.pmd.jaxb.Violation</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.jaxb.ObjectFactory</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.svn</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.svn.CommitRecord</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecordEntry</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.SVNLogEntry</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.SVNLogEntryPath</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.SVNNodeKind</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.io.SVNFileRevision</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.io.SVNRepository</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.svn.CommitRecordEntry</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.GenericDiffCounter</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.GenericSizeCounter</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.SVNNodeKind</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.io.SVNRepository</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecord</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.svn.SVNCommitProcessor</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecord</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.SVNLogEntry</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.SVNURL</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.auth.ISVNAuthenticationManager</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.internal.io.svn.SVNRepositoryFactoryImpl</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.io.SVNRepository</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.io.SVNRepositoryFactory</outbound>
+            <outbound type="class" confirmed="no">org.tmatesoft.svn.core.wc.SVNWCUtil</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.TestAll</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.svn.SvnSensor</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.Task</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecord</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecordEntry</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellProperties</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.usermap.SensorShellMap</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.usermap.SensorShellMapException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.time.period.Day</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.Tstamp</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.svn.TestAll</name>
+            <outbound type="class" confirmed="no">junit.framework.TestCase</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</outbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.task</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.task.DataFiles</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.types.FileSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.task.HackystatSensorTask</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.DirectoryScanner</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.Project</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.Task</outbound>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.types.FileSet</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.DataFiles</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.SourceFiles</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShell</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.SensorShellProperties</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.usermap.SensorShellMap</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorshell.usermap.SensorShellMapException</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.stacktrace.StackTrace</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.utilities.tstamp.TstampSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.task.SourceFiles</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.types.FileSet</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.test</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.test.AntSensorTestHelper</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper$1</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorbase.client.SensorBaseClient</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataIndex</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataRef</outbound>
+            <outbound type="class" confirmed="no">org.hackystat.sensorbase.server.Server</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.TestCheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.TestCloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.TestEmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.TestFindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.TestJavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.TestJDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.TestJUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.TestPmdSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper$1</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.test.AntSensorTestHelper$1</name>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.util</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.util.JavaClass2FilePathMapper</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.util.LongTimeConverter</name>
+            <outbound type="class" confirmed="no">org.apache.tools.ant.BuildException</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+        </class>
+    </package>
+    <package confirmed="yes">
+        <name>org.hackystat.sensor.ant.vcs</name>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.vcs.GenericDiffCounter</name>
+            <outbound type="class" confirmed="no">org.apache.commons.jrcs.diff.Chunk</outbound>
+            <outbound type="class" confirmed="no">org.apache.commons.jrcs.diff.Delta</outbound>
+            <outbound type="class" confirmed="no">org.apache.commons.jrcs.diff.Diff</outbound>
+            <outbound type="class" confirmed="no">org.apache.commons.jrcs.diff.Revision</outbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecordEntry</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.vcs.GenericSizeCounter</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecordEntry</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.TestGenericSizeCounter</inbound>
+        </class>
+        <class confirmed="yes">
+            <name>org.hackystat.sensor.ant.vcs.TestGenericSizeCounter</name>
+            <outbound type="class" confirmed="no">junit.framework.TestCase</outbound>
+            <outbound type="class" confirmed="yes">org.hackystat.sensor.ant.vcs.GenericSizeCounter</outbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.hackystat.sensorbase.client</name>
+        <class confirmed="no">
+            <name>org.hackystat.sensorbase.client.SensorBaseClient</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.hackystat.sensorbase.resource.sensordata.jaxb</name>
+        <class confirmed="no">
+            <name>org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataIndex</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataRef</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.hackystat.sensorbase.server</name>
+        <class confirmed="no">
+            <name>org.hackystat.sensorbase.server.Server</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.test.AntSensorTestHelper</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.hackystat.sensorshell</name>
+        <class confirmed="no">
+            <name>org.hackystat.sensorshell.SensorShell</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.hackystat.sensorshell.SensorShellException</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.hackystat.sensorshell.SensorShellProperties</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.hackystat.sensorshell.usermap</name>
+        <class confirmed="no">
+            <name>org.hackystat.sensorshell.usermap.SensorShellMap</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.hackystat.sensorshell.usermap.SensorShellMapException</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.antbuild.BuildSensorAntListener</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.hackystat.utilities.stacktrace</name>
+        <class confirmed="no">
+            <name>org.hackystat.utilities.stacktrace.StackTrace</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.hackystat.utilities.time.period</name>
+        <class confirmed="no">
+            <name>org.hackystat.utilities.time.period.Day</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.hackystat.utilities.tstamp</name>
+        <class confirmed="no">
+            <name>org.hackystat.utilities.tstamp.Tstamp</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.hackystat.utilities.tstamp.TstampSet</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.CheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.CloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.EmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.FindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.JavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.JDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.JUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.PmdSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SvnSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.task.HackystatSensorTask</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.junit</name>
+        <class confirmed="no">
+            <name>org.junit.Assert</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.checkstyle.TestCheckstyleSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.clover.TestCloverSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.emma.TestEmmaSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.findbugs.TestFindBugsSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.TestCcnData</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.javancss.TestJavaNcssSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.TestJDependSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.jdepend.TestPackage2Path</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.junit.TestJUnitSensor</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.pmd.TestPmdSensor</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.tmatesoft.svn.core</name>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.SVNLogEntry</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecord</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.SVNLogEntryPath</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecord</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.SVNNodeKind</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecord</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecordEntry</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.SVNURL</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.tmatesoft.svn.core.auth</name>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.auth.ISVNAuthenticationManager</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.tmatesoft.svn.core.internal.io.dav</name>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.tmatesoft.svn.core.internal.io.svn</name>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.internal.io.svn.SVNRepositoryFactoryImpl</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.tmatesoft.svn.core.io</name>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.io.SVNFileRevision</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecord</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.io.SVNRepository</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecord</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.CommitRecordEntry</inbound>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+        </class>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.io.SVNRepositoryFactory</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+        </class>
+    </package>
+    <package confirmed="no">
+        <name>org.tmatesoft.svn.core.wc</name>
+        <class confirmed="no">
+            <name>org.tmatesoft.svn.core.wc.SVNWCUtil</name>
+            <inbound type="class" confirmed="yes">org.hackystat.sensor.ant.svn.SVNCommitProcessor</inbound>
+        </class>
+    </package>
+</dependencies>

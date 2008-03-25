@@ -12,6 +12,7 @@
   <target name="validateXml" description="Validates XML files against their schemas.">
     <schemavalidate noNamespaceFile="${schema.dir}/javancss.xsd" file="${testdata.dir}/javancss/javancss.xml"/>
     <schemavalidate noNamespaceFile="${schema.dir}/jdepend.xsd" file="${testdata.dir}/jdepend/jdepend.xml"/>
+    <schemavalidate noNamespaceFile="${schema.dir}/dependencyfinder.xsd" file="${testdata.dir}/dependencyfinder/class2class.xml"/>
   </target>
   
 </project>

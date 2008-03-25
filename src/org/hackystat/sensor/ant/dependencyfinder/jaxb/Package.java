@@ -6,12 +6,13 @@
 //
 
 
-package org.hackystat.sensor.ant.jdepend.jaxb;
+package org.hackystat.sensor.ant.dependencyfinder.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -27,8 +28,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}Class" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element ref="{}class" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
+ *       &lt;attribute name="confirmed" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -38,13 +41,42 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "name",
     "clazz"
 })
-@XmlRootElement(name = "ConcreteClasses")
-public class ConcreteClasses {
+@XmlRootElement(name = "package")
+public class Package {
 
-    @XmlElement(name = "Class")
+    @XmlElement(required = true)
+    protected String name;
+    @XmlElement(name = "class")
     protected List<Class> clazz;
+    @XmlAttribute
+    protected String confirmed;
+
+    /**
+     * Gets the value of the name property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the value of the name property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setName(String value) {
+        this.name = value;
+    }
 
     /**
      * Gets the value of the clazz property.
@@ -73,6 +105,30 @@ public class ConcreteClasses {
             clazz = new ArrayList<Class>();
         }
         return this.clazz;
+    }
+
+    /**
+     * Gets the value of the confirmed property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getConfirmed() {
+        return confirmed;
+    }
+
+    /**
+     * Sets the value of the confirmed property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setConfirmed(String value) {
+        this.confirmed = value;
     }
 
 }

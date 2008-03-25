@@ -50,5 +50,9 @@
     <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/jdepend.xsd" destdir="src" package="org.hackystat.sensor.ant.jdepend.jaxb">
       <produces dir="${basedir}/src/org/hackystat/sensor/ant/jdepend/jaxb" includes="*" />
     </xjc>
+    
+    <xjc target="${env.JAXB_TARGET}" schema="${basedir}/xml/schema/dependencyfinder.xsd" destdir="src" package="org.hackystat.sensor.ant.dependencyfinder.jaxb">
+       <produces dir="${basedir}/src/org/hackystat/sensor/ant/dependencyfinder/jaxb" includes="*" />
+     </xjc>
   </target>
 </project>
