@@ -46,18 +46,5 @@
     <hackystat.dependencyfinder dependencyfinder.datafiles.fileset="dependencyfinder.datafiles" dependencyfinder.sourcefiles.fileset="dependencyfinder.sourcefiles" verbose="${hackystat.verbose.mode}" />
   </target>
 
-  <!--
-  <target name="dependencyfinder.sensor" description="Sends Dependency data to Hackystat using the DependencyFinder sensor.">
-    <available classname="org.hackystat.sensor.dependencyfinder.DependencyFinderSensor" property="dependencyfinder.sensor.available"/>
-    <fail unless="dependencyfinder.sensor.available" message="Error: DependencyFinder sensor not installed."/>
-    <taskdef name="hacky-dependency" classname="org.hackystat.sensor.dependencyfinder.DependencyFinderSensor" />    
-
-    <hacky-dependency verbose="${hackystat.verbose.mode}"
-                      class2ClassFile="${dependencyfinder.dir}/class2class.xml" 
-                      package2packageFile="${dependencyfinder.dir}/package2package.xml">
-      <fileset dir="${src.dir}" includes="**/*.java"/>
-    </hacky-dependency>
-  </target>
-  -->
 </project>
 
