@@ -18,6 +18,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.tools.ant.BuildException;
 import org.hackystat.sensor.ant.findbugs.jaxb.BugCollection;
 import org.hackystat.sensor.ant.findbugs.jaxb.BugInstance;
+import org.hackystat.sensor.ant.findbugs.jaxb.SourceLine;
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 import org.hackystat.sensor.ant.util.LongTimeConverter;
 import org.hackystat.sensorshell.SensorShellException;
@@ -102,8 +103,12 @@ public class FindBugsSensor extends HackystatSensorTask {
       // Sort all the bugs by the file they are from
       HashMap<String, List<BugInstance>> fileToBugs = new HashMap<String, List<BugInstance>>();
       for (BugInstance bugInstance : bugInstanceCollection) {
-        String abstractSourcePath = bugInstance.getSourceLine().getSourcepath();
         // Discard this bugInstance if we can't figure out the source path.
+        SourceLine sourceLine = bugInstance.getSourceLine();
+        if (sourceLine == null) {
+          continue;
+        }
+        String abstractSourcePath = sourceLine.getSourcepath();
         if (abstractSourcePath == null) {
           continue;
         }
