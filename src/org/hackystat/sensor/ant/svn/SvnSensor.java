@@ -155,7 +155,7 @@ public class SvnSensor extends Task {
    * 
    * @throws BuildException If any error is detected in the property setting.
    */
-  private void processProperties() throws BuildException {
+  private void validateProperties() throws BuildException {
     if (this.repositoryName == null || this.repositoryName.length() == 0) {
       throw new BuildException("Attribute 'repositoryName' must be set.");
     }
@@ -211,15 +211,19 @@ public class SvnSensor extends Task {
    */
   @Override
   public void execute() throws BuildException {
-    this.processProperties(); // sanity check.
+    this.validateProperties(); // sanity check.
     if (this.isVerbose) {
-      System.out.println("[Hackystat SVN Sensor] Processing commits between " + 
+      System.out.println("Processing commits between " + 
           this.fromDate + "(exclusive) to " + this.toDate + "(inclusive)");
     }
 
     try {
       Map<String, SensorShell> shellCache = new HashMap<String, SensorShell>();
       SensorShellMap shellMap = new SensorShellMap("svn");
+      if (this.isVerbose) {
+        System.out.println("Checking for user maps at: " + shellMap.getUserMapFile());
+        System.out.println("SVN accounts found: " + shellMap.getToolAccounts("svn"));
+      }
       SVNCommitProcessor processor = new SVNCommitProcessor(this.repositoryUrl, this.userName,
           this.password);
       long startRevision = processor.getRevisionNumber(this.fromDate) + 1;
@@ -235,7 +239,8 @@ public class SvnSensor extends Task {
 
           for (CommitRecordEntry entry : commitRecord.getCommitRecordEntries()) {
             if (this.isVerbose) {
-              System.out.println(commitRecord.toString() + " - " + entry.toString());
+              System.out.println("Retrieved SVN data: " + 
+                  commitRecord.toString() + " - " + entry.toString());
             }
             SensorShell shell = this.getShell(shellCache, shellMap, author);
             this.processCommitEntry(shell, author, message, tstampSet
@@ -244,22 +249,18 @@ public class SvnSensor extends Task {
           }
         }
       }
+      if (this.isVerbose) {
+        System.out.println("Found " + entriesAdded + " commit records.");
+      }
 
-      boolean isServerAvailable = false;
       // Send the sensor data after all entries have been processed.
       for (SensorShell shell : shellCache.values()) {
-        isServerAvailable = shell.ping();
+        if (this.isVerbose) {
+          System.out.println("Sending data to " + shell.getProperties().getSensorBaseUser() + 
+              " at " + shell.getProperties().getSensorBaseHost());
+        }
         shell.send();
         shell.quit();
-      }
-
-      SensorShellProperties props = new SensorShellProperties();
-      if (isServerAvailable) {
-        System.out.println(entriesAdded + " entries sent to " + props.getSensorBaseHost());
-      }
-      else {
-        System.out.println("Server not available. Storing " + entriesAdded
-            + " data entries offline.");
       }
     }
     catch (Exception ex) {
@@ -348,10 +349,11 @@ public class SvnSensor extends Task {
       int linesDeleted = entry.isTextFile() ? entry.getLinesDeleted() : 0;
 
       Map<String, String> pMap = new HashMap<String, String>();
+      String timestampString = Tstamp.makeTimestamp(timestamp).toString();
       pMap.put("SensorDataType", "Commit");
       pMap.put("Resource", file);
       pMap.put("Tool", "Subversion");
-      pMap.put("Timestamp", Tstamp.makeTimestamp(timestamp).toString());
+      pMap.put("Timestamp", timestampString);
       pMap.put("Runtime", Tstamp.makeTimestamp(commitTime.getTime()).toString());
       pMap.put("repository", this.repositoryName);
       pMap.put("totalLines", String.valueOf(totalLines));
@@ -359,6 +361,10 @@ public class SvnSensor extends Task {
       pMap.put("linesDeleted", String.valueOf(linesDeleted));
       pMap.put("log", message);
       shell.add(pMap);
+      if (this.isVerbose) {
+        System.out.printf("Sending SVN Commit: Timestamp: %s Resource: %s User: %s%n", 
+            timestampString, file, shell.getProperties().getSensorBaseUser());
+      }
     }
   }
 }
