@@ -213,8 +213,8 @@ public class SvnSensor extends Task {
   public void execute() throws BuildException {
     this.validateProperties(); // sanity check.
     if (this.isVerbose) {
-      System.out.println("Processing commits between " + 
-          this.fromDate + "(exclusive) to " + this.toDate + "(inclusive)");
+      System.out.printf("Processing commits for %s between %s (exclusive) and %s (inclusive)%n",
+          this.repositoryUrl, this.fromDate, this.toDate);
     }
 
     try {
