@@ -26,12 +26,13 @@ public class Common {
     BufferedInputStream props = null;
     try {
       // First, try loading from the properties file.
-      props = new BufferedInputStream(new FileInputStream("p4.properties"));
+      props = new BufferedInputStream(new FileInputStream("C:\\p4.properties"));
       prps.load(props);
       System.setProperties(prps);
       env = new Env(prps);
     }
     catch (IOException ioex) {
+      System.out.println("Could not find p4.properties file.");
       Debug.error("Could not load properties.");
       /*
        * If the properties file failed, we could set the environment manually. Another option would

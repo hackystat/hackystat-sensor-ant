@@ -22,12 +22,13 @@ public class StatFile {
    */
   @SuppressWarnings("unchecked")
   public static void main(String[] argv) {
+    System.out.println("Starting.");
     /*
      * Please see the Common.java file to see how the environment is being set up. This is
      * important, but it is common to all the examples.
      */
     Env env = Common.setup();
-    String filename = "//guest/david_markley/p4package/index.html";
+    String filename = "//guest/philip_johnson/test.txt";
     Vector fileHistory = null;
     FileEntry fent;
     Debug.setDebugLevel(Debug.ERROR);
@@ -55,5 +56,6 @@ public class StatFile {
       ex.printStackTrace();
     }
     Utils.cleanUp();
+    System.out.println("Ending");
   }
 }
