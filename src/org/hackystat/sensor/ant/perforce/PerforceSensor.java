@@ -2,6 +2,10 @@ package org.hackystat.sensor.ant.perforce;
 
 import org.hackystat.sensor.ant.task.HackystatSensorTask;
 
+/**
+ * A sensor for collecting Commit information from the Perforce CM system. 
+ * @author Philip Johnson
+ */
 public class PerforceSensor extends HackystatSensorTask {
   
   /** The name of this tool. */
@@ -23,6 +27,9 @@ public class PerforceSensor extends HackystatSensorTask {
     super(host, email, password, tool);
   }
 
+  /**
+   * Mandatory task.
+   */
   @Override
   public void executeInternal() {
     // TODO Auto-generated method stub
