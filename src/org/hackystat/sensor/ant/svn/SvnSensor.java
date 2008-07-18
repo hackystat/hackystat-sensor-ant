@@ -162,6 +162,18 @@ public class SvnSensor extends Task {
     if (this.repositoryUrl == null || this.repositoryUrl.length() == 0) {
       throw new BuildException("Attribute 'repositoryUrl' must be set.");
     }
+    
+    // If default* is specified, then all should be specified. 
+    if (((this.defaultHackystatAccount != null) || 
+         (this.defaultHackystatPassword != null) ||
+         (this.defaultHackystatSensorbase != null)) &&
+        ((this.defaultHackystatAccount == null) || 
+         (this.defaultHackystatPassword == null) ||
+         (this.defaultHackystatSensorbase == null))) {
+      throw new BuildException ("If one of default Hackystat account, password, or sensorbase " +
+          "is specified, then all must be specified.");
+    }
+    
 
     // If fromDate and toDate not set, we only extract commit information for
     // the previous day.
