@@ -1,11 +1,12 @@
 package org.hackystat.sensor.ant.perforce;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import com.perforce.api.Change;
 import com.perforce.api.Client;
-import com.perforce.api.Debug;
 import com.perforce.api.Env;
 import com.perforce.api.FileEntry;
 import com.perforce.api.P4Process;
@@ -17,80 +18,99 @@ import com.perforce.api.Utils;
  * <li> Defines a new Client with a view that maps to the Perforce depot directory of interest.  
  * <li> Obtains the set of ChangeLists for a specified date interval.
  * <li> Finds the set of files committed in each change list. 
- * <li> Performs a diff on each file to get a count of lines added, modified, and changed. 
+ * <li> Performs a diff on each file to get a count of lines added, modified, and changed.
  * </ul>
- *
- * @author Philip Johnson
  * 
+ * Note that you must create a P4Environment instance and initialize it properly before 
+ * invoking the PerforceCommitProcessor.  
+ * 
+ * See the main() method for example usage of this class. 
+ * 
+ * @author Philip Johnson
  */
 public class PerforceCommitProcessor {
-  // START CONFIGURATION SECTION
-  // Edit the following String variables to conform to your local environment.
-  /** The path to the p4 executable. */
-  private String p4Executable = "C:\\Program Files\\Perforce\\P4.EXE";
-  /** The hostname and port for the perforce server. */
-  private String p4Port = "public.perforce.com:1666";
-  /** The authorized Perforce user for this server. */
-  private String p4User = "philip_johnson";
-  /** The password for this user on this server. */
-  private String p4Password = "clearsnow";
-  /** If running on windows, need this for p4. */
-  private String p4SysRoot = "C:\\WINDOWS";
-  /** If running on windows, need this for p4. */
-  private String p4SysDrive = "C:";
-  /** The depot file specification for the files we want to analyze for this sensor. */
-  private String depotPath = "//guest/philip_johnson/...";
-  /** The start date for getting Commit data. */
-  private String startDate = "2008/07/14";
-  /** The end date for getting Commit data. */
-  private String endDate = "2008/07/16";
-  // END CONFIGURATION SECTION
 
-  /** The Env instance initialized in setupEnvironment. */
+  /** The Perforce depotPath associated with this processor. */
+  private String depotPath;
+  /** The Perforce Java API Env instance initialized in setupEnvironment. */
   private Env env;
   /** The Client workspace that will be created based upon the depotPath. */
   private Client client;
-  /** The set of Change instances we will retrieve from the server. */
-  Change[] changes;
+  /** The set of changelists and associated information we will build in this processor. */  
+  private List<PerforceChangeListData> changeListDataList = new ArrayList<PerforceChangeListData>();
+  
+  /** Disable the default public no-arg constructor. */
+  @SuppressWarnings("unused")
+  private PerforceCommitProcessor () {
+    // Disable default constructor.
+  }
+  
+  /**
+   * Instantiates a PerforceCommitProcessor with the passed P4Environment instance and depotPath. 
+   * @param p4Environment The p4Environment. 
+   * @param depotPath The depot path this processor will work on. 
+   * @throws Exception If problems occur instantiating this environment. 
+   */
+  public PerforceCommitProcessor(P4Environment p4Environment, String depotPath) throws Exception {
+    this.env = p4Environment.getEnv();
+    this.depotPath = depotPath;
+    this.client = createClient(env, depotPath);
+    this.env.setClient(this.client.getName());
+  }
+  
 
   /**
-   * Setting up the Perforce environment involves two tasks: (1) Create an Env instance that holds
-   * the various properties required by the P4 Java API. (2) Create a Client instance that maps the
-   * depotPath to a local workspace. Note that we won't actually populate that local workspace with
-   * any files, but we need to create one in order to do any manipulations in Perforce.
+   * Creates a Perforce Client that maps the depotPath to a local workspace.
+   * This Client has a unique name which enables concurrent execution of this sensor. 
+   * It will be deleted during cleanup.
+   * @param env The Env instance to be used to create this client.
+   * @param depotPath The depotPath this Client will map.   
+   * @return The newly created Client.  
    * @throws Exception if problems occur. 
    */
-  private void setupEnvironment() throws Exception {
-    // First, initialize the Env instance with the configuration data.
-    this.env = new Env();
-    this.env.setExecutable(p4Executable);
-    this.env.setPort(p4Port);
-    this.env.setUser(p4User);
-    this.env.setPassword(p4Password);
-    this.env.setSystemRoot(p4SysRoot);
-    this.env.setSystemDrive(p4SysDrive);
-    Debug.setDebugLevel(Debug.VERBOSE); // Seems like a good idea.
-    // Uncomment the following to get lots of output if the p4 command is failing. 
-    //Debug.setLogLevel(Debug.LOG_SPLIT);
-
-    // Next, create a unique Client that maps the depotPath. We will delete this Client during
-    // cleanup. By creating a unique Client, we support concurrent invocation of this sensor
-    // by the same client with different depotPaths. 
+  private Client createClient(Env env, String depotPath) throws Exception {
     String hackystatSensorClientName = "hackystat-sensor-" + (new Date()).getTime();
-    this.client = new Client(env, hackystatSensorClientName);
-    this.client.setRoot(System.getProperty("user.home") + "/perforcesensorsketch");
-    this.client.addView(depotPath, "//" + hackystatSensorClientName + "/...");
-    this.client.commit();
-    // Now that we've defined a client, add it to our environment.
-    this.env.setClient(hackystatSensorClientName);
+    Client client = new Client(env, hackystatSensorClientName);
+    client.setRoot(System.getProperty("user.home") + "/perforcesensorsketch");
+    client.addView(depotPath, "//" + hackystatSensorClientName + "/...");
+    client.commit();
+    return client;
   }
 
+  
   /**
-   * Gets the set of ChangeLists for the specified depotPath between start and end date.
+   * Processes any ChangeLists that were submitted between startData and endDate to the depotPath.
+   * @param startDate The start date, in YYYY/MM/DD format. 
+   * @param endDate The end date, in YYYY/MM/DD format. 
    * @throws Exception If problems occur. 
    */
-  private void getChangeLists() throws Exception {
-    this.changes = Change.getChanges(env, depotPath, 100, startDate, endDate, true, null);
+  @SuppressWarnings("unchecked") // Vector in Perforce Java API is not generic.
+  public void processChangeLists(String startDate, String endDate) throws Exception {
+    int maximumChanges = 1000;
+    boolean useIntegrations = true;
+    Change[] changes = Change.getChanges(env, depotPath, maximumChanges, startDate, endDate, 
+        useIntegrations, null);
+    for (Change changelist : changes) {
+      String owner = changelist.getUser().getId();
+      PerforceChangeListData changeListData = 
+        new PerforceChangeListData(owner, changelist.getNumber());
+      changelist.sync();
+      Vector<FileEntry> files = changelist.getFileEntries();
+      for (FileEntry fileEntry : files) {
+        //fileEntry.sync(); // not sure if this is needed. Maybe changelist.sync() is good enough.
+        Integer[] lineInfo = getFileChangeInfo(fileEntry);
+        changeListData.addFileData(fileEntry.getDepotPath(), lineInfo[0], lineInfo[1], lineInfo[2]);
+      }
+      this.changeListDataList.add(changeListData);
+    }
+  }
+  
+  /**
+   * Retrieve the list of PerforceChangeListData instances associated with this instance. 
+   * @return The list of PerforceChangeListData instances.  
+   */
+  public List<PerforceChangeListData> getChangeListDataList() {
+    return this.changeListDataList;
   }
 
   /**
@@ -109,11 +129,8 @@ public class PerforceCommitProcessor {
       return ints;
     }
     int revision = entry.getHeadRev();
-    System.out.printf("Diffing file: %s%n", depotPath);
     String difference = runDiff2Command(depotPath, revision);
-    System.out.println(difference);
     ints = processDiff2Output(difference);
-    System.out.printf("Lines added/deleted/changed: %d %d %d %n", ints[0], ints[1], ints[2]);
     return ints;
   }
 
@@ -200,27 +217,37 @@ public class PerforceCommitProcessor {
   }
 
   /**
-   * Exercises the methods in this class. 
-   * @param args Ignored. 
+   * Exercises the methods in this class manually.
+   * Supply arguments in the following order. Examples given in parentheses:
+   * <ul>
+   * <li> port ("public.perforce.com:1666")
+   * <li> user ("philip_johnson")
+   * <li> password ("foo")
+   * <li> depotPath ("//guest/philip_johnson/...")
+   * <li> startDate ("2008/07/14")
+   * <li> endDate ("2008/07/15")
+   * </ul>
+   * @param args Arguments are: port, user, password, depotPath, startDate, endDate.
    * @throws Exception If problems occur. 
    */
   @SuppressWarnings("unchecked")
   public static void main(String[] args) throws Exception {
-    System.out.printf("Starting PerforceSensorSketch%n  Setting up environment...");
-    PerforceCommitProcessor sketch = new PerforceCommitProcessor();
-    sketch.setupEnvironment();
-    System.out.printf("done.%n  Now retrieving change lists...");
-    sketch.getChangeLists();
-    System.out.printf("found %d.%n  Now iterating through files...%n", sketch.changes.length);
-
-    for (Change changelist : sketch.changes) {
-      changelist.sync();
-      Vector<FileEntry> files = changelist.getFileEntries();
-      for (FileEntry fileEntry : files) {
-        sketch.getFileChangeInfo(fileEntry);
-      }
+    System.out.printf("Starting PerforceCommitProcessor. %nSetting up environment...");
+    P4Environment p4Env = new P4Environment();
+    p4Env.setP4Port(args[0]);
+    p4Env.setP4User(args[1]);
+    p4Env.setP4Password(args[2]);
+    p4Env.setVerbose(false); // could set this to true for lots of debugging output. 
+    PerforceCommitProcessor processor = new PerforceCommitProcessor(p4Env, args[3]);
+    System.out.printf("done. %nNow retrieving change lists...");
+    processor.processChangeLists(args[4], args[5]);
+    System.out.printf("found %d changelists. %n", processor.changeListDataList.size());
+    for (PerforceChangeListData data : processor.getChangeListDataList()) {
+      System.out.println(data);
     }
-    sketch.cleanup();
-    System.out.printf("Finished PerforceSensorSketch.");
+    // Always make sure you call cleanup() at the end. 
+    processor.cleanup();
+    System.out.printf("Finished PerforceCommitProcessor.");
   }
+  
 }
