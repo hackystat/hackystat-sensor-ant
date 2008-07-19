@@ -93,13 +93,15 @@ public class PerforceCommitProcessor {
     for (Change changelist : changes) {
       String owner = changelist.getUser().getId();
       PerforceChangeListData changeListData = 
-        new PerforceChangeListData(owner, changelist.getNumber());
+        new PerforceChangeListData(owner, changelist.getNumber(), changelist.getModtimeString());
       changelist.sync();
       Vector<FileEntry> files = changelist.getFileEntries();
       for (FileEntry fileEntry : files) {
         //fileEntry.sync(); // not sure if this is needed. Maybe changelist.sync() is good enough.
         Integer[] lineInfo = getFileChangeInfo(fileEntry);
-        changeListData.addFileData(fileEntry.getDepotPath(), lineInfo[0], lineInfo[1], lineInfo[2]);
+        int totalLoc = getFileSize(changelist.getNumber(), fileEntry.getDepotPath());
+        changeListData.addFileData(fileEntry.getDepotPath(), lineInfo[0], lineInfo[1], lineInfo[2],
+            totalLoc);
       }
       this.changeListDataList.add(changeListData);
     }
@@ -178,6 +180,28 @@ public class PerforceCommitProcessor {
     return sb.toString();
   }
   
+  /**
+   * Calls the p4 program to get file size in LOC for the specified file. 
+   * (This should really be part of the official Perforce Java API.)
+   * (We also shouldn't have to retrieve the whole darn file just to count the number of lines.)
+   * Only call this if the file is text.
+   * @param changelist The changelist revision we want file size for. 
+   * @param file The file we want stats for. Should be in the form of a depot path.  
+   * @return The number of lines in this file. 
+   * @throws Exception if problems occur. 
+   */
+  private int getFileSize(int changelist, String file) throws Exception {
+    String[] cmd = { "p4", "print", file + "@" + changelist};
+    P4Process p = new P4Process(this.env);
+    p.exec(cmd);
+    int loc = 0;
+    while (null != p.readLine()) {
+      loc++;
+    }
+    p.close();
+    return loc;
+  }
+  
   
   
   /**
@@ -211,13 +235,14 @@ public class PerforceCommitProcessor {
    * created for this task as well as invoke the Perforce library cleanUp() method.
    * @throws Exception If problems occur. 
    */
-  private void cleanup() throws Exception {
+  public void cleanup() throws Exception {
     this.runDeleteClientCommand(this.client);
     Utils.cleanUp();
   }
 
   /**
-   * Exercises the methods in this class manually.
+   * Exercises the methods in this class manually.  Useful as a way to check that you have
+   * configured your p4 environment correctly if you are having problems with the sensor. 
    * Supply arguments in the following order. Examples given in parentheses:
    * <ul>
    * <li> port ("public.perforce.com:1666")
@@ -244,6 +269,10 @@ public class PerforceCommitProcessor {
     System.out.printf("found %d changelists. %n", processor.changeListDataList.size());
     for (PerforceChangeListData data : processor.getChangeListDataList()) {
       System.out.println(data);
+      for (PerforceChangeListData.PerforceFileData fileData : data.getFileData()) {
+        System.out.printf("Size of %s is %d%n", fileData.getFileName(), 
+            processor.getFileSize(data.getId(), fileData.getFileName()));
+      }
     }
     // Always make sure you call cleanup() at the end. 
     processor.cleanup();

@@ -10,4 +10,5 @@
     <taskdef name="hacky-junit" classname="org.hackystat.sensor.ant.junit.JUnitSensor" />
     <taskdef name="hacky-pmd" classname="org.hackystat.sensor.ant.pmd.PmdSensor" />
     <taskdef name="hacky-svn" classname="org.hackystat.sensor.ant.svn.SvnSensor" />
+    <taskdef name="hacky-perforce" classname="org.hackystat.sensor.ant.perforce.PerforceSensor" />
 </antlib>

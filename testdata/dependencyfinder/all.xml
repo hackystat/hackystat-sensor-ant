@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<!DOCTYPE dependencies SYSTEM "/Users/johnson/java/DependencyFinder-1.2.0/etc/dependencies.dtd">
-
 <dependencies>
     <package confirmed="no">
         <name>junit.framework</name>
