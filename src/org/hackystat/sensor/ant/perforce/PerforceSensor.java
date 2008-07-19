@@ -28,9 +28,12 @@ public class PerforceSensor extends Task {
   private String userName;
   private String password;
   private String fileNamePrefix;
+  private String p4ExecutablePath;
   private String defaultHackystatAccount = "";
   private String defaultHackystatPassword = "";
   private String defaultHackystatSensorbase = "";
+  private String p4SysRoot = "C:\\WINDOWS";
+  private String p4SysDrive = "C:";
   private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
   private String fromDateString, toDateString;
   private Date fromDate, toDate;
@@ -137,6 +140,32 @@ public class PerforceSensor extends Task {
   }
   
   /**
+   * Sets the path to the p4 executable. Example: "C:\\Program Files\\Perforce\\P4.EXE".
+   * @param path The path.
+   */
+  public void setP4ExecutablePath(String path) {
+    this.p4ExecutablePath = path;
+  }
+  
+  /**
+   * Sets the path to the Window system root dir. Default: "C:\\WINDOWS".
+   * This is needed by the p4 executable on Windows for reasons only it knows.
+   * @param sysroot The sysroot.
+   */
+  public void setP4SysRoot(String sysroot) {
+    this.p4SysRoot = sysroot;
+  }
+  
+  /**
+   * Sets the path to the Window system drive. Default: "C:".
+   * This is needed by the p4 executable on Windows for reasons only it knows.
+   * @param sysdrive The sysdrive.
+   */
+  public void setP4SysDrive(String sysdrive) {
+    this.p4SysDrive = sysdrive;
+  }
+  
+  /**
    * Sets the depot path in the Perforce server. Example: "//guest/philip_johnson/...".
    * @param depotPath The depot path. 
    */
@@ -165,6 +194,9 @@ public class PerforceSensor extends Task {
     }
     if (this.depotPath == null || this.depotPath.length() == 0) {
       throw new BuildException("Attribute 'repositoryUrl' must be set.");
+    }
+    if (this.p4ExecutablePath == null || this.p4ExecutablePath.length() == 0) {
+      throw new BuildException("Attribute 'p4ExecutablePath' must be set.");
     }
     
     // If default* is specified, then all should be specified. 
@@ -243,6 +275,11 @@ public class PerforceSensor extends Task {
       p4Env.setP4Port(this.port);
       p4Env.setP4User(this.userName);
       p4Env.setP4Password(this.password);
+      p4Env.setP4Executable(this.p4ExecutablePath);
+      // These are given default values above.  User need not set them in the Ant task unless
+      // the defaults are not correct.
+      p4Env.setP4SystemDrive(this.p4SysDrive);
+      p4Env.setP4SystemRoot(this.p4SysRoot);
       p4Env.setVerbose(false); // could set this to true for lots of p4 debugging output. 
       PerforceCommitProcessor processor = new PerforceCommitProcessor(p4Env, this.depotPath);
       processor.processChangeLists(dateFormat.format(this.fromDate), 

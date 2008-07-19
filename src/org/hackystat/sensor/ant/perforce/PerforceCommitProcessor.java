@@ -98,8 +98,15 @@ public class PerforceCommitProcessor {
       Vector<FileEntry> files = changelist.getFileEntries();
       for (FileEntry fileEntry : files) {
         //fileEntry.sync(); // not sure if this is needed. Maybe changelist.sync() is good enough.
-        Integer[] lineInfo = getFileChangeInfo(fileEntry);
-        int totalLoc = getFileSize(changelist.getNumber(), fileEntry.getDepotPath());
+        
+        // Set up defaults for size info for binary files.
+        Integer[] lineInfo = {0,0,0};
+        int totalLoc = 0;  
+        // Calculate real values for text files. 
+        if (isTextFile(fileEntry)) {
+          lineInfo = getFileChangeInfo(fileEntry);
+          totalLoc = getFileSize(changelist.getNumber(), fileEntry.getDepotPath());
+        }
         changeListData.addFileData(fileEntry.getDepotPath(), lineInfo[0], lineInfo[1], lineInfo[2],
             totalLoc);
       }
@@ -114,6 +121,15 @@ public class PerforceCommitProcessor {
   public List<PerforceChangeListData> getChangeListDataList() {
     return this.changeListDataList;
   }
+  
+  /**
+   * True if the file entry is a text file.
+   * @param entry The fileEntry.
+   * @return True if a text file.
+   */
+  private boolean isTextFile(FileEntry entry) {
+    return "text".equals(entry.getHeadType());
+  }
 
   /**
    * Finds out the lines added, deleted, and changed for the passed file.
@@ -125,9 +141,8 @@ public class PerforceCommitProcessor {
   private Integer[] getFileChangeInfo(FileEntry entry) throws Exception {
     entry.sync();
     String depotPath = entry.getDepotPath();
-    boolean isTextFile = "text".equals(entry.getHeadType());
     Integer[] ints = {0, 0, 0};
-    if (!isTextFile) {
+    if (!isTextFile(entry)) {
       return ints;
     }
     int revision = entry.getHeadRev();
