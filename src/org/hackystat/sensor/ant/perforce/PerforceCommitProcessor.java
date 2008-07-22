@@ -39,6 +39,9 @@ public class PerforceCommitProcessor {
   /** The set of changelists and associated information we will build in this processor. */  
   private List<PerforceChangeListData> changeListDataList = new ArrayList<PerforceChangeListData>();
   
+  /** Controls whether the -dw option is passed to diff2. */
+  private boolean ignoreWhitespace = false;
+  
   /** Disable the default public no-arg constructor. */
   @SuppressWarnings("unused")
   private PerforceCommitProcessor () {
@@ -88,27 +91,33 @@ public class PerforceCommitProcessor {
   public void processChangeLists(String startDate, String endDate) throws Exception {
     int maximumChanges = 1000;
     boolean useIntegrations = true;
-    Change[] changes = Change.getChanges(env, depotPath, maximumChanges, startDate, endDate, 
+    String startTime = startDate + " 00:00:00";
+    String endTime = endDate + " 23:59:59";
+    Change[] changes = Change.getChanges(env, depotPath, maximumChanges, startTime, endTime,
         useIntegrations, null);
     for (Change changelist : changes) {
       String owner = changelist.getUser().getId();
-      PerforceChangeListData changeListData = 
-        new PerforceChangeListData(owner, changelist.getNumber(), changelist.getModtimeString());
+      PerforceChangeListData changeListData = new PerforceChangeListData(owner, changelist
+          .getNumber(), changelist.getModtimeString());
       changelist.sync();
       Vector<FileEntry> files = changelist.getFileEntries();
       for (FileEntry fileEntry : files) {
         //fileEntry.sync(); // not sure if this is needed. Maybe changelist.sync() is good enough.
         
-        // Set up defaults for size info for binary files.
-        Integer[] lineInfo = {0,0,0};
-        int totalLoc = 0;  
-        // Calculate real values for text files. 
-        if (isTextFile(fileEntry)) {
-          lineInfo = getFileChangeInfo(fileEntry);
-          totalLoc = getFileSize(changelist.getNumber(), fileEntry.getDepotPath());
+        // Changelists can contain files not in the user-specified depotPath, so only process 
+        // files in the changelist that match the depotPath. 
+        if (Utils.wildPathMatch(this.depotPath, fileEntry.getDepotPath())) {
+          // Set up defaults for size info for binary files.
+          Integer[] lineInfo = { 0, 0, 0 };
+          int totalLoc = 0;
+          // Calculate real values for text files.
+          if (isTextFile(fileEntry.getDepotPath(), changelist.getNumber())) {
+            lineInfo = getFileChangeInfo(fileEntry);
+            totalLoc = getFileSize(changelist.getNumber(), fileEntry.getDepotPath());
+          }
+          changeListData.addFileData(fileEntry.getDepotPath(), lineInfo[0], lineInfo[1],
+              lineInfo[2], totalLoc);
         }
-        changeListData.addFileData(fileEntry.getDepotPath(), lineInfo[0], lineInfo[1], lineInfo[2],
-            totalLoc);
       }
       this.changeListDataList.add(changeListData);
     }
@@ -123,12 +132,12 @@ public class PerforceCommitProcessor {
   }
   
   /**
-   * True if the file entry is a text file.
-   * @param entry The fileEntry.
-   * @return True if a text file.
+   * Controls whether the diff2 command will be passed the -dw option so that whitespace changes
+   * in the file are ignored. 
+   * @param ignoreWhitespace True if whitespace changes in the file should be ignored. 
    */
-  private boolean isTextFile(FileEntry entry) {
-    return "text".equals(entry.getHeadType());
+  public void setIgnoreWhitespace(boolean ignoreWhitespace) {
+    this.ignoreWhitespace = ignoreWhitespace;
   }
 
   /**
@@ -142,9 +151,6 @@ public class PerforceCommitProcessor {
     entry.sync();
     String depotPath = entry.getDepotPath();
     Integer[] ints = {0, 0, 0};
-    if (!isTextFile(entry)) {
-      return ints;
-    }
     int revision = entry.getHeadRev();
     String difference = runDiff2Command(depotPath, revision);
     ints = processDiff2Output(difference);
@@ -160,10 +166,30 @@ public class PerforceCommitProcessor {
    * @throws Exception If problems occur.
    */
   private String runDiff2Command(String file, int revision) throws Exception {
+    int priorRevision = revision - 1;
+    List<String> cmd = new ArrayList<String>();
+    cmd.add("p4");
+    cmd.add("diff2");
+    cmd.add("-ds");
+    if (this.ignoreWhitespace) {
+      cmd.add("-dw");
+    }
+    cmd.add(file + "#" + priorRevision);
+    cmd.add(file + "#" + revision);
+    String[] args = cmd.toArray(new String[cmd.size()]); 
+    return runP4Command(args);
+  }
+  
+  
+  /**
+   * Invokes the p4 program with the specified arguments, and returns the output as a string.
+   * @param cmd The command to be invoked. 
+   * @return The output from the P4 program. 
+   * @throws Exception If problems occur. 
+   */
+  private String runP4Command (String[] cmd) throws Exception {
     String l;
     StringBuffer sb = new StringBuffer();
-    int priorRevision = revision - 1;
-    String[] cmd = { "p4", "diff2", "-ds", file + "#" + revision, file + "#" + priorRevision };
     P4Process p = new P4Process(this.env);
     p.exec(cmd);
     while (null != (l = p.readLine())) {
@@ -182,17 +208,8 @@ public class PerforceCommitProcessor {
    * @throws Exception if problems occur. 
    */
   private String runDeleteClientCommand(Client client) throws Exception {
-    String l;
-    StringBuffer sb = new StringBuffer();
     String[] cmd = { "p4", "client", "-d", client.getName() };
-    P4Process p = new P4Process(this.env);
-    p.exec(cmd);
-    while (null != (l = p.readLine())) {
-      sb.append(l);
-      sb.append('\n');
-    }
-    p.close();
-    return sb.toString();
+    return runP4Command(cmd);
   }
   
   /**
@@ -206,7 +223,7 @@ public class PerforceCommitProcessor {
    * @throws Exception if problems occur. 
    */
   private int getFileSize(int changelist, String file) throws Exception {
-    String[] cmd = { "p4", "print", file + "@" + changelist};
+    String[] cmd = { "p4", "print", file + "@" + changelist };
     P4Process p = new P4Process(this.env);
     p.exec(cmd);
     int loc = 0;
@@ -217,11 +234,42 @@ public class PerforceCommitProcessor {
     return loc;
   }
   
+  /**
+   * Calls the p4 program to get file type for the specified file, and returns true if
+   * the file type is 'text'. 
+   * (This should really be part of the official Perforce Java API.)
+   * @param file The file we want stats for. Should be in the form of a depot path.  
+   * @param changelist The changelist revision we want file size for. 
+   * @return True if the file type is text.
+   * @throws Exception if problems occur. 
+   */
+  private boolean isTextFile(String file, int changelist) throws Exception {
+    String[] cmd = { "p4", "files", file + "@" + changelist };
+    String fileInfo = runP4Command(cmd);
+    return fileInfo.contains("(text)");
+  }
+  
   
   
   /**
    * Takes the diff2 command output, and parses it to produce an array of three integers: the
    * lines added, the lines deleted, and the lines changed. 
+   * 
+   * Typical diff2 output might look like this:
+   * <pre>
+   * Diffing file: //depot/project/Foo.java
+   * ==== //depot/project/Foo.java#1 (text) - //depot/project/Foo.java#2 (text) ==== content
+   * add 2 chunks 6 lines
+   * deleted 0 chunks 0 lines
+   * changed 3 chunks 8 / 10 lines
+   * </pre>
+   * 
+   * Note that the diff2 command returns two numbers for "changed" regions of a file.  The first
+   * number is the number of lines deleted from the changed region, while the second number
+   * is the number of lines added to the changed region.   We will take the smaller of the 
+   * two numbers to be the "changed" count, and then the difference between the two numbers
+   * will be added to the "add" count.  (Recommended by Greg Bylenok.)
+   *   
    * @param output The diff2 command output
    * @return An array of three integers containing added, deleted, and changed lines. 
    * @throws Exception If problems occur. 
@@ -239,7 +287,12 @@ public class PerforceCommitProcessor {
         ints[1] += Integer.valueOf(tokens[3]);
       }
       if ("changed".equals(changeType)) {
-        ints[2] += Integer.valueOf(tokens[3]);
+        int changedLinesDeleted = Integer.valueOf(tokens[3]);
+        int changedLinesAdded = Integer.valueOf(tokens[5]);
+        int min = Math.min(changedLinesAdded, changedLinesDeleted);
+        int diff = Math.abs(changedLinesDeleted - changedLinesAdded);
+        ints[2] += min;
+        ints[0] += diff;
       }
     }
     return ints;

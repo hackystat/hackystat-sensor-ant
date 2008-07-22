@@ -38,6 +38,7 @@ public class PerforceSensor extends Task {
   private String fromDateString, toDateString;
   private Date fromDate, toDate;
   private boolean isVerbose = false;
+  private boolean ignoreWhitespace = false;
   
   /** Initialize a new instance of a PerforceSensor. */
   public PerforceSensor() {
@@ -67,6 +68,15 @@ public class PerforceSensor extends Task {
    */
   public void setPassword(String password) {
     this.password = password;
+  }
+  
+  /**
+   * True if whitespace changes should be ignored by the underlying Perforce diff2 program
+   * when calculating lines added, changed, and deleted. 
+   * @param ignoreWhitespace True if whitespace changes should be ignored. 
+   */
+  public void setIgnoreWhitespace(boolean ignoreWhitespace) {
+    this.ignoreWhitespace = ignoreWhitespace;
   }
 
   /**
@@ -282,6 +292,7 @@ public class PerforceSensor extends Task {
       p4Env.setP4SystemRoot(this.p4SysRoot);
       p4Env.setVerbose(false); // could set this to true for lots of p4 debugging output. 
       PerforceCommitProcessor processor = new PerforceCommitProcessor(p4Env, this.depotPath);
+      processor.setIgnoreWhitespace(this.ignoreWhitespace);
       processor.processChangeLists(dateFormat.format(this.fromDate), 
           dateFormat.format(this.toDate));
       int entriesAdded = 0;
