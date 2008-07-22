@@ -42,6 +42,7 @@
       </classpath>
       <sysproperty key="emma.coverage.out.file" value="${build.dir}/emma/coverage.emma" />
       <sysproperty key="emma.coverage.out.merge" value="true" />
+      <sysproperty key="user.dir" value="${basedir}" />
       <sysproperty key="junittestfiles" value="${basedir}/testdata/junit" />
       <sysproperty key="emmatestfiles" value="${basedir}/testdata/emma" />
       <sysproperty key="findbugstestfiles" value="${basedir}/testdata/findbugs" />

@@ -14,6 +14,7 @@ import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
+import org.hackystat.utilities.email.ValidateEmailSyntax;
 import org.hackystat.utilities.time.period.Day;
 import org.hackystat.utilities.tstamp.Tstamp;
 import org.hackystat.utilities.tstamp.TstampSet;
@@ -39,6 +40,7 @@ public class SvnSensor extends Task {
   private String fromDateString, toDateString;
   private Date fromDate, toDate;
   private boolean isVerbose = false;
+  private String tool = "svn";
 
   /**
    * Sets the svn repository name. This name can be any string. It's used in
@@ -174,7 +176,11 @@ public class SvnSensor extends Task {
           "is specified, then all must be specified.");
     }
     
-
+    // Check to make sure that defaultHackystatAccount looks like a real email address.
+    if (!ValidateEmailSyntax.isValid(this.defaultHackystatAccount)) {
+      throw new BuildException("Attribute 'defaultHackystatAccount' " + this.defaultHackystatAccount
+          + " does not appear to be a valid email address.");
+    }
     // If fromDate and toDate not set, we only extract commit information for
     // the previous day.
     if (this.fromDateString == null && this.toDateString == null) {
@@ -231,10 +237,17 @@ public class SvnSensor extends Task {
 
     try {
       Map<String, SensorShell> shellCache = new HashMap<String, SensorShell>();
-      SensorShellMap shellMap = new SensorShellMap("svn");
+      SensorShellMap shellMap = new SensorShellMap(this.tool);
       if (this.isVerbose) {
         System.out.println("Checking for user maps at: " + shellMap.getUserMapFile());
-        System.out.println("SVN accounts found: " + shellMap.getToolAccounts("svn"));
+        System.out.println("SVN accounts found: " + shellMap.getToolAccounts(this.tool));
+      }
+      
+      try {
+        shellMap.validateHackystatInfo(this.tool);
+      }
+      catch (Exception e) {
+        System.out.println("Warning: UserMap validation failed: " + e.getMessage());
       }
       SVNCommitProcessor processor = new SVNCommitProcessor(this.repositoryUrl, this.userName,
           this.password);

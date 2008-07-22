@@ -1,5 +1,6 @@
 package org.hackystat.sensor.ant.perforce;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +15,7 @@ import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShellProperties;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
+import org.hackystat.utilities.email.ValidateEmailSyntax;
 import org.hackystat.utilities.time.period.Day;
 import org.hackystat.utilities.tstamp.Tstamp;
 import org.hackystat.utilities.tstamp.TstampSet;
@@ -39,6 +41,7 @@ public class PerforceSensor extends Task {
   private Date fromDate, toDate;
   private boolean isVerbose = false;
   private boolean ignoreWhitespace = false;
+  private String tool = "perforce";
   
   /** Initialize a new instance of a PerforceSensor. */
   public PerforceSensor() {
@@ -208,6 +211,11 @@ public class PerforceSensor extends Task {
     if (this.p4ExecutablePath == null || this.p4ExecutablePath.length() == 0) {
       throw new BuildException("Attribute 'p4ExecutablePath' must be set.");
     }
+    File p4Executable = new File(this.p4ExecutablePath);
+    if (!p4Executable.exists()) {
+      throw new BuildException("Attribute 'p4ExecutablePath' " + this.p4ExecutablePath +
+          " does not appear to point to an actual file.");
+    }
     
     // If default* is specified, then all should be specified. 
     if (((this.defaultHackystatAccount != null) || 
@@ -220,7 +228,12 @@ public class PerforceSensor extends Task {
           "is specified, then all must be specified.");
     }
     
-
+    // Check to make sure that defaultHackystatAccount looks like a real email address.
+    if (!ValidateEmailSyntax.isValid(this.defaultHackystatAccount)) {
+      throw new BuildException("Attribute 'defaultHackystatAccount' " + this.defaultHackystatAccount
+          + " does not appear to be a valid email address.");
+    }
+    
     // If fromDate and toDate not set, we extract commit information for the previous day.
     if (this.fromDateString == null && this.toDateString == null) {
       Day previousDay = Day.getInstance().inc(-1);
@@ -276,11 +289,18 @@ public class PerforceSensor extends Task {
 
     try {
       Map<String, SensorShell> shellCache = new HashMap<String, SensorShell>();
-      SensorShellMap shellMap = new SensorShellMap("perforce");
+      SensorShellMap shellMap = new SensorShellMap(this.tool);
       if (this.isVerbose) {
         System.out.println("Checking for user maps at: " + shellMap.getUserMapFile());
-        System.out.println("Perforce accounts found: " + shellMap.getToolAccounts("perforce"));
+        System.out.println("Perforce accounts found: " + shellMap.getToolAccounts(this.tool));
       }
+      try {
+        shellMap.validateHackystatInfo(this.tool);
+      }
+      catch (Exception e) {
+        System.out.println("Warning: UserMap validation failed: " + e.getMessage());
+      }
+      
       P4Environment p4Env = new P4Environment();
       p4Env.setP4Port(this.port);
       p4Env.setP4User(this.userName);
