@@ -14,7 +14,7 @@ import org.apache.tools.ant.BuildException;
  * @author jsakuda
  *
  */
-public class LongTimeConverter {
+public final class LongTimeConverter {
   
   /** Private constructor for utility class. */
   private LongTimeConverter() {

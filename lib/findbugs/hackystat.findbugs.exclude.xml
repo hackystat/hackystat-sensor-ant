@@ -10,5 +10,9 @@
  <Match>
     <Bug pattern="MS_PKGPROTECT" />
   </Match>
+
+ <Match>
+    <Bug pattern="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS" />
+  </Match>
 </FindBugsFilter>
 

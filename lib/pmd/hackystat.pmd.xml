@@ -11,6 +11,7 @@
     <exclude name="UseLocaleWithCaseConversions"/>
     <exclude name="AvoidSynchronizedAtMethodLevel"/>
     <exclude name="UnnecessaryLocalBeforeReturn"/>
+    <exclude name="ClassWithOnlyPrivateConstructorsShouldBeFinal"/>
   </rule>
   <rule ref="rulesets/finalizers.xml"/>
   <rule ref="rulesets/imports.xml"/>
