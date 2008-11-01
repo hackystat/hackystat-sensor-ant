@@ -14,7 +14,6 @@ import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
-import org.hackystat.utilities.email.ValidateEmailSyntax;
 import org.hackystat.utilities.time.period.Day;
 import org.hackystat.utilities.tstamp.Tstamp;
 import org.hackystat.utilities.tstamp.TstampSet;
@@ -165,22 +164,6 @@ public class SvnSensor extends Task {
       throw new BuildException("Attribute 'repositoryUrl' must be set.");
     }
     
-    // If default* is specified, then all should be specified. 
-    if (((this.defaultHackystatAccount != null) || 
-         (this.defaultHackystatPassword != null) ||
-         (this.defaultHackystatSensorbase != null)) &&
-        ((this.defaultHackystatAccount == null) || 
-         (this.defaultHackystatPassword == null) ||
-         (this.defaultHackystatSensorbase == null))) {
-      throw new BuildException ("If one of default Hackystat account, password, or sensorbase " +
-          "is specified, then all must be specified.");
-    }
-    
-    // Check to make sure that defaultHackystatAccount looks like a real email address.
-    if (!ValidateEmailSyntax.isValid(this.defaultHackystatAccount)) {
-      throw new BuildException("Attribute 'defaultHackystatAccount' " + this.defaultHackystatAccount
-          + " does not appear to be a valid email address.");
-    }
     // If fromDate and toDate not set, we only extract commit information for
     // the previous day.
     if (this.fromDateString == null && this.toDateString == null) {

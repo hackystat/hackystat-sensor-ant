@@ -103,7 +103,8 @@ public class BuildSensorAntListener implements BuildListener {
     this.setUpSensorShell();
 
     long endTimeMillis = System.currentTimeMillis();
-    String workingDirectory = buildEvent.getProject().getBaseDir().getAbsolutePath();
+    String fileSep = System.getProperty("file.separator");
+    String workingDirectory = buildEvent.getProject().getBaseDir().getAbsolutePath() + fileSep;
 
     Map<String, String> keyValMap = new TreeMap<String, String>();
     keyValMap.put("Tool", "Ant");
