@@ -164,12 +164,14 @@ public class SvnSensor extends Task {
       throw new BuildException("Attribute 'repositoryUrl' must be set.");
     }
     
-    // If fromDate and toDate not set, we only extract commit information for
-    // the previous day.
+    // If fromDate and toDate not set, we extract commit information for
+    // the previous 25 hours.  (This ensures that running the sensor as part of a daily build
+    // should have enough "overlap" to not miss any entries.)
     if (this.fromDateString == null && this.toDateString == null) {
-      Day previousDay = Day.getInstance().inc(-1);
-      this.fromDate = new Date(previousDay.getFirstTickOfTheDay() - 1);
-      this.toDate = new Date(previousDay.getLastTickOfTheDay());
+      long now = (new Date()).getTime();
+      this.toDate = new Date(now);
+      long twentyFiveHoursMillis = 1000 * 60 * 60 * 25;
+      this.fromDate = new Date(now - twentyFiveHoursMillis);
     }
     else {
       try {
