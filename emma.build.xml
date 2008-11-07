@@ -39,6 +39,7 @@
         <path refid="emma.lib.dir" />
         <path refid="compile.classpath" />
         <fileset file="${env.JAVAMAIL_HOME}/mail.jar"/> 
+        <fileset file="${env.HACKYSTAT_SENSORBASE_HOME}/sensorbase.jar"/> 
       </classpath>
       <sysproperty key="emma.coverage.out.file" value="${build.dir}/emma/coverage.emma" />
       <sysproperty key="emma.coverage.out.merge" value="true" />

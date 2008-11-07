@@ -252,10 +252,13 @@ public class SvnSensor extends Task {
               System.out.println("Retrieved SVN data: " + 
                   commitRecord.toString() + " - " + entry.toString());
             }
+            // Find the shell, if possible.
             SensorShell shell = this.getShell(shellCache, shellMap, author);
-            this.processCommitEntry(shell, author, message, tstampSet
-                .getUniqueTstamp(commitTime.getTime()), commitTime, revision, entry);
-            entriesAdded++;
+            if (shell != null) {
+              this.processCommitEntry(shell, author, message, tstampSet
+                  .getUniqueTstamp(commitTime.getTime()), commitTime, revision, entry);
+              entriesAdded++;
+            }
           }
         }
       }
@@ -279,7 +282,8 @@ public class SvnSensor extends Task {
   }
 
   /**
-   * Returns the shell associated with the specified author. The shellCache is
+   * Returns the shell associated with the specified author, or null if not found. 
+   * The shellCache is
    * used to store SensorShell instances associated with the specified user. The
    * SensorShellMap contains the SensorShell instances built from the
    * UserMap.xml file. This method should be used to retrieve the SensorShell
@@ -313,9 +317,10 @@ public class SvnSensor extends Task {
         if ("".equals(this.defaultHackystatAccount)
             || "".equals(this.defaultHackystatPassword)
             || "".equals(this.defaultHackystatSensorbase)) {
-          throw new BuildException("A user mapping for the user, " + author
+          System.out.println("Warning: A user mapping for the user, " + author
               + " was not found and no default Hackystat account login, password, "
-              + "or server was provided.");
+              + "or server was provided. Data ignored.");
+          return null;
         }
         SensorShellProperties props = new SensorShellProperties(this.defaultHackystatSensorbase,
             this.defaultHackystatAccount, this.defaultHackystatPassword);
