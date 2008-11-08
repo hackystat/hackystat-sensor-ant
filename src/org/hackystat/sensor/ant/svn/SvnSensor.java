@@ -40,6 +40,8 @@ public class SvnSensor extends Task {
   private Date fromDate, toDate;
   private boolean isVerbose = false;
   private String tool = "svn";
+  private String lastIntervalInMinutesString = "";
+  private int lastIntervalInMinutes;
 
   /**
    * Sets the svn repository name. This name can be any string. It's used in
@@ -150,6 +152,15 @@ public class SvnSensor extends Task {
   public void setToDate(String toDateString) {
     this.toDateString = toDateString;
   }
+  
+  /**
+   * Sets the last interval in minutes. 
+   * 
+   * @param lastIntervalInMinutes The preceding interval in minutes to poll.  
+   */
+  public void setLastIntervalInMinutes(String lastIntervalInMinutes) {
+    this.lastIntervalInMinutesString = lastIntervalInMinutes;
+  }
 
   /**
    * Checks and make sure all properties are set up correctly.
@@ -163,43 +174,61 @@ public class SvnSensor extends Task {
     if (this.repositoryUrl == null || this.repositoryUrl.length() == 0) {
       throw new BuildException("Attribute 'repositoryUrl' must be set.");
     }
-    
-    // If fromDate and toDate not set, we extract commit information for
-    // the previous 25 hours.  (This ensures that running the sensor as part of a daily build
+
+    // If lastIntervalInMinutes is set, then we define fromDate and toDate appropriately and return.
+    if (!this.lastIntervalInMinutesString.equals("")) {
+      try {
+        this.lastIntervalInMinutes = Integer.parseInt(this.lastIntervalInMinutesString);
+        long now = (new Date()).getTime();
+        this.toDate = new Date(now);
+        long intervalMillis = 1000 * 60 * this.lastIntervalInMinutes;
+        this.fromDate = new Date(now - intervalMillis);
+        return;
+      }
+      catch (Exception e) {
+        throw new BuildException("Attribute 'lastIntervalInMinutes' must be an integer.");
+      }
+    }
+
+    // If lastIntervalInMinutes, fromDate, and toDate not set, we extract commit information for
+    // the previous 25 hours. (This ensures that running the sensor as part of a daily build
     // should have enough "overlap" to not miss any entries.)
+    // Then return.
     if (this.fromDateString == null && this.toDateString == null) {
       long now = (new Date()).getTime();
       this.toDate = new Date(now);
       long twentyFiveHoursMillis = 1000 * 60 * 60 * 25;
       this.fromDate = new Date(now - twentyFiveHoursMillis);
+      return;
     }
-    else {
-      try {
-        if (this.hasSetToAndFromDates()) {
-          this.fromDate = new Date(Day.getInstance(this.dateFormat.parse(this.fromDateString))
-              .getFirstTickOfTheDay() - 1);
-          this.toDate = new Date(Day.getInstance(this.dateFormat.parse(this.toDateString))
-              .getLastTickOfTheDay());
-        }
-        else {
-          throw new BuildException(
-              "Attributes 'fromDate' and 'toDate' must either be both set or both not set.");
-        }
-      }
-      catch (ParseException ex) {
-        throw new BuildException("Unable to parse 'fromDate' or 'toDate'.", ex);
-      }
 
-      if (this.fromDate.compareTo(this.toDate) > 0) {
-        throw new BuildException("Attribute 'fromDate' must be a date before 'toDate'.");
+    // Finally, we try to deal with the user provided from and to dates.
+    try {
+      if (this.hasSetToAndFromDates()) {
+        this.fromDate = new Date(Day.getInstance(this.dateFormat.parse(this.fromDateString))
+            .getFirstTickOfTheDay() - 1);
+        this.toDate = new Date(Day.getInstance(this.dateFormat.parse(this.toDateString))
+            .getLastTickOfTheDay());
+      }
+      else {
+        throw new BuildException(
+            "Attributes 'fromDate' and 'toDate' must either be both set or both not set.");
       }
     }
+    catch (ParseException ex) {
+      throw new BuildException("Unable to parse 'fromDate' or 'toDate'.", ex);
+    }
+
+    if (this.fromDate.compareTo(this.toDate) > 0) {
+      throw new BuildException("Attribute 'fromDate' must be a date before 'toDate'.");
+    }
+
   }
 
   /**
-   * Returns true if both of the to and from date strings have been set by the
-   * client. Both dates must be set or else this sensor will not know which
-   * revisions to grab commit information.
+   * Returns true if both of the to and from date strings have been set by the client. Both dates
+   * must be set or else this sensor will not know which revisions to grab commit information.
+   * 
    * @return true if both the to and from date strings have been set.
    */
   private boolean hasSetToAndFromDates() {
