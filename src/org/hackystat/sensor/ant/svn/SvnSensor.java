@@ -186,7 +186,7 @@ public class SvnSensor extends Task {
         return;
       }
       catch (Exception e) {
-        throw new BuildException("Attribute 'lastIntervalInMinutes' must be an integer.");
+        throw new BuildException("Attribute 'lastIntervalInMinutes' must be an integer.", e);
       }
     }
 
