@@ -181,7 +181,7 @@ public class SvnSensor extends Task {
         this.lastIntervalInMinutes = Integer.parseInt(this.lastIntervalInMinutesString);
         long now = (new Date()).getTime();
         this.toDate = new Date(now);
-        long intervalMillis = 1000 * 60 * this.lastIntervalInMinutes;
+        long intervalMillis = 1000L * 60 * this.lastIntervalInMinutes;
         this.fromDate = new Date(now - intervalMillis);
         return;
       }
