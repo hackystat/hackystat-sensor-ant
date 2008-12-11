@@ -10,5 +10,7 @@
 	<classpathentry kind="var" path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar" sourcepath="/HACKYSTAT_UTILITIES_HOME/src"/>
 	<classpathentry kind="var" path="HACKYSTAT_SENSORBASE_HOME/sensorbase.jar"/>
 	<classpathentry kind="lib" path="lib/perforce/p4.jar"/>
+	<classpathentry kind="lib" path="lib/rss/rome-1.0RC1.jar"/>
+	<classpathentry kind="lib" path="lib/rss/jdom.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

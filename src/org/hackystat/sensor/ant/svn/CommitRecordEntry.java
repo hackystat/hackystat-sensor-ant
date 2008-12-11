@@ -19,7 +19,7 @@ import org.tmatesoft.svn.core.io.SVNRepository;
  * Note that the path may indication either a directory or a file. During a
  * commit a path name can change, such as in the case of renaming.
  * <p>
- * If an item is newly created in the commit, then fromPath is null. It an item
+ * If an item is newly created in the commit, then fromPath is null. If an item
  * is deleted, then toPath is null.
  * 
  * @author (Cedric) Qin ZHANG
