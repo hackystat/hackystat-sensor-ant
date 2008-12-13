@@ -93,7 +93,7 @@ public class IssueSensor extends Task {
             pMap.put("Tool", this.tool);
             pMap.put("Timestamp", timestampString);
             pMap.put("Runtime", runTimeString);
-            pMap.put("id", String.valueOf(event.getIssueNumber()));
+            pMap.put("issueNumber", String.valueOf(event.getIssueNumber()));
             pMap.put("updateNumber", String.valueOf(event.getUpdateNumber()));
             pMap.put("status", event.getStatus());
             pMap.put("link", event.getLink());

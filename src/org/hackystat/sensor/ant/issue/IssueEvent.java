@@ -23,6 +23,7 @@ public class IssueEvent {
   private static final String googleIssueFeedContentPrefix = "<pre>";
   private static final String googleIssueFeedContentSuffix = "</pre>";
   private static final String statusPrefix = "Status:";
+  private static final String labelPrefix = "Label:";
   
   /**
    * Create an issue event instance with the information extract from the given entry.
@@ -55,12 +56,19 @@ public class IssueEvent {
     SyndContent syndContent = (SyndContent)entry.getContents().get(0);
     String content = syndContent.getValue().replace(googleIssueFeedContentPrefix, "").
                                             replace(googleIssueFeedContentSuffix, "").trim();
+    content = content.replace("<br/>", " ");
     if (updateNumber > 0) {
       //extract status, which is the word following Status:, and comment.
       if (content.contains(statusPrefix)) {
         int statusStartIndex = content.lastIndexOf(statusPrefix);
-        comment = content.substring(0, statusStartIndex);
-        status = content.substring(statusStartIndex + statusPrefix.length()).trim();
+        statusStartIndex = statusStartIndex == -1 ? content.length() - 1 : statusStartIndex;
+        int labelStartIndex = content.lastIndexOf(labelPrefix);
+        labelStartIndex = labelStartIndex == -1 ? content.length() - 1 : labelStartIndex;
+        comment = content.substring(0, 
+            (statusStartIndex < labelStartIndex ? statusStartIndex : labelStartIndex));
+        int statusEndIndex = content.indexOf(" ", statusStartIndex + statusPrefix.length() + 1);
+        statusEndIndex = statusEndIndex == -1 ? content.length() - 1 : statusEndIndex;
+        status = content.substring(statusStartIndex + statusPrefix.length(), statusEndIndex).trim();
       }
       else {
         comment = content;

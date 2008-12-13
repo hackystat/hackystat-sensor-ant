@@ -1,10 +1,12 @@
 package org.hackystat.sensor.ant.issue;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.hackystat.sensor.ant.test.AntSensorTestHelper;
 import org.hackystat.sensorbase.client.SensorBaseClient;
 import org.hackystat.sensorbase.client.SensorBaseClientException;
+import org.hackystat.sensorbase.resource.sensordata.jaxb.Property;
 import org.hackystat.sensorbase.resource.sensordata.jaxb.SensorData;
 import org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataIndex;
 import org.junit.Test;
@@ -48,21 +50,54 @@ public class TestIssueSensor extends AntSensorTestHelper {
       assertEquals("Check first sensor data's resource", 
           "http://code.google.com/feeds/p/hackystat-sensor-ant/issueupdates/basic/40", 
           sensorData.getResource());
-      /*
-      assertEquals("Check first sensor data's id key", 
-          "id", sensorData.getProperties().getProperty().get(3).getKey());
-      assertEquals("Check first sensor data's id value", 
-          "40", sensorData.getProperties().getProperty().get(0).getValue());
-      assertEquals("Check first sensor data's update number key", 
-          "updateNumber", sensorData.getProperties().getProperty().get(1).getKey());
-      assertEquals("Check first sensor data's update number value", 
-          "0", sensorData.getProperties().getProperty().get(1).getValue());
-      assertEquals("Check first sensor data's status key", 
-          "status", sensorData.getProperties().getProperty().get(2).getKey());
-      assertEquals("Check first sensor data's status value", 
-          "Created", sensorData.getProperties().getProperty().get(2).getValue());
-      */
-      
+      boolean issueNumberChecked = false;
+      boolean updateNoChecked = false;
+      boolean statusChecked = false;
+      for (Property property : sensorData.getProperties().getProperty()) {
+        if ("issueNumber".equals(property.getKey())) {
+          issueNumberChecked = true;
+          assertEquals("Check first sensor data's issueNumber value", "40", property.getValue());
+        }
+        else if ("updateNumber".equals(property.getKey())) {
+          updateNoChecked = true;
+          assertEquals("Check first sensor data's updateNumber value", "0", property.getValue());
+        }
+        else if ("status".equals(property.getKey())) {
+          statusChecked = true;
+          assertEquals("Check first sensor data's status value", "Created", property.getValue());
+        }
+      }
+      assertTrue("Id should be checked", issueNumberChecked);
+      assertTrue("Update number should be checked", updateNoChecked);
+      assertTrue("Status should be checked", statusChecked);
+
+      //check the forth data
+      sensorData = client.getSensorData(sensorDataIndex.getSensorDataRef().get(3));
+      assertEquals("Check first sensor data's type", "Issue", sensorData.getSensorDataType());
+      assertEquals("Check first sensor data's tool", "GoogleProjectHosting", sensorData.getTool());
+      assertEquals("Check first sensor data's resource", 
+          "http://code.google.com/feeds/p/hackystat-sensor-ant/issueupdates/basic/41/1", 
+          sensorData.getResource());
+      issueNumberChecked = false;
+      updateNoChecked = false;
+      statusChecked = false;
+      for (Property property : sensorData.getProperties().getProperty()) {
+        if ("issueNumber".equals(property.getKey())) {
+          issueNumberChecked = true;
+          assertEquals("Check forth sensor data's issueNumber value", "41", property.getValue());
+        }
+        else if ("updateNumber".equals(property.getKey())) {
+          updateNoChecked = true;
+          assertEquals("Check forth sensor data's updateNumber value", "1", property.getValue());
+        }
+        else if ("status".equals(property.getKey())) {
+          statusChecked = true;
+          assertEquals("Check forth sensor data's status value", "Accepted", property.getValue());
+        }
+      }
+      assertTrue("Id should be checked", issueNumberChecked);
+      assertTrue("Update number should be checked", updateNoChecked);
+      assertTrue("Status should be checked", statusChecked);
     }
     catch (SensorBaseClientException e) {
       // TODO Auto-generated catch block
