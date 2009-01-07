@@ -243,7 +243,6 @@ public class SvnSensor extends Task {
    */
   @Override
   public void execute() throws BuildException {
-    System.out.println("DEBUG Starting execute");
     this.validateProperties(); // sanity check.
     if (this.isVerbose) {
       System.out.printf("Processing commits for %s between %s (exclusive) and %s (inclusive)%n",
@@ -260,7 +259,6 @@ public class SvnSensor extends Task {
       
       try {
         shellMap.validateHackystatInfo(this.tool);
-        System.out.println("DEBUG Validated hackystat info");        
       }
       catch (Exception e) {
         System.out.println("Warning: UserMap validation failed: " + e.getMessage());
@@ -272,7 +270,6 @@ public class SvnSensor extends Task {
       int entriesAdded = 0;
       TstampSet tstampSet = new TstampSet();
       for (long revision = startRevision; revision <= endRevision; revision++) {
-        System.out.println("DEBUG Getting a commit record.");
         CommitRecord commitRecord = processor.getCommitRecord(revision);
         if (commitRecord != null) {
           String author = commitRecord.getAuthor();
@@ -287,7 +284,6 @@ public class SvnSensor extends Task {
             // Find the shell, if possible.
             SensorShell shell = this.getShell(shellCache, shellMap, author);
             if (shell != null) {
-              System.out.println("DEBUG Processing a commit entry");
               this.processCommitEntry(shell, author, message, tstampSet
                   .getUniqueTstamp(commitTime.getTime()), commitTime, revision, entry);
               entriesAdded++;

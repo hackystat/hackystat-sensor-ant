@@ -36,7 +36,6 @@ public class SVNCommitProcessor {
    */
   public SVNCommitProcessor(String repositoryUrl, String userName, String password)
     throws Exception {
-    System.out.println("Creating a new SVNCommitProcessor");
     if (repositoryUrl.startsWith("http://") || repositoryUrl.startsWith("https://")) {
       IHTTPConnectionFactory factory =
         new DefaultHTTPConnectionFactory(null, true, null);
