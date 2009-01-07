@@ -6,6 +6,8 @@ import java.util.Date;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNURL;
 import org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory;
+import org.tmatesoft.svn.core.internal.io.dav.http.DefaultHTTPConnectionFactory;
+import org.tmatesoft.svn.core.internal.io.dav.http.IHTTPConnectionFactory;
 import org.tmatesoft.svn.core.internal.io.svn.SVNRepositoryFactoryImpl;
 import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
@@ -34,8 +36,11 @@ public class SVNCommitProcessor {
    */
   public SVNCommitProcessor(String repositoryUrl, String userName, String password)
     throws Exception {
+    System.out.println("Creating a new SVNCommitProcessor");
     if (repositoryUrl.startsWith("http://") || repositoryUrl.startsWith("https://")) {
-      DAVRepositoryFactory.setup();
+      IHTTPConnectionFactory factory =
+        new DefaultHTTPConnectionFactory(null, true, null);
+      DAVRepositoryFactory.setup(factory); 
     }
     else if (repositoryUrl.startsWith("svn://")) {
       SVNRepositoryFactoryImpl.setup();

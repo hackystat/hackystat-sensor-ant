@@ -323,7 +323,6 @@ public class PerforceCommitProcessor {
    * @param args Arguments are: port, user, password, depotPath, startDate, endDate.
    * @throws Exception If problems occur. 
    */
-  @SuppressWarnings("unchecked")
   public static void main(String[] args) throws Exception {
     System.out.printf("Starting PerforceCommitProcessor. %nSetting up environment...");
     P4Environment p4Env = new P4Environment();

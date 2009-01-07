@@ -21,6 +21,8 @@
       <auxClasspath>
         <path refid="compile.classpath" />
         <path location="${ant.home}/lib/ant-launcher.jar" />
+        <fileset dir="${env.JAXB_HOME}/lib" includes="*.jar" />
+        <fileset file="${env.JAVAMAIL_HOME}/mail.jar" />
       </auxClasspath>
       <sourcePath>
         <fileset dir="${src.dir}">

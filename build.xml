@@ -67,7 +67,11 @@
     <fileset file="${env.JUNIT_HOME}/junit-${junit.version}.jar" />
     <fileset file="${env.FINDBUGS_HOME}/lib/annotations.jar" />
     <fileset file="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar" />
-    <fileset dir="${lib.dir}" includes="**/*.jar" />
+    <fileset file="${env.SVNKIT_HOME}/svnkit.jar" />
+    <fileset file="${lib.dir}/perforce/p4.jar" />
+    <fileset file="${lib.dir}/vcs/JRCS.jar" />
+    <fileset file="${lib.dir}/rss/jdom.jar" />
+    <fileset file="${lib.dir}/rss/rome-1.0RC1.jar" />
   </path>
 
   <target name="compile" description="Compiles the code.">

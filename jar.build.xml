@@ -3,41 +3,40 @@
   Provides the target for building Java5 and Java6 jar files of the SensorShell.
   </description>
 
-  <import file="build.xml"/>
+  <import file="build.xml" />
   <property name="tmp.dir" location="${basedir}/tmp" />
- 
-  <target name="jar" depends="compile" 
-     description="Create antsensors.jar.">
 
-     <mkdir dir="${tmp.dir}" />
-     <copy todir="${tmp.dir}">
-       <fileset dir="${basedir}/build/classes/">
-          <include name="org/hackystat/sensor/**"/>
-       </fileset>
-     </copy>
+  <target name="jar" depends="compile" description="Create antsensors.jar.">
 
-  	<!-- Copy over the antlib so junit sensor task can be used. -->
-  	<copy todir="${tmp.dir}">
-  		<fileset file="${basedir}/xml/antlib/antlib.xml"/>
-  	</copy>
-    
-     <unjar src="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" dest="${tmp.dir}"/>
-  	 <unjar src="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar" dest="${tmp.dir}"/>
-     <unjar dest="${tmp.dir}">
-        <fileset dir="${lib.dir}">
-            <include name="**/*.jar" />
-        </fileset>
-     </unjar>
-  
-     <jar destfile="${basedir}/antsensors.jar" basedir="${tmp.dir}">
-       <manifest>
-         <attribute name="Implementation-Title" value="AntSensors"/>
-         <attribute name="Implementation-Version" value="${version}"/>
-         <attribute name="Implementation-Vendor" value="Collaborative Software Development Laboratory, University of Hawaii"/>
-       </manifest>
-     </jar>
-  	
-     <delete dir="${tmp.dir}" />
-   </target>  
+    <mkdir dir="${tmp.dir}" />
+    <copy todir="${tmp.dir}">
+      <fileset dir="${basedir}/build/classes/">
+        <include name="org/hackystat/sensor/**" />
+      </fileset>
+    </copy>
+
+    <!-- Copy over the antlib so junit sensor task can be used. -->
+    <copy todir="${tmp.dir}">
+      <fileset file="${basedir}/xml/antlib/antlib.xml" />
+    </copy>
+
+    <unjar src="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" dest="${tmp.dir}" />
+    <unjar src="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar" dest="${tmp.dir}" />
+    <unjar src="${env.SVNKIT_HOME}/svnkit.jar" dest="${tmp.dir}"/>
+    <unjar src="${lib.dir}/perforce/p4.jar" dest="${tmp.dir}"/>
+    <unjar src="${lib.dir}/vcs/JRCS.jar" dest="${tmp.dir}"/>
+    <unjar src="${lib.dir}/rss/jdom.jar" dest="${tmp.dir}"/>
+    <unjar src="${lib.dir}/rss/rome-1.0RC1.jar" dest="${tmp.dir}"/>
+
+    <jar destfile="${basedir}/antsensors.jar" basedir="${tmp.dir}">
+      <manifest>
+        <attribute name="Implementation-Title" value="AntSensors" />
+        <attribute name="Implementation-Version" value="${version}" />
+        <attribute name="Implementation-Vendor" value="Collaborative Software Development Laboratory, University of Hawaii" />
+      </manifest>
+    </jar>
+
+    <delete dir="${tmp.dir}" />
+  </target>
 </project>
 

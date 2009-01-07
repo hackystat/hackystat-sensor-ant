@@ -12,6 +12,7 @@ import java.util.TreeMap;
 import org.hackystat.sensor.ant.vcs.GenericDiffCounter;
 import org.hackystat.sensor.ant.vcs.GenericSizeCounter;
 import org.tmatesoft.svn.core.SVNNodeKind;
+import org.tmatesoft.svn.core.SVNProperties;
 import org.tmatesoft.svn.core.io.SVNRepository;
 
 /**
@@ -275,7 +276,8 @@ public class CommitRecordEntry {
   private byte[] getVersionedContent(String filePath, long revision,
       Map<String, String> properties) throws Exception {
     ByteArrayOutputStream output = new ByteArrayOutputStream(4096);
-    this.svnRepository.getFile(filePath, revision, properties, output);
+    SVNProperties svnProps = SVNProperties.wrap(properties);
+    this.svnRepository.getFile(filePath, revision, svnProps, output);
     output.flush();
     return output.toByteArray();
   }
@@ -291,7 +293,8 @@ public class CommitRecordEntry {
    */
   private void getVersionedProperties(String filePath, long revision,
       Map<String, String> properties) throws Exception {
-    this.svnRepository.getFile(filePath, revision, properties, null);
+    SVNProperties svnProps = SVNProperties.wrap(properties);
+    this.svnRepository.getFile(filePath, revision, svnProps, null);
   }
 
   /**
