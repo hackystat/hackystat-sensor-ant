@@ -59,11 +59,11 @@ public class IssueEvent {
     content = content.replace("<br/>", " ");
     if (updateNumber > 0) {
       //extract status, which is the word following Status:, and comment.
-      if (content.contains(statusPrefix)) {
+      if (content.contains(statusPrefix) || content.contains(labelPrefix) ) {
         int statusStartIndex = content.lastIndexOf(statusPrefix);
-        statusStartIndex = statusStartIndex == -1 ? content.length() - 1 : statusStartIndex;
+        statusStartIndex = (statusStartIndex == -1) ? content.length() - 1 : statusStartIndex;
         int labelStartIndex = content.lastIndexOf(labelPrefix);
-        labelStartIndex = labelStartIndex == -1 ? content.length() - 1 : labelStartIndex;
+        labelStartIndex = (labelStartIndex == -1) ? content.length() - 1 : labelStartIndex;
         comment = content.substring(0, 
             (statusStartIndex < labelStartIndex ? statusStartIndex : labelStartIndex));
         int statusEndIndex = content.indexOf(" ", statusStartIndex + statusPrefix.length() + 1);
