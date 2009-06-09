@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/rss/rome-1.0RC1.jar"/>
 	<classpathentry kind="lib" path="lib/rss/jdom.jar"/>
 	<classpathentry kind="var" path="SVNKIT_HOME/svnkit.jar"/>
+	<classpathentry kind="lib" path="lib/csv/opencsv-1.8.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

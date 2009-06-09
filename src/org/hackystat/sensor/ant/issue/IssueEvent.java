@@ -11,14 +11,18 @@ import com.sun.syndication.feed.synd.SyndEntryImpl;
  */
 public class IssueEvent {
 
-  private String author;
-  private String id;
+  private String uri;
   private String link;
+  private int id;
+  private String type;
   private String status;
-  private int issueNumber;
+  private String priority;
+  private String milestone;
+  private String owner;
   private int updateNumber = 0;
   private Date updatedDate;
   private String comment;
+
   
   private static final String googleIssueFeedContentPrefix = "<pre>";
   private static final String googleIssueFeedContentSuffix = "</pre>";
@@ -31,8 +35,8 @@ public class IssueEvent {
    * @throws Exception if error occur.
    */
   public IssueEvent(SyndEntryImpl entry) throws Exception {
-    this.author = entry.getAuthor();
-    this.id = entry.getUri();
+    this.owner = entry.getAuthor();
+    this.uri = entry.getUri();
     this.link = entry.getLink();
     this.updatedDate = entry.getUpdatedDate();
     if (entry.getContents().size() != 1) {
@@ -43,13 +47,13 @@ public class IssueEvent {
     if (titleWords.length > 5 && 
         titleWords[0].equals("Update") && titleWords[3].equals("issue")) { //Update
       this.updateNumber = Integer.valueOf(titleWords[1]); 
-      this.issueNumber = Integer.valueOf(titleWords[4]);
+      this.id = Integer.valueOf(titleWords[4]);
     }
     else if (titleWords.length > 3 && 
         titleWords[0].equals("Issue") && titleWords[2].equals("created:")) { //Create
       status = "Created";
       //TODO should extract more detail from the issue page.
-      this.issueNumber = Integer.valueOf(titleWords[1]);
+      this.id = Integer.valueOf(titleWords[1]);
     }
     
     //[2] extract comment and status from content
@@ -64,6 +68,9 @@ public class IssueEvent {
         statusStartIndex = (statusStartIndex == -1) ? content.length() - 1 : statusStartIndex;
         int labelStartIndex = content.lastIndexOf(labelPrefix);
         labelStartIndex = (labelStartIndex == -1) ? content.length() - 1 : labelStartIndex;
+        //String label = 
+        //  content.substring(labelStartIndex + labelPrefix.length(), content.length() - 1);
+        //parseLabel(label);
         comment = content.substring(0, 
             (statusStartIndex < labelStartIndex ? statusStartIndex : labelStartIndex));
         int statusEndIndex = content.indexOf(" ", statusStartIndex + statusPrefix.length() + 1);
@@ -87,16 +94,16 @@ public class IssueEvent {
    */
   @Override
   public String toString() {
-    return "Issue " + this.getIssueNumber() + ", Update " + this.getUpdateNumber() + 
-    ", Author=" + this.getAuthor() + ", status=" + status + ", updateDate=" + 
-    this.getUpdatedDate() + ", id=" + this.getId();
+    return "Issue " + this.getId() + ", Update " + this.getUpdateNumber() + 
+    ", Author=" + this.getOwner() + ", status=" + status + ", updateDate=" + 
+    this.getUpdatedDate() + ", uri=" + this.getUri();
   }
   
   /**
-   * @return the issueNumber
+   * @return the id
    */
-  public int getIssueNumber() {
-    return issueNumber;
+  public int getId() {
+    return id;
   }
 
   /**
@@ -107,10 +114,10 @@ public class IssueEvent {
   }
 
   /**
-   * @return the author
+   * @return the owner
    */
-  public String getAuthor() {
-    return author;
+  public String getOwner() {
+    return owner;
   }
 
   /**
@@ -128,10 +135,10 @@ public class IssueEvent {
   }
 
   /**
-   * @return the id
+   * @return the uri
    */
-  public String getId() {
-    return id;
+  public String getUri() {
+    return uri;
   }
 
   /**
@@ -146,6 +153,69 @@ public class IssueEvent {
    */
   public int getUpdateNumber() {
     return updateNumber;
+  }
+
+  /**
+   * @param type the type to set
+   */
+  protected void setType(String type) {
+    this.type = type;
+  }
+
+  /**
+   * @return the type
+   */
+  public String getType() {
+    return type;
+  }
+
+  /**
+   * @param status the status to set
+   */
+  protected void setStatus(String status) {
+    this.status = status;
+  }
+
+  /**
+   * @param priority the priority to set
+   */
+  protected void setPriority(String priority) {
+    this.priority = priority;
+  }
+
+  /**
+   * @return the priority
+   */
+  public String getPriority() {
+    return priority;
+  }
+
+  /**
+   * @param milestone the milestone to set
+   */
+  protected void setMilestone(String milestone) {
+    this.milestone = milestone;
+  }
+
+  /**
+   * @return the milestone
+   */
+  public String getMilestone() {
+    return milestone;
+  }
+
+  /**
+   * @param owner the owner to set
+   */
+  protected void setOwner(String owner) {
+    this.owner = owner;
+  }
+
+  /**
+   * @param id the id to set
+   */
+  protected void setId(int id) {
+    this.id = id;
   }
   
 }

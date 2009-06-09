@@ -1,11 +1,16 @@
 package org.hackystat.sensor.ant.issue;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +25,7 @@ import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
 import org.hackystat.utilities.time.period.Day;
 import org.hackystat.utilities.tstamp.Tstamp;
+import au.com.bytecode.opencsv.CSVReader;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
@@ -37,7 +43,7 @@ public class IssueSensor extends Task {
   
   private static final String SENSOR_DATA_TYPE = "Issue";
   private String tool = "GoogleProjectHosting";
-  private String feedUrl;
+  private String projectName;
   private String defaultHackystatAccount = "";
   private String defaultHackystatPassword = "";
   private String defaultHackystatSensorbase = "";
@@ -48,6 +54,16 @@ public class IssueSensor extends Task {
   private String lastIntervalInMinutesString = "";
   private int lastIntervalInMinutes;
   
+
+  private int idCsvIndex = 0; 
+  private int typeCsvIndex = 1; 
+  private int statusCsvIndex = 2; 
+  private int priorityCsvIndex = 3; 
+  private int milestoneCsvIndex = 4; 
+  private int ownerCsvIndex = 5; 
+  //private int summaryCsvIndex = 6; 
+  //private int openedCsvIndex = 7; 
+  //private int closedCsvIndex = 8;
   /**
    * Extracts issue information from feeds, and sends them to the
    * Hackystat server.
@@ -59,7 +75,7 @@ public class IssueSensor extends Task {
     this.validateProperties(); // sanity check.
     if (this.isVerbose) {
       System.out.printf("Processing issue updates for %s between %s (exclusive) and " +
-          "%s (inclusive)%n", this.feedUrl, this.fromDate, this.toDate);
+          "%s (inclusive)%n", this.getFeedUrl(), this.fromDate, this.toDate);
     }
 
     try {
@@ -76,6 +92,9 @@ public class IssueSensor extends Task {
       // Extract issue events from Google Project Hosting.
       List<IssueEvent> issueEvents = this.getIssueEvents(this.fromDate, this.toDate);
       
+      // Extract additional data from Issue CSV table.
+      this.checkDataWithCsv(issueEvents);
+      
       // Send data to SensorBase.
       int eventsAdded = 0;
       for (IssueEvent event : issueEvents) {
@@ -83,17 +102,17 @@ public class IssueSensor extends Task {
             System.out.println("Retrieved Issue data: " + event.toString());
           }
           //issueEvents.add(event);
-          SensorShell shell = this.getShell(shellCache, shellMap, event.getAuthor());
+          SensorShell shell = this.getShell(shellCache, shellMap, event.getOwner());
           if (shell != null) {
             Map<String, String> pMap = new HashMap<String, String>();
             String timestampString = 
               Tstamp.makeTimestamp(event.getUpdatedDate().getTime()).toString();
             pMap.put("SensorDataType", SENSOR_DATA_TYPE);
-            pMap.put("Resource", event.getId());
+            pMap.put("Resource", event.getUri());
             pMap.put("Tool", this.tool);
             pMap.put("Timestamp", timestampString);
             pMap.put("Runtime", runTimeString);
-            pMap.put("issueNumber", String.valueOf(event.getIssueNumber()));
+            pMap.put("id", String.valueOf(event.getId()));
             pMap.put("updateNumber", String.valueOf(event.getUpdateNumber()));
             pMap.put("status", event.getStatus());
             pMap.put("link", event.getLink());
@@ -101,7 +120,7 @@ public class IssueSensor extends Task {
             shell.add(pMap);
             if (this.isVerbose) {
               System.out.printf("Sending SVN Commit: Timestamp: %s Resource: %s User: %s%n", 
-                  timestampString, event.getId(), shell.getProperties().getSensorBaseUser());
+                  timestampString, event.getUri(), shell.getProperties().getSensorBaseUser());
             }
             eventsAdded++;
         }
@@ -126,8 +145,64 @@ public class IssueSensor extends Task {
     catch (SensorShellException e) {
       throw new BuildException("SensorShell error.", e);
     }
+    catch (IOException e) {
+      throw new BuildException("IO error.", e);
+    }
   }
 
+  /**
+   * Check data with the information from issue list table, which use CSV format.
+   * @param issueEvents the issue events to be checked.
+   * @throws IOException if errors.
+   */
+  private void checkDataWithCsv(List<IssueEvent> issueEvents) throws IOException {
+    URL url = new URL(this.getOpenCsvUrl());
+    URLConnection urlConnection = url.openConnection();
+    urlConnection.connect();
+    Reader reader = new InputStreamReader(url.openStream());
+    
+    CSVReader csvReader = new CSVReader(reader);
+    
+    
+    String[] line = csvReader.readNext();
+    
+    
+    //sort the list by reverse time order. 
+    Collections.sort(issueEvents, new Comparator<IssueEvent> () {
+      public int compare(IssueEvent o1, IssueEvent o2) {
+        // TODO Auto-generated method stub
+        return -o1.getUpdatedDate().compareTo(o2.getUpdatedDate());
+      }
+    });
+    System.out.println("Checking data with issue list table.");
+    while ((line = csvReader.readNext()) != null && line.length > 1) {
+      
+      for (String l : line) {
+        System.out.print(l + ", ");
+      }
+      System.out.println();
+      
+      int id = Integer.valueOf(line[idCsvIndex]);
+      for (IssueEvent issueEvent : issueEvents) {
+        //find the latest one with the same id and put the information in, then next entry.
+        if (issueEvent.getId() == id) {
+          issueEvent.setOwner(line[this.ownerCsvIndex]);
+          issueEvent.setMilestone(line[this.milestoneCsvIndex]);
+          issueEvent.setOwner(line[this.ownerCsvIndex]);
+          issueEvent.setPriority(line[this.priorityCsvIndex]);
+          issueEvent.setStatus(line[this.statusCsvIndex]);
+          issueEvent.setType(line[this.typeCsvIndex]);
+          break;
+        }
+      }
+      
+    }
+
+
+    
+    //BufferedReader bufferedReader = new BufferedReader(reader);
+  }
+  
   /**
    * Extract issue events from Google Project Hosting with the given time period.
    * @param fromDate the start date of the time period.
@@ -139,10 +214,10 @@ public class IssueSensor extends Task {
     try {
     // Prepare the feed.
     if (this.isVerbose) {
-      System.out.println("Retrieving data from " + this.feedUrl);
+      System.out.println("Retrieving data from " + this.getFeedUrl());
     }
     SyndFeedInput input = new SyndFeedInput();
-    SyndFeed feed = input.build(new XmlReader(new URL(feedUrl)));
+    SyndFeed feed = input.build(new XmlReader(new URL(getFeedUrl())));
     if (this.isVerbose) {
       System.out.println("Done.");
     }
@@ -178,7 +253,7 @@ public class IssueSensor extends Task {
    * @throws BuildException If any error is detected in the property setting.
    */
   protected void validateProperties() throws BuildException {
-    if (this.feedUrl == null || this.feedUrl.length() == 0) {
+    if (this.getFeedUrl() == null || this.getFeedUrl().length() == 0) {
       throw new BuildException("Attribute 'feedUrl' must be set.");
     }
     // If lastIntervalInMinutes is set, then we define fromDate and toDate appropriately and return.
@@ -290,21 +365,29 @@ public class IssueSensor extends Task {
       }
     }
   }
-  
-  /**
-   * @param feedUrl the feedUrl to set
-   */
-  public void setFeedUrl(String feedUrl) {
-    this.feedUrl = feedUrl;
-  }
 
   /**
    * @return the feedUrl
    */
   public String getFeedUrl() {
-    return feedUrl;
+    return "http://code.google.com/feeds/p/" + projectName + "/issueupdates/basic";
   }
 
+  /**
+   * @return the csvUrl
+   */
+  public String getAllCsvUrl() {
+    return "http://code.google.com/p/" + projectName + "/issues/csv?can=1&q=&" +
+    "colspec=ID%20Type%20Status%20Priority%20Milestone%20Owner%20Summary%20Opened%20Closed";
+  }
+
+  /**
+   * @return the csvUrl
+   */
+  public String getOpenCsvUrl() {
+    return "http://code.google.com/p/" + projectName + "/issues/csv";
+  }
+  
   /**
    * Sets if verbose mode has been enabled.
    * @param isVerbose true if verbose mode is enabled, false if not.
@@ -368,6 +451,20 @@ public class IssueSensor extends Task {
    */
   public void setLastIntervalInMinutes(String lastIntervalInMinutes) {
     this.lastIntervalInMinutesString = lastIntervalInMinutes;
+  }
+
+  /**
+   * @param projectName the projectName to set
+   */
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
+
+  /**
+   * @return the projectName
+   */
+  public String getProjectName() {
+    return projectName;
   }
 
 }

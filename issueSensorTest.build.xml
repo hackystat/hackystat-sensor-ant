@@ -1,0 +1,23 @@
+<project name="Ant sensors test" default="issue.sensor">
+  <description>
+  Provides sample Ant sensor tasks for each sensor bundled in the release.
+  </description>
+
+  <import file="build.xml" />
+	<target name="issue.sensor" depends="compile" description="Sends Issue update data to Hackystat using the Issue sensor.">
+	  <property environment="env"/>
+	  <taskdef file="${basedir}/xml/antlib/antlib.xml" classpath="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar"/>
+	  <property name="hackystat.verbose.mode" value="true" />
+
+	    
+	<!-- Send Subversion data to Hackystat using the Subversion sensor. --> 
+	  <hacky-issue
+	    feedUrl="http://code.google.com/feeds/p/hackystat-sensor-ant/issueupdates/basic"
+	    fromDate="2008-11-5" 
+	    toDate="2008-12-5"
+	    defaultHackystatAccount="TestUser@hackystat.org"
+	    defaultHackystatPassword="TestUser@hackystat.org" 
+	    defaultHackystatSensorbase="http://localhost:9876/sensorbase"
+	    verbose="true" />
+	</target>
+</project>
