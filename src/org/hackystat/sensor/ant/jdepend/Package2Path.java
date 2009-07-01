@@ -2,6 +2,7 @@ package org.hackystat.sensor.ant.jdepend;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A utility for determining the file path associated with a package. 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Package2Path {
   /** Holds the list of sourcePaths. */
-  private ArrayList<String> sourcePaths = new ArrayList<String>();
+  private List<String> sourcePaths = new ArrayList<String>();
   /** The path separator character on this platform. */  
   private char sep = System.getProperty("file.separator").charAt(0);
   
@@ -18,7 +19,7 @@ public class Package2Path {
    * Constructs a new Package2Path instance from a list of source file paths. 
    * @param sourceFiles The source files from which the package paths are constructed.
    */
-  public Package2Path(ArrayList<File> sourceFiles) {
+  public Package2Path(List<File> sourceFiles) {
     for (File file : sourceFiles) {
       String parentDir = file.getParent();
       if (parentDir != null) {

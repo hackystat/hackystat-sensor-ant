@@ -3,6 +3,7 @@ package org.hackystat.sensor.ant.antbuild;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
@@ -46,9 +47,9 @@ public class BuildSensorAntListener implements BuildListener {
 
   // the following two stacks are always synchronized.
   /** List of messages from single tasks. */
-  private Stack<ArrayList<String>> messagesStack = new Stack<ArrayList<String>>();
+  private Stack<List<String>> messagesStack = new Stack<List<String>>();
   /** Stack of target names. */
-  private ArrayList<String> targetNameStack = new ArrayList<String>();
+  private List<String> targetNameStack = new ArrayList<String>();
 
   /** Build start time. */
   private long startTimeMillis;
@@ -235,7 +236,7 @@ public class BuildSensorAntListener implements BuildListener {
           && task.getTaskName().equals(this.taskNameStack.peek())) {
         String message = buildEvent.getMessage();
         if (message != null) {
-          ArrayList<String> list = this.messagesStack.peek();
+          List<String> list = this.messagesStack.peek();
           list.add(message);
         }
       }

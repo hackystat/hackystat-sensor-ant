@@ -1,34 +1,35 @@
-<project name="jar" default="jar">
+<project name="jar" default="publish" xmlns:ivy="antlib:org.apache.ivy.ant">
   <description>
-  Provides the target for building Java5 and Java6 jar files of the SensorShell.
+  Provides the target for building antsensors.jar.
   </description>
 
   <import file="build.xml" />
   <property name="tmp.dir" location="${basedir}/tmp" />
+  <property name="build.jar.dir" location="${build.dir}/jar" />
 
   <target name="jar" depends="compile" description="Create antsensors.jar.">
 
     <mkdir dir="${tmp.dir}" />
+    <mkdir dir="${build.jar.dir}"/>
     <copy todir="${tmp.dir}">
       <fileset dir="${basedir}/build/classes/">
         <include name="org/hackystat/sensor/**" />
       </fileset>
     </copy>
 
-    <!-- Copy over the antlib so junit sensor task can be used. -->
+    <!-- Copy over the antlib so sensor tasks can be used. -->
     <copy todir="${tmp.dir}">
       <fileset file="${basedir}/xml/antlib/antlib.xml" />
     </copy>
 
-    <unjar src="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" dest="${tmp.dir}" />
-    <unjar src="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar" dest="${tmp.dir}" />
-    <unjar src="${env.SVNKIT_HOME}/svnkit.jar" dest="${tmp.dir}"/>
-    <unjar src="${lib.dir}/perforce/p4.jar" dest="${tmp.dir}"/>
-    <unjar src="${lib.dir}/vcs/JRCS.jar" dest="${tmp.dir}"/>
-    <unjar src="${lib.dir}/rss/jdom.jar" dest="${tmp.dir}"/>
-    <unjar src="${lib.dir}/rss/rome-1.0RC1.jar" dest="${tmp.dir}"/>
+    <unjar src="${lib.dir}/hackystat-sensor-shell/sensorshell.jar" dest="${tmp.dir}" />
+    <unjar src="${lib.dir}/svnkit/svnkit.jar" dest="${tmp.dir}" />
+    <unjar src="${basedir}/thirdpartyjars/p4.jar" dest="${tmp.dir}" />
+    <unjar src="${basedir}/thirdpartyjars/JRCS.jar" dest="${tmp.dir}" />
+    <unjar src="${basedir}/thirdpartyjars/jdom.jar" dest="${tmp.dir}" />
+    <unjar src="${basedir}/thirdpartyjars/rome-1.0RC1.jar" dest="${tmp.dir}" />
 
-    <jar destfile="${basedir}/antsensors.jar" basedir="${tmp.dir}">
+    <jar destfile="${build.jar.dir}/antsensors.jar" basedir="${tmp.dir}">
       <manifest>
         <attribute name="Implementation-Title" value="AntSensors" />
         <attribute name="Implementation-Version" value="${version}" />
@@ -37,6 +38,19 @@
     </jar>
 
     <delete dir="${tmp.dir}" />
+  </target>
+
+  <target name="publish" depends="jar" description="Publish this project in the local ivy repository">
+    <ivy:resolve />
+    <tstamp>
+      <format property="publication-revision" pattern="yyyy.MM.dd.HH.mm.ss" />
+    </tstamp>
+    <ivy:publish artifactspattern="${build.jar.dir}/[artifact].[ext]" resolver="local-repository" pubrevision="${publication-revision}" update="true" />
+  </target>
+
+  <target name="publish-all" description="Publish all dependent projects, then this one.">
+    <ant antfile="../hackystat-sensor-shell/jar.build.xml" target="publish-all" inheritAll="false" />
+    <antcall target="publish" />
   </target>
 </project>
 

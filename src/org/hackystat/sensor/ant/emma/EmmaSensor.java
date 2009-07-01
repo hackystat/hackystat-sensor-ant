@@ -89,7 +89,7 @@ public class EmmaSensor extends HackystatSensorTask {
    *   <coverage type="method, %" value="58%  (7/12)"/>
    *   <coverage type="block, %" value="57%  (374/656)"/>
    *   <coverage type="line, %" value="58%  (80.5/139)"/>
-   * </class>
+   * &lt;/class&gt;
    * </pre> 
    * The granularities of class, method, block, and line are retrieved from the class element. 
    * One could dig down into the method elements, but we are not doing this at the moment.  

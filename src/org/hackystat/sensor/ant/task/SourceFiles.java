@@ -1,6 +1,8 @@
 package org.hackystat.sensor.ant.task;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.tools.ant.types.FileSet;
 
 /**
@@ -10,7 +12,7 @@ import org.apache.tools.ant.types.FileSet;
 public class SourceFiles {
   
   /** The list of all FileSets in this element. */
-  protected ArrayList<FileSet> filesets = new ArrayList<FileSet>();
+  protected List<FileSet> filesets = new ArrayList<FileSet>();
   
   /**
    * The sourcefiles element must contain one or more internal filesets.
@@ -26,7 +28,7 @@ public class SourceFiles {
    * Returns the list of FileSet instances associated with the sourcefiles element. 
    * @return The list of FileSets. 
    */
-  public ArrayList<FileSet> getFileSets() {
+  public List<FileSet> getFileSets() {
     return this.filesets;
   }
 

@@ -22,7 +22,7 @@ import org.hackystat.sensor.ant.javancss.jaxb.Functions;
 public class CcnData {
   
   /** Maps the fully qualified Java file to a list of ints indicating its methods' ccn's. */
-  private Map<File, ArrayList<Integer>> file2Ccns = new HashMap<File, ArrayList<Integer>>();
+  private Map<File, List<Integer>> file2Ccns = new HashMap<File, List<Integer>>();
   private Map<File, Integer> file2TotalLines = new HashMap<File, Integer>();
   
   /**

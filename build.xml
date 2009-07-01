@@ -1,11 +1,12 @@
-<project name="build" default="compile">
+<project name="build" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
   <description>
   The basic build file for the system. 
   </description>
 
-  <!-- Always make environment variables available with the "env." prefix. -->
-  <property environment="env" />
-
+  <!-- Basic directory structure. -->
+  <property name="src.dir" location="${basedir}/src" />
+  <property name="lib.dir" location="${basedir}/lib" />
+  <property name="build.dir" location="${basedir}/build" />
 
   <!-- Make sure we're running a Java 5 or better. -->
   <condition property="java.5.available">
@@ -22,20 +23,43 @@
   </condition>
   <fail message="This package requires Ant 1.7." unless="ant.1.7.available" />
 
-  <!-- Make sure that a compatible version of JUnit is installed. -->
-  <!-- You can override the version. For example: 'ant -Djunit.version=4.1 -f junit.build.xml' -->
-  <property name="junit.version" value="4.5" />
-  <property name="junit.jar" location="${env.JUNIT_HOME}/junit-${junit.version}.jar" />
-  <available file="${junit.jar}" type="file" property="junit.available" />
-  <fail message="This package requires JUNIT_HOME to be defined and ${junit.jar} available" unless="junit.available" />
+  <!-- Make sure Ivy is installed. -->
+  <import file="ivy.build.xml" />
+  <available file="${ivy.jar.path}/ivy.jar" type="file" property="ivy.available" />
+  <fail message="This package requires Ivy.  To install, invoke 'ant -f ivy.build.xml'." unless="ivy.available" />
+  <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpath="${ivy.jar.path}/ivy.jar" />
 
-  <!-- Make sure that the SensorShell is available.  -->
-  <available file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" type="file" property="hackystat.sensorshell.available" />
-  <fail message="This package requires ${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" unless="hackystat.sensorshell.available" />
+  <!-- Make sure library.versions.properties is installed, which provides all library version numbers. -->
+  <property name="library.versions.path" location="${user.home}/.hackystat/library.versions.properties" />
+  <available file="${library.versions.path}" type="file" property="library.versions.available" />
+  <fail message="This package requires ~/.hackystat/library.versions.properties.  To install, invoke 'ant -f ivy.build.xml'." unless="library.versions.available" />
+  <!-- Now load all library version numbers. -->
+  <property file="${library.versions.path}" />
 
-  <!-- Make sure that the JAXB library is available (by default in Java 6, through manual installation in Java 5. -->
-  <available classname="javax.xml.bind.JAXBContext" property="jaxb.available" />
-  <fail message="This package requires JAXB to be installed" unless="jaxb.available" />
+  <!-- Where to look for configuration files (Checkstyle, PMD, FindBugs, etc.) -->
+  <property name="configfiles.url" value="http://hackystat.googlecode.com/svn/trunk/configfiles/" />
+  <property name="configfiles.dir" location="${lib.dir}/configfiles" />
+  <mkdir dir="${configfiles.dir}" />
+
+  <!-- Install libraries required for compilation. -->
+  <ivy:retrieve organisation="org.junit" module="junit" revision="${junit.version}" pattern="${lib.dir}/junit/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
+  <path id="junit.path" location="${lib.dir}/junit/junit.jar" />
+
+  <ivy:retrieve organisation="com.svnkit" module="svnkit" revision="1.3.0" pattern="${lib.dir}/svnkit/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
+  <path id="svnkit.path" location="${lib.dir}/svnkit/svnkit.jar" />
+
+  <ivy:retrieve organisation="org.hackystat" module="hackystat-sensor-shell" revision="latest.integration" pattern="${lib.dir}/hackystat-sensor-shell/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
+  <path id="hackystat-sensor-shell.path" location="${lib.dir}/hackystat-sensor-shell/sensorshell.jar" />
+
+  <path id="thirdpartyjars.path">
+    <fileset dir="${basedir}/thirdpartyjars">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+   <!-- Only needed for testing. -->  
+  <ivy:retrieve organisation="org.hackystat" module="hackystat-sensorbase-uh" revision="latest.integration" pattern="${lib.dir}/hackystat-sensorbase-uh/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
+  <path id="hackystat-sensorbase-uh.path" location="${lib.dir}/hackystat-sensorbase-uh/sensorbase.jar" />
 
   <!-- Basic properties for this system. -->
   <property name="system.name" value="hackystat-sensor-ant" />
@@ -55,24 +79,13 @@
     <istrue value="${hackystat.enable}" />
   </condition>
 
-  <!-- Basic directory structure. -->
-  <property name="src.dir" location="${basedir}/src" />
-  <property name="lib.dir" location="${basedir}/lib" />
-  <property name="build.dir" location="${basedir}/build" />
-
   <!-- The compile/testing classpath  -->
   <path id="compile.classpath">
-    <fileset file="${env.HACKYSTAT_SENSORSHELL_HOME}/sensorshell.jar" />
+    <path refid="junit.path" />
+    <path refid="svnkit.path" />
+    <path refid="hackystat-sensor-shell.path" />
+    <path refid="thirdpartyjars.path" />
     <fileset file="${ant.home}/lib/ant.jar" />
-    <fileset file="${env.JUNIT_HOME}/junit-${junit.version}.jar" />
-    <fileset file="${env.FINDBUGS_HOME}/lib/annotations.jar" />
-    <fileset file="${env.HACKYSTAT_UTILITIES_HOME}/tstamp.lib.jar" />
-    <fileset file="${env.SVNKIT_HOME}/svnkit.jar" />
-    <fileset file="${lib.dir}/perforce/p4.jar" />
-    <fileset file="${lib.dir}/vcs/JRCS.jar" />
-    <fileset file="${lib.dir}/rss/jdom.jar" />
-    <fileset file="${lib.dir}/rss/rome-1.0RC1.jar" />
-    <fileset file="${lib.dir}/csv/opencsv-1.8.jar" />
   </path>
 
   <target name="compile" description="Compiles the code.">

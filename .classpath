@@ -4,14 +4,12 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="ANT_HOME/lib/ant.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="lib/vcs/JRCS.jar"/>
-	<classpathentry kind="var" path="HACKYSTAT_SENSORSHELL_HOME/sensorshell.jar"/>
-	<classpathentry kind="var" path="HACKYSTAT_UTILITIES_HOME/tstamp.lib.jar" sourcepath="/HACKYSTAT_UTILITIES_HOME/src"/>
-	<classpathentry kind="var" path="HACKYSTAT_SENSORBASE_HOME/sensorbase.jar"/>
-	<classpathentry kind="lib" path="lib/perforce/p4.jar"/>
-	<classpathentry kind="lib" path="lib/rss/rome-1.0RC1.jar"/>
-	<classpathentry kind="lib" path="lib/rss/jdom.jar"/>
-	<classpathentry kind="var" path="SVNKIT_HOME/svnkit.jar"/>
-	<classpathentry kind="lib" path="lib/csv/opencsv-1.8.jar"/>
+	<classpathentry kind="lib" path="thirdpartyjars/jdom.jar"/>
+	<classpathentry kind="lib" path="thirdpartyjars/jrcs.jar"/>
+	<classpathentry kind="lib" path="thirdpartyjars/opencsv-1.8.jar"/>
+	<classpathentry kind="lib" path="thirdpartyjars/p4.jar"/>
+	<classpathentry kind="lib" path="thirdpartyjars/rome-1.0RC1.jar"/>
+	<classpathentry kind="lib" path="lib/hackystat-sensor-shell/sensorshell.jar"/>
+	<classpathentry kind="lib" path="lib/svnkit/svnkit.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

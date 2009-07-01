@@ -2,67 +2,65 @@
   <description>
   Provides sample Ant sensor tasks for each sensor bundled in the release.
   </description>
-	
-  <!-- Always make environment variables available with the "env." prefix. --> 
-  <property environment="env"/> 
 
-	<available file="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar" type="file" property="hackystat.antsensors.available"/>
-  <fail message="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar could not be found." unless="hackystat.antsensors.available"/>   
-  <taskdef resource="antlib.xml" classpath="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar"/>
-	
+  <!-- Always make environment variables available with the "env." prefix. -->
+  <property environment="env" />
+
+  <available file="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar" type="file" property="hackystat.antsensors.available" />
+  <fail message="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar could not be found." unless="hackystat.antsensors.available" />
+  <taskdef resource="antlib.xml" classpath="${env.HACKYSTAT_ANTSENSORS_HOME}/antsensors.jar" />
+
   <property name="testdata.dir" location="${basedir}/testdata" />
-	
-	<target name="test.sensors" description="Tests all sensors with test data." 
-	  depends="test.junit.sensor, test.emma.sensor, test.checkstyle.sensor, test.pmd.sensor, test.findbugs.sensor"/>
-	
+
+  <target name="test.sensors" description="Tests all sensors with test data." depends="test.junit.sensor, test.emma.sensor, test.checkstyle.sensor, test.pmd.sensor, test.findbugs.sensor" />
+
   <target name="test.junit.sensor" description="Sends UnitTest data to Hackystat using the JUnit sensor.">
     <!-- Send JUnit test data to hackystat using the JUnit sensor. -->
-    <hacky-junit verbose="false" 
-                 sourcePath="${src.dir}">
-      <fileset dir="${testdata.dir}/junit" includes="TEST-*.xml"/>
+    <hacky-junit verbose="false" sourcePath="${src.dir}">
+      <fileset dir="${testdata.dir}/junit" includes="TEST-*.xml" />
     </hacky-junit>
   </target>
-	
+
   <target name="test.emma.sensor" description="Sends Emma coverage data to Hackystat using the Emma sensor.">
-    <!-- Send Coverage data to Hackystat using the Emma sensor. --> 
+    <!-- Send Coverage data to Hackystat using the Emma sensor. -->
     <hacky-emma verbose="false" emmaReportXmlFile="${testdata.dir}/emma/coverage.xml">
       <fileset dir="${basedir}/src" includes="**/*.java" />
     </hacky-emma>
   </target>
 
   <target name="test.clover.sensor" description="Sends Clover coverage data to Hackystat using the Clover sensor.">
-  <!-- Send Coverage data to Hackystat using the Clover sensor. -->
+    <!-- Send Coverage data to Hackystat using the Clover sensor. -->
     <hacky-clover verbose="${hackystat.verbose.mode}" cloverReportXmlFile="${clover.dir}/coverage.xml">
       <fileset dir="${src.dir}" includes="**/*.java" />
     </hacky-clover>
   </target>
 
-	
-	<target name="test.checkstyle.sensor" description="Sends Checkstyle CodeIssue data to Hackystat using the Checkstyle sensor.">
-		<!-- Send Checkstyle data to Hackystat. -->
-		<hacky-checkstyle verbose="false">
-			<fileset file="${testdata.dir}/checkstyle/checkstyle.xml"/>
-		</hacky-checkstyle>
-	</target>
-	
-	<target name="test.pmd.sensor" description="Sends PMD CodeIssue data to Hackystat using the PMD sensor.">
-	  <!-- Send PMD data to Hackystat. -->
-	  <hacky-pmd verbose="false" sourcePath="${testdata.dir}/pmd/src">
-	    <fileset file="${testdata.dir}/pmd/pmd.xml"/>
+
+  <target name="test.checkstyle.sensor" description="Sends Checkstyle CodeIssue data to Hackystat using the Checkstyle sensor.">
+    <!-- Send Checkstyle data to Hackystat. -->
+    <hacky-checkstyle verbose="false">
+      <fileset file="${testdata.dir}/checkstyle/checkstyle.xml" />
+    </hacky-checkstyle>
+  </target>
+
+  <target name="test.pmd.sensor" description="Sends PMD CodeIssue data to Hackystat using the PMD sensor.">
+    <!-- Send PMD data to Hackystat. -->
+    <hacky-pmd verbose="false" sourcePath="${testdata.dir}/pmd/src">
+      <fileset file="${testdata.dir}/pmd/pmd.xml" />
       <sourcePath>
         <fileset dir="${testdata.dir}/pmd/src">
-          <include name="**/*.java"/>
-        	<exclude name="**/jaxb/**"/>
+          <include name="**/*.java" />
+          <exclude name="**/jaxb/**" />
         </fileset>
       </sourcePath>
-	  </hacky-pmd>
-	</target>
+    </hacky-pmd>
+  </target>
 
-	<target name="test.findbugs.sensor" description="Sends FindBugs CodeIssue data to Hackystat using the FindBugs sensor.">
-	  <!-- Send FindBugs data to Hackystat. -->
+  <target name="test.findbugs.sensor" description="Sends FindBugs CodeIssue data to Hackystat using the FindBugs sensor.">
+    <!-- Send FindBugs data to Hackystat. -->
     <hacky-findbugs verbose="${hackystat.verbose.mode}">
-      <fileset file="${testdata.dir}/findbugs/findbugs.xml"/>
+      <fileset file="${testdata.dir}/findbugs/findbugs.xml" />
     </hacky-findbugs>
-		
-	</target>
+
+  </target>
 </project>

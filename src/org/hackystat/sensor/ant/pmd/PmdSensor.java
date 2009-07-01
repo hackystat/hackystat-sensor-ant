@@ -1,7 +1,6 @@
 package org.hackystat.sensor.ant.pmd;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -94,7 +93,7 @@ public class PmdSensor extends HackystatSensorTask {
       JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
 
-      ArrayList<File> allSourceFiles = this.getSourceFiles();
+      List<File> allSourceFiles = this.getSourceFiles();
       Set<String> filesWithViolations = new HashSet<String>();
 
       Pmd pmdResults = (Pmd) unmarshaller.unmarshal(xmlFile);

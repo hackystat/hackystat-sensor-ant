@@ -81,16 +81,16 @@ public class CloverSensor extends HackystatSensorTask {
    * ignored; for example the sensor does not use the method element coverage information. 
    * Instead, the sensor parses the class element. Here is an example: 
    * <pre>
-   * <file name="PmdSensor.java">
-   *   <class name="PmdSensor">
-   *     <metrics methods="18" conditionals="36" coveredstatements="77" coveredmethods="7" 
-   *       coveredconditionals="11" statements="141" coveredelements="95" elements="195"/>
-   *   </class>
-   *   <metrics classes="1" methods="18" conditionals="36" ncloc="270" coveredstatements="77" 
+   * &lt;file name="PmdSensor.java"&gt;
+   *   &lt;class name="PmdSensor"&gt;
+   *     &lt;metrics methods="18" conditionals="36" coveredstatements="77" coveredmethods="7" 
+   *       coveredconditionals="11" statements="141" coveredelements="95" elements="195"/&gt;
+   *   &lt;/class&gt;
+   *   &lt;metrics classes="1" methods="18" conditionals="36" ncloc="270" coveredstatements="77" 
    *     coveredmethods="7" coveredconditionals="11" statements="141" loc="456" 
-   *     coveredelements="95" elements="195"/>
+   *     coveredelements="95" elements="195"/&gt;
    *   ...
-   * </file>
+   * &lt;/file&gt;
    * </pre> 
    * The granularities of file metrics element.  One could dig down into the line elements but 
    * we aren't doing that now.   

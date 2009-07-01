@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -215,7 +216,7 @@ public class CommitRecordEntry {
           this.getVersionedProperties(this.fromPath, this.fromRevision, properties);
         }
         String svnFileMineType = properties.get("svn:mime-type");
-        this.isTextFile = (svnFileMineType == null || svnFileMineType.toLowerCase()
+        this.isTextFile = (svnFileMineType == null || svnFileMineType.toLowerCase(Locale.ENGLISH)
             .startsWith("/text"));
 
         if (this.isTextFile) {

@@ -1,4 +1,4 @@
-<project name="hudson.ant" default="hudson.basic">
+<project name="sensorbase.hudson" default="hudson.basic">
   <description>
     Tasks for use by Hudson continuous integration system.
   </description>
@@ -10,6 +10,9 @@
   <property name="checkstyle.failOnViolation" value="true"/> 
   <property name="junit.haltonfailure" value="true"/>
 
+  <!-- Ensure that Ivy and library.versions.properties are installed. -->
+  <ant antfile="ivy.build.xml"/>
+
   <!-- Now import the target definitions. -->
   <import file="javadoc.build.xml"/>  
   <import file="javancss.build.xml"/>  
@@ -19,30 +22,28 @@
   <import file="junit.build.xml"/>
   <import file="emma.build.xml"/>
   <import file="sclc.build.xml"/>
-  <import file="dist.build.xml"/>
   <import file="jar.build.xml"/>
   
       
   <target name="hudson.basic" 
-    depends="clean, compile, checkstyle.tool,  junit.tool, findbugs.tool, pmd.tool, jar, dist" 
+    depends="clean, compile, checkstyle.tool,  junit.tool, findbugs.tool, pmd.tool, publish" 
     description="Fast build for production purposes. No sensors.">
+    <fail message="FindBugs reported warnings." if="findbugs.warningsfound"/>
   </target>
-    
   
   <target name="hudson.daily.build" 
-     depends="clean, compile, checkstyle.tool, junit.tool, findbugs.tool, pmd.tool, jar" 
+     depends="clean, compile, checkstyle.tool, junit.tool, findbugs.tool, pmd.tool, publish" 
      description="Builds and runs all QA stuff in preparation for sending sensor data.">
-      <fail message="FindBugs reported warnings." if="findbugs.warningsfound"/>
+    <fail message="FindBugs reported warnings." if="findbugs.warningsfound"/>
   </target>
 
   <target name="hudson.daily.junit"  
     depends="junit.tool, junit.sensor"  description="JUnit plus sensor."/>
-
   
   <target name="hudson.daily.javancss"  
     depends="javancss.tool, javancss.sensor"  description="JavaNCSS plus sensor."/>
   
   <target name="hudson.daily.emma"  
-     depends="emma.tool, emma.report, emma.sensor"  description="Emma plus sensor."/>
+     depends="emma.tool, emma.sensor"  description="Emma plus sensor."/>
   
 </project>

@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,15 +20,15 @@ public class JavaClass2FilePathMapper {
   /** Used to create an internal list of fully qualified source files with the same separator. */
   private static final char CANONICAL_SEPARATOR = '/';
   /** The initial file names, with any separator. */
-  private ArrayList<String> originalFileNames;
+  private List<String> originalFileNames;
   /** The canonical file names, all with the '/' separator. */
-  private ArrayList<String> canonicalfileNames;
+  private List<String> canonicalfileNames;
 
   /**
    * A map with the edited package path as the key and the original package path
    * as the value.
    */
-  private HashMap<String, String> packagePathMap = new HashMap<String, String>();
+  private Map<String, String> packagePathMap = new HashMap<String, String>();
 
 
   

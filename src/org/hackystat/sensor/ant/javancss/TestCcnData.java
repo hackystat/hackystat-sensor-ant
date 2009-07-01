@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNull;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 import java.io.File;
 
 import org.hackystat.sensor.ant.javancss.jaxb.Function;
@@ -71,8 +72,8 @@ public class TestCcnData {
    * should not. 
    * @return The list of three files for testing. 
    */
-  private ArrayList<File> makeFiles() {
-    ArrayList<File> files = new ArrayList<File>();
+  private List<File> makeFiles() {
+    List<File> files = new ArrayList<File>();
     files.add(file1);
     files.add(file2);
     files.add(file3);

@@ -305,7 +305,7 @@ public abstract class HackystatSensorTask extends Task {
    * 
    * @return The list of files in the sourcefiles element.
    */
-  protected ArrayList<File> getSourceFiles() {
+  protected List<File> getSourceFiles() {
     List<FileSet> filesets = new ArrayList<FileSet>();
     // Create our list of filesets from all nested SourceFiles.
     for (SourceFiles sourceFiles : this.sourceFilesList) {
@@ -319,7 +319,7 @@ public abstract class HackystatSensorTask extends Task {
    * 
    * @return The list of files in the datafiles element.
    */
-  protected ArrayList<File> getDataFiles() {
+  protected List<File> getDataFiles() {
     List<FileSet> filesets = new ArrayList<FileSet>();
     // Create our list of filesets from all nested SourceFiles.
     for (DataFiles dataFiles : this.dataFilesList) {
@@ -334,7 +334,7 @@ public abstract class HackystatSensorTask extends Task {
    * @param filesets The filesets of interest.
    * @return The files of interest.
    */
-  protected ArrayList<File> getFiles(List<FileSet> filesets) {
+  protected List<File> getFiles(List<FileSet> filesets) {
     ArrayList<File> fileList = new ArrayList<File>();
     final int size = filesets.size();
     for (int i = 0; i < size; i++) {
