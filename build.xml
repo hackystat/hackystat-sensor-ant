@@ -45,22 +45,23 @@
   <ivy:retrieve organisation="org.junit" module="junit" revision="${junit.version}" pattern="${lib.dir}/junit/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
   <path id="junit.path" location="${lib.dir}/junit/junit.jar" />
 
-  <ivy:retrieve organisation="com.svnkit" module="svnkit" revision="1.3.0" pattern="${lib.dir}/svnkit/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
+  <ivy:retrieve organisation="com.svnkit" module="svnkit" revision="${svnkit.version}" pattern="${lib.dir}/svnkit/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
   <path id="svnkit.path" location="${lib.dir}/svnkit/svnkit.jar" />
 
   <ivy:retrieve organisation="org.hackystat" module="hackystat-sensor-shell" revision="latest.integration" pattern="${lib.dir}/hackystat-sensor-shell/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
   <path id="hackystat-sensor-shell.path" location="${lib.dir}/hackystat-sensor-shell/sensorshell.jar" />
 
+  <!-- Only needed for testing.   -->  
+  <ivy:retrieve organisation="org.hackystat" module="hackystat-sensorbase-uh" revision="latest.integration" pattern="${lib.dir}/hackystat-sensorbase-uh/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
+  <path id="hackystat-sensorbase-uh.path" location="${lib.dir}/hackystat-sensorbase-uh/sensorbase.jar" />
+
+  <!-- Jar files not under Ivy control due to obsolete and/or other issues . --> 
   <path id="thirdpartyjars.path">
     <fileset dir="${basedir}/thirdpartyjars">
       <include name="*.jar" />
     </fileset>
   </path>
-
-   <!-- Only needed for testing. -->  
-  <ivy:retrieve organisation="org.hackystat" module="hackystat-sensorbase-uh" revision="latest.integration" pattern="${lib.dir}/hackystat-sensorbase-uh/[artifact].[ext]" sync="true" inline="true" conf="default" log="download-only" transitive="false" type="jar" />
-  <path id="hackystat-sensorbase-uh.path" location="${lib.dir}/hackystat-sensorbase-uh/sensorbase.jar" />
-
+ 
   <!-- Basic properties for this system. -->
   <property name="system.name" value="hackystat-sensor-ant" />
   <property name="majorVersionNumber" value="8" />

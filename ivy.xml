@@ -6,6 +6,5 @@
   <dependencies>
     <dependency org="org.junit" name="junit" rev="${junit.version}" />
     <dependency org="org.hackystat" name="hackystat-sensor-shell" rev="latest.integration" />
-    <dependency org="org.hackystat" name="hackystat-sensorbase-uh" rev="latest.integration" />
   </dependencies>
 </ivy-module>
