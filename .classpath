@@ -9,7 +9,11 @@
 	<classpathentry kind="lib" path="thirdpartyjars/opencsv-1.8.jar"/>
 	<classpathentry kind="lib" path="thirdpartyjars/p4.jar"/>
 	<classpathentry kind="lib" path="thirdpartyjars/rome-1.0RC1.jar"/>
-	<classpathentry kind="lib" path="lib/hackystat-sensor-shell/sensorshell.jar"/>
+	<classpathentry kind="lib" path="lib/hackystat-sensor-shell/sensorshell.jar" sourcepath="lib/hackystat-sensor-shell/hackystat-sensor-shell-source.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/hackystat-sensor-ant/lib/hackystat-sensor-shell/hackystat-sensor-shell-javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/svnkit/svnkit.jar"/>
 	<classpathentry kind="lib" path="lib/hackystat-sensorbase-uh/sensorbase.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>

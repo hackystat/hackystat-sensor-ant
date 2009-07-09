@@ -2,6 +2,8 @@
   <info organisation="org.hackystat" module="hackystat-sensor-ant"/>
   <publications>
     <artifact name="antsensors" />
+    <artifact name="hackystat-sensor-ant-javadoc" type="javadoc" ext="zip"/>
+    <artifact name="hackystat-sensor-ant-source" type="source" ext="zip"/>    
   </publications>
   <dependencies>
     <dependency org="org.junit" name="junit" rev="${junit.version}" />
