@@ -6,31 +6,27 @@ import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.ParseException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+import org.hackystat.sensorbase.client.SensorBaseClient;
+import org.hackystat.sensorbase.client.SensorBaseClientException;
+import org.hackystat.sensorbase.resource.sensordata.jaxb.SensorData;
+import org.hackystat.sensorbase.resource.sensordata.jaxb.SensorDataRef;
 import org.hackystat.sensorshell.SensorShell;
 import org.hackystat.sensorshell.SensorShellException;
 import org.hackystat.sensorshell.SensorShellProperties;
 import org.hackystat.sensorshell.usermap.SensorShellMap;
 import org.hackystat.sensorshell.usermap.SensorShellMapException;
-import org.hackystat.utilities.time.period.Day;
 import org.hackystat.utilities.tstamp.Tstamp;
 import au.com.bytecode.opencsv.CSVReader;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedInput;
-import com.sun.syndication.io.XmlReader;
 
 /**
  * Ant task to retieve the issue changes and send those information to Hackystat
@@ -40,30 +36,20 @@ import com.sun.syndication.io.XmlReader;
  *
  */
 public class IssueSensor extends Task {
+
+  /** DateFormat for google csv table. */
+  public static final DateFormat googleDateFormat = 
+    new SimpleDateFormat("MMM dd, yyyy kk:mm:ss", Locale.US);
   
-  private static final String SENSOR_DATA_TYPE = "Issue";
+  private static final String ISSUE_SENSOR_DATA_TYPE = "Issue";
   private String tool = "GoogleProjectHosting";
   private String projectName;
-  private String defaultHackystatAccount = "";
-  private String defaultHackystatPassword = "";
-  private String defaultHackystatSensorbase = "";
-  private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-  private String fromDateString, toDateString;
-  private Date fromDate, toDate;
+  private String dataOwnerHackystatAccount = "";
+  private String dataOwnerHackystatPassword = "";
+  private String hackystatSensorbase = "";
   private boolean isVerbose = false;
-  private String lastIntervalInMinutesString = "";
-  private int lastIntervalInMinutes;
+  private XMLGregorianCalendar runTimestamp = Tstamp.makeTimestamp();
   
-
-  private int idCsvIndex = 0; 
-  private int typeCsvIndex = 1; 
-  private int statusCsvIndex = 2; 
-  private int priorityCsvIndex = 3; 
-  private int milestoneCsvIndex = 4; 
-  private int ownerCsvIndex = 5; 
-  //private int summaryCsvIndex = 6; 
-  //private int openedCsvIndex = 7; 
-  //private int closedCsvIndex = 8;
   /**
    * Extracts issue information from feeds, and sends them to the
    * Hackystat server.
@@ -74,245 +60,267 @@ public class IssueSensor extends Task {
   public void execute() throws BuildException {
     this.validateProperties(); // sanity check.
     if (this.isVerbose) {
-      System.out.printf("Processing issue updates for %s between %s (exclusive) and " +
-          "%s (inclusive)%n", this.getFeedUrl(), this.fromDate, this.toDate);
-    }
-
+      System.out.println("Processing issue updates for project " + this.projectName);
+    }  
+    
+    runTimestamp = Tstamp.makeTimestamp();
+    
     try {
-      Map<String, SensorShell> shellCache = new HashMap<String, SensorShell>();
+      List<IssueEntry> updatedIssues = new ArrayList<IssueEntry>();
+      
+      //Construct SensorShellMap.
       SensorShellMap shellMap = new SensorShellMap(this.tool);
       if (this.isVerbose) {
         System.out.println("Checking for user maps at: " + shellMap.getUserMapFile());
-        System.out.println("Issue accounts found: " + shellMap.getToolAccounts(this.tool));
+        System.out.println(this.tool + " accounts found: " + shellMap.getToolAccounts(this.tool));
+      }
+      try {
+        shellMap.validateHackystatInfo(this.tool);
+      }
+      catch (Exception e) {
+        System.out.println("Warning: UserMap validation failed: " + e.getMessage());
+      }
+
+      SensorShellProperties props = new SensorShellProperties(this.hackystatSensorbase,
+          this.dataOwnerHackystatAccount, this.dataOwnerHackystatPassword);
+      SensorShell shell = new SensorShell(props, false, this.tool);
+      SensorBaseClient sensorBaseClient = new SensorBaseClient(this.hackystatSensorbase,
+          this.dataOwnerHackystatAccount, this.dataOwnerHackystatPassword);
+      
+      //[1] Retrieve sensor data.
+      if (this.isVerbose) {
+        System.out.println("Retrieve sensordata from " + this.hackystatSensorbase);
+      }
+      Map<Integer, IssueEntry> issues = new HashMap<Integer, IssueEntry>();
+      for (SensorDataRef ref : sensorBaseClient.getSensorDataIndex(
+          this.dataOwnerHackystatAccount, ISSUE_SENSOR_DATA_TYPE).getSensorDataRef()) {
+        IssueEntry issue = new IssueEntry(sensorBaseClient.getSensorData(ref));
+        issues.put(issue.getId(), issue);
+      }
+
+      if (this.isVerbose) {
+        System.out.println(issues.size() + " sensordata found on sensorbase.");
       }
       
-      // Runtime timestamp.
-      String runTimeString = Tstamp.makeTimestamp().toString();
+      //[2] Extract data from Issue CSV table. 
+      if (this.isVerbose) {
+        System.out.println("Retrieving issue csv table from " + this.getAllCsvUrl());
+      }
+      URL url = new URL(this.getAllCsvUrl());
+      URLConnection urlConnection = url.openConnection();
+      urlConnection.connect();
+      Reader reader = new InputStreamReader(url.openStream());
+      CSVReader csvReader = new CSVReader(reader);
       
-      // Extract issue events from Google Project Hosting.
-      List<IssueEvent> issueEvents = this.getIssueEvents(this.fromDate, this.toDate);
+      //skip the first line, the header.
+      String[] line = csvReader.readNext();
       
-      // Extract additional data from Issue CSV table.
-      this.checkDataWithCsv(issueEvents);
-      
-      // Send data to SensorBase.
-      int eventsAdded = 0;
-      for (IssueEvent event : issueEvents) {
-          if (this.isVerbose) {
-            System.out.println("Retrieved Issue data: " + event.toString());
-          }
-          //issueEvents.add(event);
-          SensorShell shell = this.getShell(shellCache, shellMap, event.getOwner());
-          if (shell != null) {
-            Map<String, String> pMap = new HashMap<String, String>();
-            String timestampString = 
-              Tstamp.makeTimestamp(event.getUpdatedDate().getTime()).toString();
-            pMap.put("SensorDataType", SENSOR_DATA_TYPE);
-            pMap.put("Resource", event.getUri());
-            pMap.put("Tool", this.tool);
-            pMap.put("Timestamp", timestampString);
-            pMap.put("Runtime", runTimeString);
-            pMap.put("id", String.valueOf(event.getId()));
-            pMap.put("updateNumber", String.valueOf(event.getUpdateNumber()));
-            pMap.put("status", event.getStatus());
-            pMap.put("link", event.getLink());
-            pMap.put("comment", event.getComment());
-            shell.add(pMap);
+      while ((line = csvReader.readNext()) != null && line.length > 1) {
+        try {
+          int id = Integer.valueOf(line[0]);
+          line[5] = mapToHackystatAccount(line[5], shellMap);
+          IssueEntry issue = issues.get(id);
+          if (issue == null) {
+            issue = new IssueEntry(createSensorData(line));
+            issue.upToDate(line, runTimestamp);
+            issues.put(id, issue);
             if (this.isVerbose) {
-              System.out.printf("Sending SVN Commit: Timestamp: %s Resource: %s User: %s%n", 
-                  timestampString, event.getUri(), shell.getProperties().getSensorBaseUser());
+              System.out.println("New issue #" + issue.getId() + " found. " + printStrings(line));
             }
-            eventsAdded++;
+            updatedIssues.add(issue);
+          }
+          else {
+            if (issue.upToDate(line, runTimestamp)) {
+              if (this.isVerbose) {
+                System.out.println("Issue #" + issue.getId() + " updated. " + printStrings(line));
+              }
+              updatedIssues.add(issue);
+            }
+          }
+        }
+        catch (Exception e) {
+          e.printStackTrace();
         }
       }
       if (this.isVerbose) {
-        System.out.println("Found " + eventsAdded + " issue records.");
+        System.out.println("Found " + issues.size() + " issues, " + 
+            updatedIssues.size() + " updated.");
       }
       
-      // Send the sensor data after all entries have been processed.
-      for (SensorShell shell : shellCache.values()) {
-        if (this.isVerbose) {
-          System.out.println("Sending data to " + shell.getProperties().getSensorBaseUser() + 
-              " at " + shell.getProperties().getSensorBaseHost());
-        }
-        shell.send();
-        shell.quit();
+      /*
+      //[2] Extract issue updates from Google Project Hosting.
+      if (this.isVerbose) {
+        System.out.println("Extract issue updates.");
       }
+      //List<IssueUpdate> issueUpdates = this.getIssueUpdates(this.fromDate, this.toDate);
+      //GoogleRssProcessor rssProcessor = new GoogleRssProcessor(this.getFeedUrl(), this.isVerbose);
+      
+      //[3] Extract data from Issue CSV table.
+      Map<Integer, IssueEntry> issueEntries = this.getAllIssueList();
+      
+      //[4] Assign sensordata to associated issue entry.
+      for (SensorData data : issueSensorData) {
+        int id = getIssueId(data);
+        IssueEntry issueEntry = issueEntries.get(id);
+      }
+      
+      //[5] Find new issue and add new sensordata to it.
+      for (IssueEntry issueEntry : issueEntries.values()) {
+        if (issueEntry.getSensorData() == null) {
+          issueEntry.setSensorData(createSensorData(issueEntry, shellMap));
+          updatedIssue.add(issueEntry);
+        }
+      }
+      //[6] Add udpate information to sensordata.
+      for (IssueEntry issueEntry : issueEntries.values()) {
+        XMLGregorianCalendar lastUpdateTime = getLastUpdateTime(issueEntry.getSensorData());
+        List<IssueUpdate> updates;
+        if (lastUpdateTime == null) {
+          updates = rssProcessor.getIssueUpdate(issueEntry.getId());
+        }
+        else {
+          updates = rssProcessor.
+              getIssueUpdate(issueEntry.getId(), lastUpdateTime, runTimestamp);
+        }
+        addIssueUpdates(issueEntry, updates);
+      }*/
+      
+      //Put send updated data.
+      for (IssueEntry issueEntry : updatedIssues) {
+        shell.add(issueEntry.getSensorData());
+      }
+      shell.send();
+      shell.quit();
+    }
+    catch (SensorBaseClientException e) {
+      throw new BuildException("SensorBaseClient error.", e);
     }
     catch (SensorShellMapException e) {
-      throw new BuildException("Error whenretrieving the shell instance.", e);
+      throw new BuildException("SensorShellMap error.", e);
     }
     catch (SensorShellException e) {
-      throw new BuildException("SensorShell error.", e);
-    }
-    catch (IOException e) {
-      throw new BuildException("IO error.", e);
-    }
-  }
-
-  /**
-   * Check data with the information from issue list table, which use CSV format.
-   * @param issueEvents the issue events to be checked.
-   * @throws IOException if errors.
-   */
-  private void checkDataWithCsv(List<IssueEvent> issueEvents) throws IOException {
-    URL url = new URL(this.getOpenCsvUrl());
-    URLConnection urlConnection = url.openConnection();
-    urlConnection.connect();
-    Reader reader = new InputStreamReader(url.openStream());
-    
-    CSVReader csvReader = new CSVReader(reader);
-    
-    
-    String[] line = csvReader.readNext();
-    
-    
-    //sort the list by reverse time order. 
-    Collections.sort(issueEvents, new Comparator<IssueEvent> () {
-      public int compare(IssueEvent o1, IssueEvent o2) {
-        // TODO Auto-generated method stub
-        return -o1.getUpdatedDate().compareTo(o2.getUpdatedDate());
-      }
-    });
-    System.out.println("Checking data with issue list table.");
-    while ((line = csvReader.readNext()) != null && line.length > 1) {
-      
-      for (String l : line) {
-        System.out.print(l + ", ");
-      }
-      System.out.println();
-      
-      int id = Integer.valueOf(line[idCsvIndex]);
-      for (IssueEvent issueEvent : issueEvents) {
-        //find the latest one with the same id and put the information in, then next entry.
-        if (issueEvent.getId() == id) {
-          issueEvent.setOwner(line[this.ownerCsvIndex]);
-          issueEvent.setMilestone(line[this.milestoneCsvIndex]);
-          issueEvent.setOwner(line[this.ownerCsvIndex]);
-          issueEvent.setPriority(line[this.priorityCsvIndex]);
-          issueEvent.setStatus(line[this.statusCsvIndex]);
-          issueEvent.setType(line[this.typeCsvIndex]);
-          break;
-        }
-      }
-      
-    }
-
-
-    
-    //BufferedReader bufferedReader = new BufferedReader(reader);
-  }
-  
-  /**
-   * Extract issue events from Google Project Hosting with the given time period.
-   * @param fromDate the start date of the time period.
-   * @param toDate the end date of the time period.
-   * @return a List of IssueEvent.
-   */
-  protected List<IssueEvent> getIssueEvents(Date fromDate, Date toDate) {
-    List<IssueEvent> issueEvents = new ArrayList<IssueEvent>();
-    try {
-    // Prepare the feed.
-    if (this.isVerbose) {
-      System.out.println("Retrieving data from " + this.getFeedUrl());
-    }
-    SyndFeedInput input = new SyndFeedInput();
-    SyndFeed feed = input.build(new XmlReader(new URL(getFeedUrl())));
-    if (this.isVerbose) {
-      System.out.println("Done.");
-    }
-    // Parse the feed
-    //List<IssueEvent> issueEvents = new ArrayList<IssueEvent>();
-    for (Object o : feed.getEntries()) {
-      SyndEntryImpl entry = (SyndEntryImpl)o;
-      if (entry.getUpdatedDate().compareTo(this.fromDate) >= 0 && 
-          entry.getUpdatedDate().compareTo(this.toDate) <= 0) {
-        IssueEvent event = new IssueEvent(entry);
-        issueEvents.add(event);
-      }
-    }
+      throw new BuildException("SensorShellException error.", e);
     }
     catch (MalformedURLException e) {
-      throw new BuildException("The feed URL specifies an unknown protocol.", e);
+      throw new BuildException("Source URL malformed.", e);
     }
     catch (IOException e) {
-      throw new BuildException("There is a problem reading the stream of the URL.", e);
-    }
-    catch (FeedException e) {
-      throw new BuildException("The feed could not be parsed.", e);
+      throw new BuildException("Internet connection error.", e);
     }
     catch (Exception e) {
-      throw new BuildException("IO error when extract issue event from feed entry.", e);
+      throw new BuildException("Error when constructing issue data.", e);
     }
-    return issueEvents;
   }
   
+  /**
+   * Print the array of String, separated by comma.
+   * @param line the array of String
+   * @return the string.
+   */
+  private String printStrings(String[] line) {
+    StringBuffer buffer = new StringBuffer();
+    for (String string : line) {
+      buffer.append(string);
+      buffer.append(", ");
+    }
+    return buffer.toString();
+  }
+  
+  /**
+   * add the udpate information to the issue entry's sensordata.
+   * @param issue the issue entry.
+   * @param updates the IssueUpdates.
+   *//*
+  private void addIssueUpdates(IssueEntry issue, List<IssueUpdate> updates) {
+    boolean modified = false;
+    SensorData issueData = issue.getSensorData();
+    for (IssueUpdate update : updates) {
+      String propertyValue = update.getUpdateValueWithTime();
+      if (update.getTimestamp().compare(issueData.getLastMod()) == DatatypeConstants.GREATER) {
+        issueData.addProperty(update.getUpdateKey(), propertyValue);
+        modified = true;
+      }
+      else {
+        boolean foundDuplicate = false;
+        for (Property property : issueData.getProperties().getProperty()) {
+          if (property.getKey().equals(update.getUpdateKey()) && property.getValue()
+          .equals(propertyValue)) {
+            foundDuplicate = true;
+            break;
+          }
+        }
+        if (!foundDuplicate) {
+          issueData.addProperty(update.getUpdateKey(), propertyValue);
+          modified = true;
+        }
+      }
+    }
+    if (modified && runTimestamp.compare(issueData.getLastMod()) == DatatypeConstants.GREATER) {
+      issueData.setLastMod(runTimestamp);
+    }
+  }
+  */
+  /**
+   * Create a SensorData according to the given issue table column.
+   * @param line The given issue table column contents.
+   * @return A SensorData
+   * @throws Exception if error occurs.
+   */
+  private synchronized SensorData createSensorData(String[] line) throws Exception {
+    SensorData sensorData = new SensorData();
+    sensorData.setOwner(dataOwnerHackystatAccount);
+    sensorData.setTool(tool);
+    sensorData.setRuntime(runTimestamp);
+    sensorData.setTimestamp(Tstamp.makeTimestamp(googleDateFormat.parse(line[6]).getTime()));
+    sensorData.setSensorDataType(ISSUE_SENSOR_DATA_TYPE);
+    sensorData.setLastMod(runTimestamp);
+
+    sensorData.addProperty(IssueEntry.ID_PROPERTY_KEY, line[0]);
+    
+    return sensorData;
+  }
+
+  /**
+   * Map the given issue account to hackystat account. 
+   * Return the issue account if no mapping found.
+   * @param issueAccount the issue account.
+   * @param shellMap shellMap used to map tool account name to hackystat account name.
+   * @return the mapped account.
+   * @throws SensorShellMapException if error when mapping.
+   */
+  private String mapToHackystatAccount(String issueAccount, SensorShellMap shellMap) 
+    throws SensorShellMapException {
+
+    String hackystatAccount;
+    if (shellMap != null && shellMap.hasUserShell(issueAccount)) {
+      hackystatAccount = 
+        shellMap.getUserShell(issueAccount).getProperties().getSensorBaseUser();
+    }
+    else {
+      hackystatAccount = issueAccount;
+    }
+    return hackystatAccount;
+  }
+  
+
   /**
    * Checks and make sure all properties are set up correctly.
    * 
    * @throws BuildException If any error is detected in the property setting.
    */
   protected void validateProperties() throws BuildException {
-    if (this.getFeedUrl() == null || this.getFeedUrl().length() == 0) {
-      throw new BuildException("Attribute 'feedUrl' must be set.");
+    if (this.projectName == null || this.projectName.length() == 0) {
+      throw new BuildException("Attribute 'projectName' must be set.");
     }
-    // If lastIntervalInMinutes is set, then we define fromDate and toDate appropriately and return.
-    if (!this.lastIntervalInMinutesString.equals("")) {
-      try {
-        this.lastIntervalInMinutes = Integer.parseInt(this.lastIntervalInMinutesString);
-        long now = (new Date()).getTime();
-        this.toDate = new Date(now);
-        long intervalMillis = 1000L * 60 * this.lastIntervalInMinutes;
-        this.fromDate = new Date(now - intervalMillis);
-        return;
-      }
-      catch (Exception e) {
-        throw new BuildException("Attribute 'lastIntervalInMinutes' must be an integer.", e);
-      }
+    if (this.dataOwnerHackystatAccount == null || this.dataOwnerHackystatAccount.length() == 0) {
+      throw new BuildException("Attribute 'dataOwnerHackystatAccount' must be set.");
     }
-
-    // If lastIntervalInMinutes, fromDate, and toDate not set, we extract commit information for
-    // the previous 25 hours. (This ensures that running the sensor as part of a daily build
-    // should have enough "overlap" to not miss any entries.)
-    // Then return.
-    if (this.fromDateString == null && this.toDateString == null) {
-      long now = (new Date()).getTime();
-      this.toDate = new Date(now);
-      long twentyFiveHoursMillis = 1000 * 60 * 60 * 25;
-      this.fromDate = new Date(now - twentyFiveHoursMillis);
-      return;
+    if (this.dataOwnerHackystatPassword == null || this.dataOwnerHackystatPassword.length() == 0) {
+      throw new BuildException("Attribute 'dataOwnerHackystatPassword' must be set.");
     }
-
-    // Finally, we try to deal with the user provided from and to dates.
-    try {
-      if (this.hasSetToAndFromDates()) {
-        this.fromDate = new Date(Day.getInstance(this.dateFormat.parse(this.fromDateString))
-            .getFirstTickOfTheDay() - 1);
-        this.toDate = new Date(Day.getInstance(this.dateFormat.parse(this.toDateString))
-            .getLastTickOfTheDay());
-      }
-      else {
-        throw new BuildException(
-            "Attributes 'fromDate' and 'toDate' must either be both set or both not set.");
-      }
+    if (this.hackystatSensorbase == null || this.hackystatSensorbase.length() == 0) {
+      throw new BuildException("Attribute 'hackystatSensorbase' must be set.");
     }
-    catch (ParseException ex) {
-      throw new BuildException("Unable to parse 'fromDate' or 'toDate'.", ex);
-    }
-
-    if (this.fromDate.compareTo(this.toDate) > 0) {
-      throw new BuildException("Attribute 'fromDate' must be a date before 'toDate'.");
-    }
-  }
-
-  /**
-   * Returns true if both of the to and from date strings have been set by the client. Both dates
-   * must be set or else this sensor will not know which revisions to grab commit information.
-   * 
-   * @return true if both the to and from date strings have been set.
-   */
-  private boolean hasSetToAndFromDates() {
-    return (this.fromDateString != null) && (this.toDateString != null);
   }
 
   /**
@@ -335,6 +343,7 @@ public class IssueSensor extends Task {
    * @throws SensorShellException thrown if there is a problem retrieving
    * the Hackystat host from the v8.sensor.properties file.
    */
+  /*
   private SensorShell getShell(Map<String, SensorShell> shellCache, SensorShellMap shellMap,
       String author) throws SensorShellMapException, SensorShellException {
     if (shellCache.containsKey(author)) {
@@ -364,7 +373,7 @@ public class IssueSensor extends Task {
         return shell;
       }
     }
-  }
+  }*/
 
   /**
    * @return the feedUrl
@@ -378,7 +387,7 @@ public class IssueSensor extends Task {
    */
   public String getAllCsvUrl() {
     return "http://code.google.com/p/" + projectName + "/issues/csv?can=1&q=&" +
-    "colspec=ID%20Type%20Status%20Priority%20Milestone%20Owner%20Summary%20Opened%20Closed";
+    "colspec=ID%20Type%20Status%20Priority%20Milestone%20Owner%20Opened%20Closed%20Modified";
   }
 
   /**
@@ -397,62 +406,13 @@ public class IssueSensor extends Task {
   }
 
   /**
-   * Sets a default Hackystat account to which to send commit data when there is
-   * no svn committer to Hackystat account mapping.
-   * 
-   * @param defaultHackystatAccount The default Hackystat account.
-   */
-  public void setDefaultHackystatAccount(String defaultHackystatAccount) {
-    this.defaultHackystatAccount = defaultHackystatAccount;
-  }
-
-  /**
-   * Sets the default Hackystat account password.
-   * @param defaultHackystatPassword the default account password.
-   */
-  public void setDefaultHackystatPassword(String defaultHackystatPassword) {
-    this.defaultHackystatPassword = defaultHackystatPassword;
-  }
-
-  /**
    * Sets the default Hackystat sensorbase server.
    * @param defaultHackystatSensorbase the default sensorbase server.
    */
   public void setDefaultHackystatSensorbase(String defaultHackystatSensorbase) {
-    this.defaultHackystatSensorbase = defaultHackystatSensorbase;
-  }
-
-  /**
-   * Sets the optional fromDate. If fromDate is set, toDate must be set. This
-   * field must be conform to yyyy-MM-dd format.
-   * 
-   * @param fromDateString The first date from which we send commit information
-   * to Hackystat server.
-   */
-  public void setFromDate(String fromDateString) {
-    this.fromDateString = fromDateString;
-  }
-
-  /**
-   * Sets the optional toDate. If toDate is set, fromDate must be set. This
-   * field must be conform to yyyy-MM-dd format.
-   * 
-   * @param toDateString The last date to which we send commit information to
-   * Hackystat server.
-   */
-  public void setToDate(String toDateString) {
-    this.toDateString = toDateString;
+    this.hackystatSensorbase = defaultHackystatSensorbase;
   }
   
-  /**
-   * Sets the last interval in minutes. 
-   * 
-   * @param lastIntervalInMinutes The preceding interval in minutes to poll.  
-   */
-  public void setLastIntervalInMinutes(String lastIntervalInMinutes) {
-    this.lastIntervalInMinutesString = lastIntervalInMinutes;
-  }
-
   /**
    * @param projectName the projectName to set
    */
@@ -461,10 +421,17 @@ public class IssueSensor extends Task {
   }
 
   /**
-   * @return the projectName
+   * @param dataOwner the dataOwner account to set
    */
-  public String getProjectName() {
-    return projectName;
+  public void setDataOwnerHackystatAccount(String dataOwner) {
+    this.dataOwnerHackystatAccount = dataOwner;
+  }
+
+  /**
+   * @param password the password to set
+   */
+  public void setDataOwnerHackystatPassword(String password) {
+    this.dataOwnerHackystatPassword = password;
   }
 
 }
