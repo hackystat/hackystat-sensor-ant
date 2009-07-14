@@ -41,7 +41,8 @@ public class IssueSensor extends Task {
   public static final DateFormat googleDateFormat = 
     new SimpleDateFormat("MMM dd, yyyy kk:mm:ss", Locale.US);
   
-  private static final String ISSUE_SENSOR_DATA_TYPE = "Issue";
+  /** SensorDataType of Issue data. */
+  public static final String ISSUE_SENSOR_DATA_TYPE = "Issue";
   private String tool = "GoogleProjectHosting";
   private String projectName;
   private String dataOwnerHackystatAccount = "";
@@ -49,6 +50,29 @@ public class IssueSensor extends Task {
   private String hackystatSensorbase = "";
   private boolean isVerbose = false;
   private XMLGregorianCalendar runTimestamp = Tstamp.makeTimestamp();
+  
+  List<IssueEntry> updatedIssues = new ArrayList<IssueEntry>();
+  Map<Integer, IssueEntry> issues = new HashMap<Integer, IssueEntry>();
+  SensorShellMap shellMap;
+  
+  /**
+   * Prepare sensor shell map for this sensor.
+   * @throws SensorShellMapException if error when loading sensor shell map
+   */
+  public IssueSensor() throws SensorShellMapException {
+    //Construct SensorShellMap.
+    shellMap = new SensorShellMap(this.tool);
+    if (this.isVerbose) {
+      System.out.println("Checking for user maps at: " + shellMap.getUserMapFile());
+      System.out.println(this.tool + " accounts found: " + shellMap.getToolAccounts(this.tool));
+    }
+    try {
+      shellMap.validateHackystatInfo(this.tool);
+    }
+    catch (Exception e) {
+      System.out.println("Warning: UserMap validation failed: " + e.getMessage());
+    }
+  }
   
   /**
    * Extracts issue information from feeds, and sends them to the
@@ -66,20 +90,7 @@ public class IssueSensor extends Task {
     runTimestamp = Tstamp.makeTimestamp();
     
     try {
-      List<IssueEntry> updatedIssues = new ArrayList<IssueEntry>();
-      
-      //Construct SensorShellMap.
-      SensorShellMap shellMap = new SensorShellMap(this.tool);
-      if (this.isVerbose) {
-        System.out.println("Checking for user maps at: " + shellMap.getUserMapFile());
-        System.out.println(this.tool + " accounts found: " + shellMap.getToolAccounts(this.tool));
-      }
-      try {
-        shellMap.validateHackystatInfo(this.tool);
-      }
-      catch (Exception e) {
-        System.out.println("Warning: UserMap validation failed: " + e.getMessage());
-      }
+      updatedIssues.clear();
 
       SensorShellProperties props = new SensorShellProperties(this.hackystatSensorbase,
           this.dataOwnerHackystatAccount, this.dataOwnerHackystatPassword);
@@ -91,7 +102,6 @@ public class IssueSensor extends Task {
       if (this.isVerbose) {
         System.out.println("Retrieve sensordata from " + this.hackystatSensorbase);
       }
-      Map<Integer, IssueEntry> issues = new HashMap<Integer, IssueEntry>();
       for (SensorDataRef ref : sensorBaseClient.getSensorDataIndex(
           this.dataOwnerHackystatAccount, ISSUE_SENSOR_DATA_TYPE).getSensorDataRef()) {
         IssueEntry issue = new IssueEntry(sensorBaseClient.getSensorData(ref));
@@ -118,21 +128,21 @@ public class IssueSensor extends Task {
       while ((line = csvReader.readNext()) != null && line.length > 1) {
         try {
           int id = Integer.valueOf(line[0]);
-          line[5] = mapToHackystatAccount(line[5], shellMap);
+          line[5] = mapToHackystatAccount(line[5]);
           IssueEntry issue = issues.get(id);
           if (issue == null) {
             issue = new IssueEntry(createSensorData(line));
-            issue.upToDate(line, runTimestamp);
-            issues.put(id, issue);
             if (this.isVerbose) {
               System.out.println("New issue #" + issue.getId() + " found. " + printStrings(line));
             }
+            issue.upToDate(line, runTimestamp, false);
+            issues.put(id, issue);
             updatedIssues.add(issue);
           }
           else {
-            if (issue.upToDate(line, runTimestamp)) {
+            if (issue.upToDate(line, runTimestamp, isVerbose)) {
               if (this.isVerbose) {
-                System.out.println("Issue #" + issue.getId() + " updated. " + printStrings(line));
+                System.out.println("Issue #" + issue.getId() + " updated. ");
               }
               updatedIssues.add(issue);
             }
@@ -284,11 +294,10 @@ public class IssueSensor extends Task {
    * Map the given issue account to hackystat account. 
    * Return the issue account if no mapping found.
    * @param issueAccount the issue account.
-   * @param shellMap shellMap used to map tool account name to hackystat account name.
    * @return the mapped account.
    * @throws SensorShellMapException if error when mapping.
    */
-  private String mapToHackystatAccount(String issueAccount, SensorShellMap shellMap) 
+  private String mapToHackystatAccount(String issueAccount) 
     throws SensorShellMapException {
 
     String hackystatAccount;

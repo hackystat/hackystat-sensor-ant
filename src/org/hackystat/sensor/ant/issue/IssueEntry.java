@@ -1,5 +1,7 @@
 package org.hackystat.sensor.ant.issue;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import javax.xml.datatype.DatatypeConstants;
@@ -49,41 +51,70 @@ public class IssueEntry {
    * Update this IssueEntry as well as the associated sensordata to the given issue table column.
    * @param line the content of the issue table column.
    * @param runTimestamp the run time.
+   * @param isVerbose if do the update verbosely.
    * @return true if the sensordata is modified.
    */
-  public boolean upToDate(String[] line, XMLGregorianCalendar runTimestamp) {
+  public boolean upToDate(String[] line, XMLGregorianCalendar runTimestamp, boolean isVerbose) {
     boolean modified = false;
-    if (this.type == null || this.type.equals(line[1])) {
-      this.type = line[1];
-      sensorData.addProperty(TYPE_PROPERTY_KEY, line[1] + TIMESTAMP_SEPARATOR + runTimestamp);
-      modified = true;
-    }
-    if (this.status == null || this.status.equals(line[2])) {
-      this.status = line[2];
-      sensorData.addProperty(STATUS_PROPERTY_KEY, line[2] + TIMESTAMP_SEPARATOR + runTimestamp);
-      modified = true;
-    }
-    if (this.priority == null || this.priority.equals(line[3])) {
-      this.priority = line[3];
-      sensorData.addProperty(PRIORITY_PROPERTY_KEY, line[3] + TIMESTAMP_SEPARATOR + runTimestamp);
-      modified = true;
-    }
-    if (this.milestone == null || this.milestone.equals(line[4])) {
-      this.milestone = line[4];
-      sensorData.addProperty(MILESTONE_PROPERTY_KEY, line[4] + TIMESTAMP_SEPARATOR + runTimestamp);
-      modified = true;
-    }
-    if (this.owner == null || this.owner.equals(line[5])) {
-      this.owner = line[5];
-      sensorData.addProperty(OWNER_PROPERTY_KEY, line[5] + TIMESTAMP_SEPARATOR + runTimestamp);
-      modified = true;
-    }
+    modified |= checkFieldUpdate(TYPE_PROPERTY_KEY, line[1], runTimestamp, isVerbose); 
+    modified |= checkFieldUpdate(STATUS_PROPERTY_KEY, line[2], runTimestamp, isVerbose); 
+    modified |= checkFieldUpdate(PRIORITY_PROPERTY_KEY, line[3], runTimestamp, isVerbose); 
+    modified |= checkFieldUpdate(MILESTONE_PROPERTY_KEY, line[4], runTimestamp, isVerbose);
+    modified |= checkFieldUpdate(OWNER_PROPERTY_KEY, line[5], runTimestamp, isVerbose);
     if (modified) {
       sensorData.setLastMod(runTimestamp);
     }
     return modified;
   }
 
+  /**
+   * Check field update with the new value.
+   * @param fieldName name of the field.
+   * @param value new value.
+   * @param runTimestamp timestamp of the new value.
+   * @param isVerbose if do the update verbosely.
+   * @return true if the new value is different from the current value.
+   */
+  private boolean checkFieldUpdate(String fieldName, String value, 
+      XMLGregorianCalendar runTimestamp, boolean isVerbose)  {
+    Method getMethod = null;
+    Method setMethod = null;
+    try {
+      getMethod = this.getClass().getMethod("get" + fieldName, new Class[]{});
+      setMethod = this.getClass().getMethod("set" + fieldName, new Class[]{String.class});
+      String oldValue = null;
+      String newValue = value;
+      oldValue = getMethod.invoke(this, new Object[]{}).toString();
+      oldValue = (oldValue == null) ? "" : oldValue;
+      newValue = (newValue == null) ? "" : newValue;
+      if (oldValue.equals(newValue)) {
+        return false;
+      }
+      if (isVerbose) {
+        System.out.println(fieldName + " has been changed from [" + oldValue + 
+          "] to [" + newValue + "].");
+      }
+      sensorData.addProperty(fieldName, newValue + TIMESTAMP_SEPARATOR + runTimestamp);
+      setMethod.invoke(this, new Object[]{newValue});
+      return true;
+    }
+    catch (IllegalArgumentException e) {
+      e.printStackTrace();
+    }
+    catch (IllegalAccessException e) {
+      e.printStackTrace();
+    }
+    catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    catch (SecurityException e) {
+      e.printStackTrace();
+    }
+    catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
   /**
    * @param data The associated SensorData
    * @throws Exception if error
@@ -214,7 +245,7 @@ public class IssueEntry {
   /**
    * @param type the type to set
    */
-  protected void setType(String type) {
+  public void setType(String type) {
     this.type = type;
   }
   /**
@@ -226,7 +257,7 @@ public class IssueEntry {
   /**
    * @param status the status to set
    */
-  protected void setStatus(String status) {
+  public void setStatus(String status) {
     this.status = status;
   }
   /**
@@ -238,7 +269,7 @@ public class IssueEntry {
   /**
    * @param priority the priority to set
    */
-  protected void setPriority(String priority) {
+  public void setPriority(String priority) {
     this.priority = priority;
   }
   /**
@@ -250,7 +281,7 @@ public class IssueEntry {
   /**
    * @param milestone the milestone to set
    */
-  protected void setMilestone(String milestone) {
+  public void setMilestone(String milestone) {
     this.milestone = milestone;
   }
   /**
@@ -262,7 +293,7 @@ public class IssueEntry {
   /**
    * @param owner the owner to set
    */
-  protected void setOwner(String owner) {
+  public void setOwner(String owner) {
     this.owner = owner;
   }
   /**
@@ -274,7 +305,7 @@ public class IssueEntry {
   /**
    * @param openedTime the openedTime to set
    */
-  protected void setOpenedTime(XMLGregorianCalendar openedTime) {
+  public void setOpenedTime(XMLGregorianCalendar openedTime) {
     this.openedTime = openedTime;
   }
   /**
