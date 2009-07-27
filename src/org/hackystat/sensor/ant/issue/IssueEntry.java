@@ -18,7 +18,7 @@ import org.hackystat.utilities.tstamp.Tstamp;
 public class IssueEntry {
 
   /** property key of ID. */
-  public static final String ID_PROPERTY_KEY = "Id";
+  public static final String ID_PROPERTY_KEY = "IssueId";
   /** property key of TYPE. */
   public static final String TYPE_PROPERTY_KEY = "Type";
   /** property key of STATUS. */
@@ -33,7 +33,7 @@ public class IssueEntry {
   /** timestamp separator in property value. */
   public static final String TIMESTAMP_SEPARATOR = "--";
   
-  private int id;
+  private int issueId;
   private String type = "";
   private String status = "";
   private String priority = "";
@@ -82,11 +82,9 @@ public class IssueEntry {
     try {
       getMethod = this.getClass().getMethod("get" + fieldName, new Class[]{});
       setMethod = this.getClass().getMethod("set" + fieldName, new Class[]{String.class});
-      String oldValue = null;
+      String oldValue = "";
       String newValue = value;
-      oldValue = getMethod.invoke(this, new Object[]{}).toString();
-      oldValue = (oldValue == null) ? "" : oldValue;
-      newValue = (newValue == null) ? "" : newValue;
+      oldValue = (String)getMethod.invoke(this, new Object[]{});
       if (oldValue.equals(newValue)) {
         return false;
       }
@@ -121,38 +119,30 @@ public class IssueEntry {
    */
   public IssueEntry(final SensorData data) throws Exception {
     this.sensorData = data;
-    //get id
+    this.issueId = getIssueId(data);
+    if (this.issueId < 0) {
+      throw new Exception("Issue Id not found, " +
+      		"probably because it is not Issue SensorData or malformatted");
+    }
+    this.type = getLatestValueWithKey(this.sensorData, TYPE_PROPERTY_KEY);
+    this.status = getLatestValueWithKey(this.sensorData, STATUS_PROPERTY_KEY);
+    this.priority = getLatestValueWithKey(this.sensorData, PRIORITY_PROPERTY_KEY);
+    this.milestone = getLatestValueWithKey(this.sensorData, MILESTONE_PROPERTY_KEY);
+    this.owner = getLatestValueWithKey(this.sensorData, OWNER_PROPERTY_KEY);
+  }
+
+  /**
+   * Return the issue id of the issue sensordata.
+   * @param data the issue sensordata.
+   * @return the issue id. -1 if there is no property with key = IssueId.
+   */
+  public static int getIssueId(final SensorData data) {
     for (Property property : data.getProperties().getProperty()) {
       if (ID_PROPERTY_KEY.equals(property.getKey())) {
-        this.id = Integer.valueOf(property.getValue());
-        break;
+        return Integer.valueOf(property.getValue());
       }
     }
-    //get latest type
-    String type = this.getLatestValueWithKey(TYPE_PROPERTY_KEY);
-    if (type != null) {
-      this.type = type;
-    }
-    //get latest status
-    String status = this.getLatestValueWithKey(STATUS_PROPERTY_KEY);
-    if (status != null) {
-      this.status = status;
-    }
-    //get latest priority
-    String priority = this.getLatestValueWithKey(PRIORITY_PROPERTY_KEY);
-    if (priority != null) {
-      this.priority = priority;
-    }
-    //get latest milestone
-    String milestone = this.getLatestValueWithKey(MILESTONE_PROPERTY_KEY);
-    if (milestone != null) {
-      this.milestone = milestone;
-    }
-    //get latest owner
-    String owner = this.getLatestValueWithKey(OWNER_PROPERTY_KEY);
-    if (owner != null) {
-      this.owner = owner;
-    }
+    return -1;
   }
 
   /**
@@ -201,21 +191,22 @@ public class IssueEntry {
    * Extract value from formatted string.
    * @param string the string.
    * @return the value.
-   * @throws Exception if the string is not formatted.
    */
-  private static String extractValue(String string) throws Exception {
+  private static String extractValue(String string) {
     return string.substring(0, string.indexOf(TIMESTAMP_SEPARATOR));
   }
   
   /**
-   * Return the latest value with the given key.
+   * Return the latest value with the given key from the SensorData.
+   * @param sensorData the SensorData.
    * @param key the property key
    * @return the latest value, null if not found.
    * @throws Exception if error when parsing property values.
    */
-  public final String getLatestValueWithKey(String key) throws Exception {
+  public static final String getLatestValueWithKey(SensorData sensorData, String key) 
+      throws Exception {
     XMLGregorianCalendar latestTime = null;
-    String value = null;
+    String value = "";
     for (Property property : sensorData.getProperties().getProperty()) {
       if (key.equals(property.getKey())) {
         XMLGregorianCalendar newTimestamp = extractTimestamp(property.getValue());
@@ -231,16 +222,16 @@ public class IssueEntry {
 
   
   /**
-   * @param id the id to set
+   * @param id the issueId to set
    */
-  protected void setId(int id) {
-    this.id = id;
+  protected void setIssueId(int id) {
+    this.issueId = id;
   }
   /**
-   * @return the id
+   * @return the issueId
    */
-  public int getId() {
-    return id;
+  public int getIssueId() {
+    return issueId;
   }
   /**
    * @param type the type to set

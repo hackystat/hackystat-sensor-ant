@@ -52,7 +52,7 @@ public class IssueSensor extends Task {
   private XMLGregorianCalendar runTimestamp = Tstamp.makeTimestamp();
   
   List<IssueEntry> updatedIssues = new ArrayList<IssueEntry>();
-  Map<Integer, IssueEntry> issues = new HashMap<Integer, IssueEntry>();
+  Map<String, IssueEntry> issues = new HashMap<String, IssueEntry>();
   SensorShellMap shellMap;
   
   /**
@@ -87,35 +87,13 @@ public class IssueSensor extends Task {
       System.out.println("Processing issue updates for project " + this.projectName);
     }  
     
-    runTimestamp = Tstamp.makeTimestamp();
-    
+
+    List<String[]> issueTableContents = new ArrayList<String[]>();
+    //[1] Extract data from Issue CSV table. 
+    if (this.isVerbose) {
+      System.out.println("Retrieving issue csv table from " + this.getAllCsvUrl());
+    }
     try {
-      updatedIssues.clear();
-
-      SensorShellProperties props = new SensorShellProperties(this.hackystatSensorbase,
-          this.dataOwnerHackystatAccount, this.dataOwnerHackystatPassword);
-      SensorShell shell = new SensorShell(props, false, this.tool);
-      SensorBaseClient sensorBaseClient = new SensorBaseClient(this.hackystatSensorbase,
-          this.dataOwnerHackystatAccount, this.dataOwnerHackystatPassword);
-      
-      //[1] Retrieve sensor data.
-      if (this.isVerbose) {
-        System.out.println("Retrieve sensordata from " + this.hackystatSensorbase);
-      }
-      for (SensorDataRef ref : sensorBaseClient.getSensorDataIndex(
-          this.dataOwnerHackystatAccount, ISSUE_SENSOR_DATA_TYPE).getSensorDataRef()) {
-        IssueEntry issue = new IssueEntry(sensorBaseClient.getSensorData(ref));
-        issues.put(issue.getId(), issue);
-      }
-
-      if (this.isVerbose) {
-        System.out.println(issues.size() + " sensordata found on sensorbase.");
-      }
-      
-      //[2] Extract data from Issue CSV table. 
-      if (this.isVerbose) {
-        System.out.println("Retrieving issue csv table from " + this.getAllCsvUrl());
-      }
       URL url = new URL(this.getAllCsvUrl());
       URLConnection urlConnection = url.openConnection();
       urlConnection.connect();
@@ -124,25 +102,75 @@ public class IssueSensor extends Task {
       
       //skip the first line, the header.
       String[] line = csvReader.readNext();
-      
       while ((line = csvReader.readNext()) != null && line.length > 1) {
+        issueTableContents.add(line);
+      }
+    }
+    catch (MalformedURLException e) {
+      throw new BuildException("Source URL malformed.", e);
+    }
+    catch (IOException e) {
+      throw new BuildException("Internet connection error.", e);
+    }
+
+    this.processGoogleIssueCsvData(issueTableContents);
+    
+  }
+  
+  /**
+   * Process the issues information from csv table contents.
+   * @param issueTableContents the parsed table content, in forms of List of String[].
+   */
+  protected void processGoogleIssueCsvData(List<String[]> issueTableContents) {
+    try {
+      runTimestamp = Tstamp.makeTimestamp();
+      
+      updatedIssues.clear();
+
+      SensorShellProperties props = new SensorShellProperties(this.hackystatSensorbase,
+          this.dataOwnerHackystatAccount, this.dataOwnerHackystatPassword);
+      SensorShell shell = new SensorShell(props, false, this.tool);
+      SensorBaseClient sensorBaseClient = new SensorBaseClient(this.hackystatSensorbase,
+          this.dataOwnerHackystatAccount, this.dataOwnerHackystatPassword);
+      
+      // Retrieve sensor data.
+      if (this.isVerbose) {
+        System.out.println("Retrieve sensordata from " + this.hackystatSensorbase);
+      }
+      for (SensorDataRef ref : sensorBaseClient.getSensorDataIndex(
+          this.dataOwnerHackystatAccount, ISSUE_SENSOR_DATA_TYPE).getSensorDataRef()) {
+        SensorData sensorData = sensorBaseClient.getSensorData(ref);
+        if (tool.equals(sensorData.getTool())) {
+          IssueEntry issue = new IssueEntry(sensorData);
+          issues.put(getResourceFromId(String.valueOf(issue.getIssueId())), issue);
+        }
+      }
+
+      if (this.isVerbose) {
+        System.out.println(issues.size() + " sensordata found on sensorbase.");
+      }
+      
+      // Put information into sensordata.
+      for (String[] line : issueTableContents) {
         try {
+          // Retrieve SensorData according to issue id.
           int id = Integer.valueOf(line[0]);
           line[5] = mapToHackystatAccount(line[5]);
-          IssueEntry issue = issues.get(id);
+          IssueEntry issue = issues.get(getResourceFromId(String.valueOf(id)));
           if (issue == null) {
             issue = new IssueEntry(createSensorData(line));
             if (this.isVerbose) {
-              System.out.println("New issue #" + issue.getId() + " found. " + printStrings(line));
+              System.out.println("New issue #" + issue.getIssueId() + " found. " + 
+                  printStrings(line));
             }
             issue.upToDate(line, runTimestamp, false);
-            issues.put(id, issue);
+            issues.put(getResourceFromId(String.valueOf(id)), issue);
             updatedIssues.add(issue);
           }
           else {
             if (issue.upToDate(line, runTimestamp, isVerbose)) {
               if (this.isVerbose) {
-                System.out.println("Issue #" + issue.getId() + " updated. ");
+                System.out.println("Issue #" + issue.getIssueId() + " updated. ");
               }
               updatedIssues.add(issue);
             }
@@ -156,44 +184,6 @@ public class IssueSensor extends Task {
         System.out.println("Found " + issues.size() + " issues, " + 
             updatedIssues.size() + " updated.");
       }
-      
-      /*
-      //[2] Extract issue updates from Google Project Hosting.
-      if (this.isVerbose) {
-        System.out.println("Extract issue updates.");
-      }
-      //List<IssueUpdate> issueUpdates = this.getIssueUpdates(this.fromDate, this.toDate);
-      //GoogleRssProcessor rssProcessor = new GoogleRssProcessor(this.getFeedUrl(), this.isVerbose);
-      
-      //[3] Extract data from Issue CSV table.
-      Map<Integer, IssueEntry> issueEntries = this.getAllIssueList();
-      
-      //[4] Assign sensordata to associated issue entry.
-      for (SensorData data : issueSensorData) {
-        int id = getIssueId(data);
-        IssueEntry issueEntry = issueEntries.get(id);
-      }
-      
-      //[5] Find new issue and add new sensordata to it.
-      for (IssueEntry issueEntry : issueEntries.values()) {
-        if (issueEntry.getSensorData() == null) {
-          issueEntry.setSensorData(createSensorData(issueEntry, shellMap));
-          updatedIssue.add(issueEntry);
-        }
-      }
-      //[6] Add udpate information to sensordata.
-      for (IssueEntry issueEntry : issueEntries.values()) {
-        XMLGregorianCalendar lastUpdateTime = getLastUpdateTime(issueEntry.getSensorData());
-        List<IssueUpdate> updates;
-        if (lastUpdateTime == null) {
-          updates = rssProcessor.getIssueUpdate(issueEntry.getId());
-        }
-        else {
-          updates = rssProcessor.
-              getIssueUpdate(issueEntry.getId(), lastUpdateTime, runTimestamp);
-        }
-        addIssueUpdates(issueEntry, updates);
-      }*/
       
       //Put send updated data.
       for (IssueEntry issueEntry : updatedIssues) {
@@ -211,17 +201,11 @@ public class IssueSensor extends Task {
     catch (SensorShellException e) {
       throw new BuildException("SensorShellException error.", e);
     }
-    catch (MalformedURLException e) {
-      throw new BuildException("Source URL malformed.", e);
-    }
-    catch (IOException e) {
-      throw new BuildException("Internet connection error.", e);
-    }
     catch (Exception e) {
       throw new BuildException("Error when constructing issue data.", e);
     }
   }
-  
+
   /**
    * Print the array of String, separated by comma.
    * @param line the array of String
@@ -284,11 +268,13 @@ public class IssueSensor extends Task {
     sensorData.setTimestamp(Tstamp.makeTimestamp(googleDateFormat.parse(line[6]).getTime()));
     sensorData.setSensorDataType(ISSUE_SENSOR_DATA_TYPE);
     sensorData.setLastMod(runTimestamp);
+    sensorData.setResource(this.getResourceFromId(line[0]));
 
     sensorData.addProperty(IssueEntry.ID_PROPERTY_KEY, line[0]);
     
     return sensorData;
   }
+
 
   /**
    * Map the given issue account to hackystat account. 
@@ -384,11 +370,8 @@ public class IssueSensor extends Task {
     }
   }*/
 
-  /**
-   * @return the feedUrl
-   */
-  public String getFeedUrl() {
-    return "http://code.google.com/feeds/p/" + projectName + "/issueupdates/basic";
+  private String getResourceFromId(String id) {
+    return "http://code.google.com/p/" + projectName + "/issues/detail?id=" + id;
   }
 
   /**
