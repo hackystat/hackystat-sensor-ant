@@ -370,6 +370,11 @@ public class IssueSensor extends Task {
     }
   }*/
 
+  /**
+   * return resource according to the id.
+   * @param id the id.
+   * @return the resource.
+   */
   private String getResourceFromId(String id) {
     return "http://code.google.com/p/" + projectName + "/issues/detail?id=" + id;
   }

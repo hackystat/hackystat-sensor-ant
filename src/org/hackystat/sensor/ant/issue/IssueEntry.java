@@ -122,7 +122,7 @@ public class IssueEntry {
     this.issueId = getIssueId(data);
     if (this.issueId < 0) {
       throw new Exception("Issue Id not found, " +
-      		"probably because it is not Issue SensorData or malformatted");
+        "probably because it is not Issue SensorData or malformatted");
     }
     this.type = getLatestValueWithKey(this.sensorData, TYPE_PROPERTY_KEY);
     this.status = getLatestValueWithKey(this.sensorData, STATUS_PROPERTY_KEY);

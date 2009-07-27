@@ -187,17 +187,22 @@ public class TestIssueSensor extends AntSensorTestHelper {
     }
   }
 
+  /**
+   * Check SensorData with the issue information in String array.
+   * @param strings String array of issue information
+   * @param sensorData the sensorData.
+   */
   private void assertIssueSensorData(String[] strings, SensorData sensorData) {
     try {
       assertEquals("Checking type.", strings[1], 
           IssueEntry.getLatestValueWithKey(sensorData, IssueEntry.TYPE_PROPERTY_KEY));
-      assertEquals("Checking type.", strings[2], 
+      assertEquals("Checking status.", strings[2], 
           IssueEntry.getLatestValueWithKey(sensorData, IssueEntry.STATUS_PROPERTY_KEY));
-      assertEquals("Checking type.", strings[3], 
+      assertEquals("Checking priority.", strings[3], 
           IssueEntry.getLatestValueWithKey(sensorData, IssueEntry.PRIORITY_PROPERTY_KEY));
-      assertEquals("Checking type.", strings[4], 
+      assertEquals("Checking milestone.", strings[4], 
           IssueEntry.getLatestValueWithKey(sensorData, IssueEntry.MILESTONE_PROPERTY_KEY));
-      assertEquals("Checking type.", strings[5], 
+      assertEquals("Checking owner.", strings[5], 
           IssueEntry.getLatestValueWithKey(sensorData, IssueEntry.OWNER_PROPERTY_KEY));
     }
     catch (Exception e) {
